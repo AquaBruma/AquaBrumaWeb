@@ -63,6 +63,17 @@
 <style>
   html { scroll-behavior: smooth; }
   body { font-family: 'Jost', sans-serif; }
+
+  /* Real mobile viewport height for the hero — avoids the gap that shows up
+     on mobile browsers where 100vh doesn't match the visible area because
+     the address bar shows/hides. --vh is kept in sync by JS below. */
+  #inicio {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  @supports (height: 100svh) {
+    #inicio { height: 100svh; }
+  }
   .font-serif { font-family: 'Cormorant Garamond', serif; }
 
   ::selection { background: #C6A15B; color: #0B1015; }
@@ -681,6 +692,13 @@
   menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden-menu'));
   menuClose.addEventListener('click', () => mobileMenu.classList.add('hidden-menu'));
   document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden-menu')));
+
+  // Keep --vh synced to the real visible viewport height (fixes the mobile
+  // hero showing a flat-color gap when the browser's address bar resizes it).
+  const setVH = () => document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  setVH();
+  window.addEventListener('resize', setVH);
+  window.addEventListener('orientationchange', setVH);
 
   // Scroll reveal
   const io = new IntersectionObserver((entries) => {
