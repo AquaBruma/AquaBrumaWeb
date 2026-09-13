@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaBruma — Piscinas, Jacuzzis &amp; Wellness de Autor</title>
+<meta name="description" content="AquaBruma diseña e instala piscinas de autor, jacuzzis, spas y zonas de bienestar a la medida de residencias y proyectos exclusivos.">
+<meta name="theme-color" content="#0B1015">
+<link rel="canonical" href="https://www.aquabruma.com/">
+
+<!-- Favicons -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AquaBruma">
+<meta property="og:title" content="AquaBruma — Piscinas, Jacuzzis & Wellness de Autor">
+<meta property="og:description" content="Piscinas de autor, jacuzzis y zonas de bienestar diseñadas a la medida de quienes no aceptan lo ordinario.">
+<meta property="og:image" content="https://www.aquabruma.com/hero-poster-1.jpg">
+<meta property="og:url" content="https://www.aquabruma.com/">
+<meta property="og:locale" content="es_CO">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AquaBruma — Piscinas, Jacuzzis & Wellness de Autor">
+<meta name="twitter:description" content="Piscinas de autor, jacuzzis y zonas de bienestar diseñadas a la medida de quienes no aceptan lo ordinario.">
+<meta name="twitter:image" content="https://www.aquabruma.com/hero-poster-1.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#0B1015',
+          ink2:     '#141B22',
+          ink3:     '#1C242C',
+          gold:     '#C6A15B',
+          goldlight:'#E3CE9C',
+          cream:    '#F7F3EA',
+          cream2:   '#EEE6D3',
+          teal:     '#213D38',
+        },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'serif'],
+          sans:  ['"Jost"', 'sans-serif'],
+        },
+        letterSpacing: {
+          widest2: '.28em',
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; }
+  .font-serif { font-family: 'Cormorant Garamond', serif; }
+
+  ::selection { background: #C6A15B; color: #0B1015; }
+
+  /* Ken Burns hero */
+  @keyframes kenburns {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.12); }
+  }
+  .kenburns { animation: kenburns 22s ease-out forwards; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: .12s; }
+  .reveal-delay-2 { transition-delay: .24s; }
+  .reveal-delay-3 { transition-delay: .36s; }
+  .reveal-delay-4 { transition-delay: .48s; }
+
+  /* Underline hover link */
+  .link-underline { position: relative; }
+  .link-underline::after {
+    content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px;
+    background: currentColor; transition: width .4s ease;
+  }
+  .link-underline:hover::after { width: 100%; }
+
+  .card-zoom img { transition: transform 1.1s cubic-bezier(.16,1,.3,1); }
+  .card-zoom:hover img { transform: scale(1.08); }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0B1015; }
+  ::-webkit-scrollbar-thumb { background: #3a3327; border-radius: 6px; }
+
+  #mobile-menu { transition: opacity .35s ease, visibility .35s ease; }
+  #mobile-menu.hidden-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  #site-header.header-hidden { transform: translateY(-100%); }
+
+  /* Calma emphasis — no entrance animation, just the ongoing soft glow */
+  .calma-reveal {
+    display: inline-block;
+    animation: calma-breathe 3.6s ease-in-out infinite;
+  }
+  @keyframes calma-breathe {
+    0%, 100% { text-shadow: 0 0 10px rgba(198,161,91,0.30), 0 0 2px rgba(198,161,91,0.25); }
+    50%      { text-shadow: 0 0 28px rgba(198,161,91,0.70), 0 0 8px rgba(198,161,91,0.45); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .calma-reveal { animation: none; }
+  }
+
+  .whatsapp-fab {
+    animation: fab-glow 3s ease-in-out infinite;
+  }
+  @keyframes fab-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(198,161,91,0.45), 0 10px 25px -5px rgba(0,0,0,0.4); }
+    50%      { box-shadow: 0 0 0 10px rgba(198,161,91,0), 0 10px 25px -5px rgba(0,0,0,0.4); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-fab { animation: none; }
+  }
+
+  .colecciones-scroll { scrollbar-width: thin; scrollbar-color: #3a3327 transparent; }
+  .colecciones-scroll::-webkit-scrollbar { height: 6px; }
+  .colecciones-scroll::-webkit-scrollbar-track { background: transparent; }
+  .colecciones-scroll::-webkit-scrollbar-thumb { background: #3a3327; border-radius: 9999px; }
+
+  .gold-divider {
+    height: 1px;
+    width: 240px;
+    max-width: 60%;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, #C6A15B 50%, transparent);
+    box-shadow: 0 0 18px 3px rgba(198, 161, 91, 0.35);
+  }
+</style>
+</head>
+
+<body class="bg-ink text-cream antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-transparent">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="flex items-center justify-between h-20 lg:h-24">
+
+      <!-- Logo -->
+      <a href="#inicio" class="flex items-center gap-3 group">
+        <img src="logo-mark.png" alt="AquaBruma" width="42" height="42" class="w-[38px] h-[38px] lg:w-[42px] lg:h-[42px]">
+        <span class="font-serif text-white text-2xl lg:text-[26px] tracking-wide leading-none header-word">
+          <span class="font-medium">AQUA</span><span class="font-medium">BRUMA</span>
+        </span>
+      </a>
+
+      <div class="flex items-center gap-5">
+        <!-- Menu dropdown -->
+        <div class="relative hidden lg:block" id="nav-dropdown">
+          <button id="nav-dropdown-btn" type="button"
+                  class="flex items-center gap-2 text-[11px] tracking-widest2 uppercase text-white/90 header-word hover:text-gold transition-colors duration-300"
+                  aria-haspopup="true" aria-expanded="false">
+            Menú
+            <svg id="nav-dropdown-chevron" width="9" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.3" class="transition-transform duration-300">
+              <path d="M1 1l4 4 4-4"/>
+            </svg>
+          </button>
+          <div id="nav-dropdown-panel"
+               class="absolute right-0 top-full mt-5 w-52 bg-ink/25 backdrop-blur-md border border-cream/15 shadow-xl shadow-black/30 py-2 opacity-0 invisible -translate-y-2 transition-all duration-300">
+            <div class="mx-6 mb-1 mt-2 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent"></div>
+            <a href="#proyectos" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-gold transition-colors duration-300">Proyectos</a>
+            <a href="#nosotros" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-gold transition-colors duration-300">Nosotros</a>
+            <a href="#contacto" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-gold transition-colors duration-300">Contacto</a>
+          </div>
+        </div>
+
+        <a href="https://wa.me/573000000000" target="_blank" rel="noopener"
+           class="hidden md:inline-flex items-center gap-2 border border-gold/70 text-gold hover:bg-gold hover:text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-5 py-3">
+          Agendar Consultoría
+        </a>
+        <!-- mobile toggle -->
+        <button id="menu-btn" class="lg:hidden text-white" aria-label="Abrir menú">
+          <svg id="icon-open" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden-menu lg:hidden fixed inset-0 bg-ink/95 z-40 flex flex-col items-center justify-center gap-8 text-cream">
+    <button id="menu-close" class="absolute top-7 right-6 text-white" aria-label="Cerrar menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <a href="#proyectos" class="mobile-link font-serif italic text-3xl">Proyectos</a>
+    <a href="#nosotros" class="mobile-link font-serif italic text-3xl">Nosotros</a>
+    <a href="#contacto" class="mobile-link font-serif italic text-3xl">Contacto</a>
+    <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="mt-4 border border-gold text-gold text-[11px] tracking-widest2 uppercase px-6 py-3">Agendar Consultoría</a>
+  </div>
+</header>
+
+<!-- ============ WHATSAPP FLOTANTE ============ -->
+<a href="https://wa.me/573000000000" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"
+   class="whatsapp-fab fixed bottom-6 right-6 z-30 group flex items-center justify-center w-14 h-14 rounded-full bg-gold hover:bg-goldlight text-ink shadow-xl shadow-black/40 transition-colors duration-300">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+  <span class="pointer-events-none absolute right-full mr-4 whitespace-nowrap rounded-sm bg-ink/95 border border-gold/20 px-4 py-2 text-[10px] tracking-widest2 uppercase text-cream opacity-0 translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">Escribir por WhatsApp</span>
+</a>
+
+<!-- ============ HERO ============ -->
+<section id="inicio" class="relative h-screen min-h-[640px] w-full overflow-hidden bg-ink">
+  <div class="absolute inset-0">
+    <video id="hero-video" autoplay muted playsinline preload="auto"
+           poster="hero-poster-2.jpg"
+           class="absolute inset-0 w-full h-full object-cover opacity-80"
+           aria-label="Piscina infinita en azotea AquaBruma, entre columnas de piedra con vista nocturna de ciudad">
+      <source src="352876_medium.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/60"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink/70 from-0% via-ink/30 via-40% to-transparent to-70%"></div>
+  </div>
+
+  <div class="relative z-10 h-full flex flex-col justify-center max-w-[1400px] mx-auto px-6 lg:px-12">
+    <h1 class="font-serif text-cream text-5xl sm:text-6xl md:text-7xl lg:text-[92px] leading-[1.03] max-w-3xl">
+      <span class="reveal block" style="transition-delay:.1s">Donde el agua</span>
+      <span class="reveal block" style="transition-delay:.7s">se convierte</span>
+      <span class="reveal block" style="transition-delay:1.3s">en <span class="calma-reveal italic text-gold font-medium">calma.</span></span>
+    </h1>
+    <p class="reveal text-cream/80 text-base md:text-lg max-w-md mt-8 font-light leading-relaxed" style="transition-delay:2.2s">
+      Piscinas de autor, jacuzzis y zonas de bienestar diseñadas a la medida de quienes no aceptan lo ordinario.
+    </p>
+    <a href="#proyectos" class="reveal link-underline inline-flex items-center gap-2 w-fit text-cream text-[11px] tracking-widest2 uppercase mt-8" style="transition-delay:2.5s">
+      Ver Proyectos
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>
+    </a>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 text-cream/70">
+    <span class="w-px h-10 bg-cream/40 relative overflow-hidden">
+      <span class="absolute top-0 left-0 w-full h-1/2 bg-gold animate-bounce"></span>
+    </span>
+  </div>
+</section>
+
+<!-- ============ MANIFIESTO + PILARES ============ -->
+<section class="bg-ink py-16 md:py-20">
+  <div class="max-w-4xl mx-auto px-6 text-center mb-14 md:mb-16">
+    <p class="reveal text-gold text-[11px] tracking-widest2 uppercase mb-8">Nuestra Filosofía</p>
+    <h2 class="reveal reveal-delay-1 font-serif text-cream text-3xl sm:text-4xl md:text-5xl leading-snug uppercase tracking-wide">
+      El lujo verdadero no se anuncia.
+      <span class="italic normal-case text-gold font-light block sm:inline"> Se siente</span> en cada detalle.
+    </h2>
+  </div>
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid md:grid-cols-3 gap-14 md:gap-10">
+
+    <div class="reveal text-center md:text-left">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold mx-auto md:mx-0 mb-6">
+        <circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><path d="M9.5 14.5L15 9l-1.5 5.5L8 17l1.5-2.5z"/>
+      </svg>
+      <h3 class="font-serif text-2xl mb-3">Diseño a Medida</h3>
+      <p class="text-cream/70 font-light leading-relaxed text-sm">Cada proyecto nace de un lienzo en blanco. Arquitectura, interiorismo y paisajismo trabajando en una sola visión.</p>
+    </div>
+
+    <div class="reveal reveal-delay-1 text-center md:text-left">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold mx-auto md:mx-0 mb-6">
+        <path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1 3-6z"/>
+      </svg>
+      <h3 class="font-serif text-2xl mb-3">Materiales de Origen</h3>
+      <p class="text-cream/70 font-light leading-relaxed text-sm">Trabajamos exclusivamente con las marcas y materiales más exigentes del mundo, seleccionados pieza por pieza.</p>
+    </div>
+
+    <div class="reveal reveal-delay-2 text-center md:text-left">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-gold mx-auto md:mx-0 mb-6">
+        <path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>
+      </svg>
+      <h3 class="font-serif text-2xl mb-3">Instalación Certificada</h3>
+      <p class="text-cream/70 font-light leading-relaxed text-sm">Un equipo técnico propio garantiza cada instalación con los más altos estándares internacionales.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ COLECCIONES ============ -->
+<section id="colecciones" class="bg-ink py-16 md:py-20">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+      <div class="reveal">
+        <p class="text-gold text-[11px] tracking-widest2 uppercase mb-4">Nuestras Colecciones</p>
+        <h2 class="font-serif text-cream text-4xl md:text-5xl">Seis formas de<span class="italic text-gold"> vivir el agua</span></h2>
+      </div>
+    </div>
+
+    <div id="colecciones-slider" class="colecciones-scroll flex gap-5 overflow-x-auto snap-x snap-proximity pb-6 -mx-6 px-6 lg:-mx-12 lg:px-12 cursor-grab active:cursor-grabbing">
+      <!-- Card 1 -->
+      <a href="#" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-2xl bg-ink block">
+        <img src="https://images.unsplash.com/photo-1711114378532-bab7d55311f3?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Piscinas de autor AquaBruma">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
+        <div class="absolute bottom-0 p-7">
+          <h3 class="font-serif text-cream text-2xl mb-2">Piscinas<br>de Autor</h3>
+          <p class="text-cream/60 text-xs font-light mb-4 max-w-[220px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">Desbordantes, infinity, interiores o exteriores: piezas arquitectónicas hechas a medida.</p>
+          <span class="link-underline text-gold text-[10px] tracking-widest2 uppercase">Explorar</span>
+        </div>
+      </a>
+      <!-- Card 2 -->
+      <a href="#" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-2xl bg-ink block">
+        <img src="https://images.unsplash.com/photo-1668461363398-1fd41bf2ca79?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Jacuzzis y spas AquaBruma">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
+        <div class="absolute bottom-0 p-7">
+          <h3 class="font-serif text-cream text-2xl mb-2">Jacuzzis<br>&amp; Spas</h3>
+          <p class="text-cream/60 text-xs font-light mb-4 max-w-[220px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">Hidroterapia de alta gama que transforma cualquier espacio en un santuario privado.</p>
+          <span class="link-underline text-gold text-[10px] tracking-widest2 uppercase">Explorar</span>
+        </div>
+      </a>
+      <!-- Card 3 -->
+      <a href="#" class="reveal reveal-delay-2 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-2xl bg-ink block">
+        <img src="https://images.unsplash.com/photo-1728404259075-209cfb5bb89c?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Saunas y baños turcos AquaBruma">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
+        <div class="absolute bottom-0 p-7">
+          <h3 class="font-serif text-cream text-2xl mb-2">Saunas<br>&amp; Turcos</h3>
+          <p class="text-cream/60 text-xs font-light mb-4 max-w-[220px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">Madera noble y vapor terapéutico, integrados en la arquitectura más exigente.</p>
+          <span class="link-underline text-gold text-[10px] tracking-widest2 uppercase">Explorar</span>
+        </div>
+      </a>
+      <!-- Card 4 -->
+      <a href="#" class="reveal reveal-delay-3 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-2xl bg-ink block">
+        <img src="https://images.unsplash.com/photo-1562016600-ece13e8ba570?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Mantenimiento y servicio AquaBruma">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
+        <div class="absolute bottom-0 p-7">
+          <h3 class="font-serif text-cream text-2xl mb-2">Servicio &amp;<br>Mantenimiento</h3>
+          <p class="text-cream/60 text-xs font-light mb-4 max-w-[220px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">Un programa de cuidado permanente para que su inversión permanezca impecable.</p>
+          <span class="link-underline text-gold text-[10px] tracking-widest2 uppercase">Conocer</span>
+        </div>
+      </a>
+      <!-- Card 5 -->
+      <a href="#" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-2xl bg-ink block">
+        <img src="https://images.unsplash.com/photo-1661267237994-7821f44e93cd?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Membranas para piscinas AquaBruma">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
+        <div class="absolute bottom-0 p-7">
+          <h3 class="font-serif text-cream text-2xl mb-2">Membranas<br>para Piscinas</h3>
+          <p class="text-cream/60 text-xs font-light mb-4 max-w-[220px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">Membranas de alta resistencia e impermeabilización total, en los acabados más exclusivos.</p>
+          <span class="link-underline text-gold text-[10px] tracking-widest2 uppercase">Explorar</span>
+        </div>
+      </a>
+      <!-- Card 6 -->
+      <a href="#" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-2xl bg-ink block">
+        <img src="https://images.unsplash.com/photo-1571078333782-417b3bfdb447?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Cerámicas para piscinas AquaBruma">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent"></div>
+        <div class="absolute bottom-0 p-7">
+          <h3 class="font-serif text-cream text-2xl mb-2">Cerámicas<br>para Piscinas</h3>
+          <p class="text-cream/60 text-xs font-light mb-4 max-w-[220px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">Porcelanatos y mosaicos de origen, seleccionados pieza por pieza para cada proyecto.</p>
+          <span class="link-underline text-gold text-[10px] tracking-widest2 uppercase">Explorar</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ COLECCIÓN DESTACADA ============ -->
+<section class="bg-ink py-12 md:py-16">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div class="reveal h-[420px] lg:h-[560px] overflow-hidden rounded-2xl">
+      <img src="https://images.unsplash.com/photo-1767667536883-e7705918f2ed?w=1200&h=1200&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Colección Privé AquaBruma">
+    </div>
+    <div class="reveal reveal-delay-1 flex flex-col justify-center">
+      <p class="text-gold text-[11px] tracking-widest2 uppercase mb-5">Edición Limitada</p>
+      <h2 class="font-serif text-4xl md:text-5xl mb-6 leading-tight">Colección <span class="italic text-gold">Privé</span></h2>
+      <p class="text-cream/70 font-light leading-relaxed mb-10 max-w-md">
+        Nuestra línea más exclusiva. Ingeniería de precisión, acabados en piedra natural y sistemas de agua inteligente, reservada para quienes exigen lo irrepetible.
+      </p>
+      <ul class="space-y-3 mb-10 text-sm text-cream/80 font-light">
+        <li class="flex items-center gap-3"><span class="w-1 h-1 rounded-full bg-gold"></span> Acabados en piedra natural y mármol</li>
+        <li class="flex items-center gap-3"><span class="w-1 h-1 rounded-full bg-gold"></span> Sistema inteligente de tratamiento de agua</li>
+        <li class="flex items-center gap-3"><span class="w-1 h-1 rounded-full bg-gold"></span> Climatización e iluminación arquitectónica</li>
+        <li class="flex items-center gap-3"><span class="w-1 h-1 rounded-full bg-gold"></span> Diseño y supervisión de obra incluidos</li>
+      </ul>
+      <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="inline-flex w-fit items-center gap-3 border border-cream/25 hover:border-gold hover:text-gold transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-7 py-4">
+        Descubrir Colección Privé
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ PROCESO ============ -->
+<section id="proceso" class="bg-ink py-16 md:py-20">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="reveal text-center max-w-2xl mx-auto mb-20">
+      <p class="text-gold text-[11px] tracking-widest2 uppercase mb-4">Cómo Trabajamos</p>
+      <h2 class="font-serif text-4xl md:text-5xl">Una experiencia <span class="italic text-gold">sin fricciones</span></h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-12 md:gap-8">
+      <div class="reveal relative">
+        <span class="font-serif italic text-6xl text-gold/30 block mb-6">01</span>
+        <h3 class="text-lg mb-3 tracking-wide">Consultoría Privada</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed">Un arquitecto asesor visita su proyecto o lo recibe en nuestro showroom para entender su visión.</p>
+      </div>
+      <div class="reveal reveal-delay-1 relative">
+        <span class="font-serif italic text-6xl text-gold/30 block mb-6">02</span>
+        <h3 class="text-lg mb-3 tracking-wide">Diseño a Medida</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed">Desarrollamos la propuesta perfecta, en total sintonía con su arquitecto o interiorista.</p>
+      </div>
+      <div class="reveal reveal-delay-2 relative">
+        <span class="font-serif italic text-6xl text-gold/30 block mb-6">03</span>
+        <h3 class="text-lg mb-3 tracking-wide">Instalación Certificada</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed">Nuestro equipo técnico ejecuta la obra con precisión milimétrica y máxima discreción.</p>
+      </div>
+      <div class="reveal reveal-delay-3 relative">
+        <span class="font-serif italic text-6xl text-gold/30 block mb-6">04</span>
+        <h3 class="text-lg mb-3 tracking-wide">Acompañamiento</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed">Soporte y mantenimiento permanente para que la experiencia sea siempre impecable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ SOBRE AQUABRUMA ============ -->
+<section id="nosotros" class="bg-ink py-16 md:py-20">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal order-2 lg:order-1">
+      <p class="text-gold text-[11px] tracking-widest2 uppercase mb-5">Quiénes Somos</p>
+      <h2 class="font-serif text-4xl md:text-5xl mb-8 leading-tight">Más de una década elevando el estándar del <span class="italic text-gold">bienestar privado</span></h2>
+      <p class="text-cream/70 font-light leading-relaxed mb-6 max-w-lg">
+        En AquaBruma creemos que los espacios de bienestar de lujo deben vivirse en la intimidad del propio hogar, con la misma excelencia que encontraría en los destinos más exclusivos del mundo.
+      </p>
+      <p class="text-cream/70 font-light leading-relaxed max-w-lg">
+        Acompañamos a arquitectos, interioristas y familias en cada etapa: desde el primer boceto hasta el último detalle de acabado.
+      </p>
+    </div>
+    <div class="reveal reveal-delay-1 order-1 lg:order-2 h-[420px] lg:h-[560px] overflow-hidden rounded-2xl">
+      <img src="https://images.unsplash.com/photo-1613487700221-38271bedcb52?w=1000&h=1200&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Showroom AquaBruma">
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ PROYECTOS / GALERÍA ============ -->
+<section id="proyectos" class="bg-ink py-16 md:py-20">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+      <div>
+        <p class="text-gold text-[11px] tracking-widest2 uppercase mb-4">Portafolio</p>
+        <h2 class="font-serif text-cream text-4xl md:text-5xl">Proyectos <span class="italic text-gold">realizados</span></h2>
+      </div>
+      <a href="#contacto" class="link-underline text-cream text-[11px] tracking-widest2 uppercase">Ver galería completa</a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="#" class="reveal card-zoom relative h-80 overflow-hidden rounded-2xl block group">
+        <img src="https://images.unsplash.com/photo-1651376589881-0e5a7eb15ae4?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Llanogrande">
+        <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
+        <p class="absolute bottom-5 left-5 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Residencia Llanogrande</p>
+      </a>
+      <a href="#" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-2xl block group">
+        <img src="https://images.unsplash.com/photo-1722409195473-d322e99621e3?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto El Poblado">
+        <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
+        <p class="absolute bottom-5 left-5 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Penthouse El Poblado</p>
+      </a>
+      <a href="#" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-2xl block group">
+        <img src="https://images.unsplash.com/photo-1547064663-a07e03f25fca?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Rionegro">
+        <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
+        <p class="absolute bottom-5 left-5 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Finca Rionegro</p>
+      </a>
+      <a href="#" class="reveal card-zoom relative h-80 overflow-hidden rounded-2xl block group">
+        <img src="https://images.unsplash.com/photo-1634253539564-8887939e239f?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Envigado">
+        <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
+        <p class="absolute bottom-5 left-5 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Casa Campestre Envigado</p>
+      </a>
+      <a href="#" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-2xl block group">
+        <img src="https://images.unsplash.com/photo-1759300031446-88e81c8a26c9?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Sabaneta">
+        <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
+        <p class="absolute bottom-5 left-5 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Apartamento Sabaneta</p>
+      </a>
+      <a href="#" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-2xl block group">
+        <img src="https://images.unsplash.com/photo-1571456803038-80efbf5c9d6b?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto La Calera">
+        <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
+        <p class="absolute bottom-5 left-5 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Villa La Calera</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section class="bg-ink py-16 md:py-20">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <p class="reveal text-center text-gold text-[11px] tracking-widest2 uppercase mb-16">Lo que dicen nuestros clientes</p>
+    <div class="grid md:grid-cols-3 gap-14">
+      <div class="reveal">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-gold mb-6"><path d="M0 20V11.5C0 4.8 4.3 0.6 11 0V4.3C7.4 5 5.7 7.3 5.4 10.6H11V20H0ZM17 20V11.5C17 4.8 21.3 0.6 28 0V4.3C24.4 5 22.7 7.3 22.4 10.6H28V20H17Z" fill="currentColor"/></svg>
+        <p class="font-serif italic text-xl leading-relaxed mb-6">"AquaBruma no construyó una piscina: diseñó una experiencia que cambió por completo la forma en que vivimos nuestra casa."</p>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/55">Residencia Privada — Llanogrande</p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-gold mb-6"><path d="M0 20V11.5C0 4.8 4.3 0.6 11 0V4.3C7.4 5 5.7 7.3 5.4 10.6H11V20H0ZM17 20V11.5C17 4.8 21.3 0.6 28 0V4.3C24.4 5 22.7 7.3 22.4 10.6H28V20H17Z" fill="currentColor"/></svg>
+        <p class="font-serif italic text-xl leading-relaxed mb-6">"El nivel de detalle y discreción del equipo es incomparable. Sentimos que trabajamos con verdaderos artesanos del agua."</p>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/55">Proyecto Penthouse — El Poblado</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-gold mb-6"><path d="M0 20V11.5C0 4.8 4.3 0.6 11 0V4.3C7.4 5 5.7 7.3 5.4 10.6H11V20H0ZM17 20V11.5C17 4.8 21.3 0.6 28 0V4.3C24.4 5 22.7 7.3 22.4 10.6H28V20H17Z" fill="currentColor"/></svg>
+        <p class="font-serif italic text-xl leading-relaxed mb-6">"Nuestro arquitecto los recomendó y hoy entendemos por qué: cumplieron cada plazo sin sacrificar un solo acabado."</p>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/55">Finca Campestre — Rionegro</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ============ CTA FINAL ============ -->
+<section id="contacto" class="relative py-24 md:py-32 bg-ink overflow-hidden">
+  <img src="https://images.unsplash.com/photo-1661333587575-25c87c14f398?w=1920&h=1000&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover opacity-60" alt="">
+  <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40"></div>
+  <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+    <p class="reveal text-gold text-[11px] tracking-widest2 uppercase mb-6">Atención Personalizada</p>
+    <h2 class="reveal reveal-delay-1 font-serif text-cream text-4xl md:text-6xl mb-8 leading-tight">Diseñemos su <span class="italic text-gold">oasis privado</span></h2>
+    <p class="reveal reveal-delay-2 text-cream/70 font-light mb-12 max-w-md mx-auto">Agende una consultoría confidencial con nuestro equipo de diseño y descubra lo que el agua puede ser en su hogar.</p>
+    <a href="https://wa.me/573000000000" target="_blank" rel="noopener"
+       class="reveal reveal-delay-3 inline-flex items-center gap-3 bg-gold hover:bg-goldlight text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-8 py-5">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-[#080C10] pt-20 pb-10">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="grid md:grid-cols-3 gap-12 pb-16 border-b border-white/10">
+      <div class="md:col-span-2">
+        <a href="#inicio" class="flex items-center gap-3 mb-5">
+          <img src="logo-mark.png" alt="AquaBruma" width="38" height="38" class="w-[34px] h-[34px]">
+          <span class="font-serif text-cream text-2xl"><span class="font-medium">AQUA</span><span class="font-medium">BRUMA</span></span>
+        </a>
+        <p class="text-cream/50 font-light text-sm max-w-xs leading-relaxed">Piscinas de autor, jacuzzis y zonas de bienestar diseñadas para quienes exigen lo irrepetible.</p>
+        <div class="flex items-center gap-4 mt-7">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 flex items-center justify-center border border-white/15 text-cream/60 hover:text-gold hover:border-gold transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 flex items-center justify-center border border-white/15 text-cream/60 hover:text-gold hover:border-gold transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 8h2V4h-2a4 4 0 0 0-4 4v2H9v4h2v6h4v-6h2.5l.5-4H15V8z"/></svg>
+          </a>
+          <a href="#" aria-label="Pinterest" class="w-9 h-9 flex items-center justify-center border border-white/15 text-cream/60 hover:text-gold hover:border-gold transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M9 17c1-3 1.5-5 1.5-6.5a2.5 2.5 0 0 1 5 0c0 1.5-1 4-2 4.5-1 .5-2-.2-2-1.3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-cream text-[11px] tracking-widest2 uppercase mb-6">Contacto</p>
+        <ul class="space-y-3 text-cream/50 font-light text-sm">
+          <li>Medellín, Colombia</li>
+          <li><a href="https://wa.me/573000000000" class="link-underline">+57 300 000 0000</a></li>
+          <li><a href="mailto:contacto@aquabruma.com" class="link-underline">contacto@aquabruma.com</a></li>
+          <li><a href="#nosotros" class="link-underline">Nosotros</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 pt-8 text-cream/40 text-xs font-light">
+      <p>&copy; 2026 AquaBruma. Todos los derechos reservados.</p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="link-underline">Política de Privacidad</a>
+        <a href="#" class="link-underline">Términos y Condiciones</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Desktop nav dropdown ("Menú")
+  (function () {
+    const wrap = document.getElementById('nav-dropdown');
+    const btn = document.getElementById('nav-dropdown-btn');
+    const panel = document.getElementById('nav-dropdown-panel');
+    const chevron = document.getElementById('nav-dropdown-chevron');
+    if (!wrap || !btn || !panel) return;
+    let open = false;
+
+    function closeDropdown() {
+      open = false;
+      panel.classList.add('opacity-0', 'invisible', '-translate-y-2');
+      chevron.style.transform = 'rotate(0deg)';
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    function openDropdown() {
+      open = true;
+      panel.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+      chevron.style.transform = 'rotate(180deg)';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      open ? closeDropdown() : openDropdown();
+    });
+    document.addEventListener('click', (e) => {
+      if (open && !wrap.contains(e.target)) closeDropdown();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (open && e.key === 'Escape') closeDropdown();
+    });
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeDropdown));
+  })();
+
+  // Colecciones slider: click-and-drag to scroll horizontally with the mouse
+  // (touch/trackpad already scroll it natively via overflow-x).
+  (function () {
+    const slider = document.getElementById('colecciones-slider');
+    if (!slider) return;
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = false;
+
+    slider.addEventListener('pointerdown', (e) => {
+      isDown = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = slider.scrollLeft;
+      slider.setPointerCapture(e.pointerId);
+    });
+    slider.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      slider.scrollLeft = startScroll - dx;
+    });
+    const endDrag = () => { isDown = false; };
+    slider.addEventListener('pointerup', endDrag);
+    slider.addEventListener('pointercancel', endDrag);
+    slider.addEventListener('pointerleave', endDrag);
+    // Prevent the card link from firing when the drag was an actual swipe.
+    slider.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  })();
+
+  // Header scroll state (background) + hide-on-scroll-down / show-on-scroll-up
+  const header = document.getElementById('site-header');
+  let lastScrollY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+
+    if (y > 40) {
+      header.classList.remove('bg-transparent');
+      header.classList.add('bg-ink/95','backdrop-blur-sm','shadow-lg','shadow-black/20');
+    } else {
+      header.classList.add('bg-transparent');
+      header.classList.remove('bg-ink/95','backdrop-blur-sm','shadow-lg','shadow-black/20');
+    }
+
+    const menuOpen = !document.getElementById('mobile-menu').classList.contains('hidden-menu');
+    if (!menuOpen) {
+      if (y > lastScrollY && y > 160) {
+        header.classList.add('header-hidden');
+      } else {
+        header.classList.remove('header-hidden');
+      }
+    }
+
+    lastScrollY = y;
+  };
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menu-btn');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden-menu'));
+  menuClose.addEventListener('click', () => mobileMenu.classList.add('hidden-menu'));
+  document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden-menu')));
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
