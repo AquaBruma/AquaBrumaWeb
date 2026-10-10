@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <script>
+  // Tema elegido por la persona (claro / oscuro), aplicado antes de pintar para evitar parpadeos
+  try { if (localStorage.getItem('aq-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+</script>
+<script>
   // Siempre empezar en el inicio: sin restaurar el scroll ni saltar a la sección de la dirección (#...)
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
@@ -45,13 +49,14 @@
     theme: {
       extend: {
         colors: {
-          ink:   '#0f2a3d', // azul marino principal
-          ink2:  '#0a1f2e', // marino profundo (footer / fondos)
-          ink3:  '#16384f', // marino elevado (tarjetas)
+          // Estos colores cambian con el tema (ver variables --c-* en el <style>)
+          ink:   'rgb(var(--c-ink) / <alpha-value>)',   // fondo principal (marino / crema)
+          ink2:  'rgb(var(--c-ink2) / <alpha-value>)',  // fondo profundo (footer, telón)
+          ink3:  'rgb(var(--c-ink3) / <alpha-value>)',  // superficie elevada (tarjetas)
+          sky:   'rgb(var(--c-sky) / <alpha-value>)',   // acento (celeste / azul profundo)
+          mist:  'rgb(var(--c-mist) / <alpha-value>)',  // acento al pasar el cursor
+          cream: 'rgb(var(--c-cream) / <alpha-value>)', // texto (crema / marino)
           ocean: '#0e5586', // azul profundo
-          sky:   '#b2cbe9', // celeste de marca (acento)
-          mist:  '#dcebff', // celeste claro
-          cream: '#f3ede9', // crema de marca
           sand:  '#c9baa3', // arena (secundario)
         },
         fontFamily: {
@@ -80,7 +85,7 @@
     #inicio { height: 100svh; }
   }
 
-  ::selection { background: #b2cbe9; color: #0f2a3d; }
+  ::selection { background: rgb(var(--c-sky)); color: rgb(var(--c-ink)); }
 
   /* Scroll reveal */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; }
@@ -102,8 +107,8 @@
   .card-zoom:hover img { transform: scale(1.06); }
 
   ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: #0f2a3d; }
-  ::-webkit-scrollbar-thumb { background: #2b4d66; border-radius: 6px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--c-ink)); }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--c-cream) / .25); border-radius: 6px; }
 
   #mobile-menu { transition: opacity .35s ease, visibility .35s ease; }
   #mobile-menu.hidden-menu { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -127,28 +132,28 @@
     animation: fab-glow 3s ease-in-out infinite;
   }
   @keyframes fab-glow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(178,203,233,0.45), 0 10px 25px -5px rgba(0,0,0,0.35); }
-    50%      { box-shadow: 0 0 0 10px rgba(178,203,233,0), 0 10px 25px -5px rgba(0,0,0,0.35); }
+    0%, 100% { box-shadow: 0 0 0 0 rgb(var(--c-sky) / 0.45), 0 10px 25px -5px rgba(0,0,0,0.35); }
+    50%      { box-shadow: 0 0 0 10px rgb(var(--c-sky) / 0), 0 10px 25px -5px rgba(0,0,0,0.35); }
   }
   @media (prefers-reduced-motion: reduce) {
     .whatsapp-fab { animation: none; }
   }
 
-  .colecciones-scroll { scrollbar-width: thin; scrollbar-color: #2b4d66 transparent; }
+  .colecciones-scroll { scrollbar-width: thin; scrollbar-color: rgb(var(--c-cream) / .25) transparent; }
   .colecciones-scroll::-webkit-scrollbar { height: 6px; }
   .colecciones-scroll::-webkit-scrollbar-track { background: transparent; }
-  .colecciones-scroll::-webkit-scrollbar-thumb { background: #2b4d66; border-radius: 9999px; }
+  .colecciones-scroll::-webkit-scrollbar-thumb { background: rgb(var(--c-cream) / .25); border-radius: 9999px; }
 
   /* Separador entre secciones: línea + gota de agua */
   .drop-divider {
     display: flex; align-items: center; justify-content: center; gap: 18px;
-    color: rgba(178,203,233,0.8);
+    color: rgb(var(--c-sky) / 0.8);
   }
   .drop-divider::before, .drop-divider::after {
     content: ''; height: 1px; width: 110px; max-width: 26vw;
   }
-  .drop-divider::before { background: linear-gradient(90deg, transparent, rgba(178,203,233,0.45)); }
-  .drop-divider::after  { background: linear-gradient(270deg, transparent, rgba(178,203,233,0.45)); }
+  .drop-divider::before { background: linear-gradient(90deg, transparent, rgb(var(--c-sky) / 0.45)); }
+  .drop-divider::after  { background: linear-gradient(270deg, transparent, rgb(var(--c-sky) / 0.45)); }
 
   /* Burbujas suaves en el hero */
   .bubble {
@@ -182,6 +187,57 @@
   .dn-label { transition: opacity .35s ease; }
   .dn.hide-day .dn-label-day, .dn.hide-night .dn-label-night { opacity: 0; }
 
+
+
+  /* ============ TEMAS: oscuro (por defecto) y claro ============ */
+  :root {
+    --c-ink: 15 42 61; --c-ink2: 10 31 46; --c-ink3: 22 56 79;
+    --c-cream: 243 237 233; --c-sky: 178 203 233; --c-mist: 220 235 255;
+  }
+  html[data-theme="light"] {
+    --c-ink: 243 237 233; --c-ink2: 233 225 218; --c-ink3: 255 255 255;
+    --c-cream: 15 42 61; --c-sky: 14 85 134; --c-mist: 55 134 190;
+    color-scheme: light;
+  }
+  /* Zonas que siempre se quedan oscuras (texto sobre fotos o video) */
+  html[data-theme="light"] .theme-dark,
+  html[data-theme="light"] #inicio,
+  html[data-theme="light"] .card-zoom,
+  html[data-theme="light"] #dn,
+  html[data-theme="light"] #modal-media {
+    --c-ink: 15 42 61; --c-ink2: 10 31 46; --c-ink3: 22 56 79;
+    --c-cream: 243 237 233; --c-sky: 178 203 233; --c-mist: 220 235 255;
+  }
+  /* Bordes definidos con blanco: en claro pasan a ser marino suave */
+  html[data-theme="light"] [class*="border-white/"] { border-color: rgb(var(--c-cream) / .14); }
+  html[data-theme="light"] .theme-dark [class*="border-white/"],
+  html[data-theme="light"] #inicio [class*="border-white/"],
+  html[data-theme="light"] .card-zoom [class*="border-white/"],
+  html[data-theme="light"] #dn [class*="border-white/"],
+  html[data-theme="light"] #modal-media [class*="border-white/"] { border-color: rgba(255,255,255,.18); }
+  html[data-theme="light"] .card-fx { box-shadow: 0 1px 2px rgba(15,42,61,.06), 0 8px 24px -16px rgba(15,42,61,.18); }
+  html[data-theme="light"] #site-header:not(.theme-dark) #nav-dropdown-panel { background: rgb(var(--c-ink) / .92); }
+  html[data-theme="light"] .pattern-band { background-image: url('pattern-olas-claro.png'); opacity: .6; }
+
+  /* Logo: versión clara sobre fondo oscuro y versión marino sobre fondo claro */
+  .logo-on-light { display: none; }
+  html[data-theme="light"] .logo-on-dark { display: none; }
+  html[data-theme="light"] .logo-on-light { display: block; }
+  html[data-theme="light"] .theme-dark .logo-on-dark { display: block; }
+  html[data-theme="light"] .theme-dark .logo-on-light { display: none; }
+
+  /* Transición suave solo mientras se cambia de tema */
+  html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+    transition: background-color .45s ease, color .45s ease, border-color .45s ease, fill .45s ease, stroke .45s ease, box-shadow .45s ease !important;
+  }
+
+  /* Botón del foquito */
+  .theme-btn .bulb-glass { fill: transparent; transition: fill .4s ease, filter .4s ease; }
+  .theme-btn .bulb-rays { opacity: 0; transform-origin: 12px 9.5px; transform: scale(.7); transition: opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); }
+  html[data-theme="light"] .theme-btn .bulb-glass { fill: #f2d28b; filter: drop-shadow(0 0 4px rgba(242,210,139,.9)); }
+  html[data-theme="light"] .theme-btn .bulb-rays { opacity: 1; transform: scale(1); }
+  .theme-btn:hover svg { animation: ico-beat .9s ease-in-out; }
+  html[data-theme="light"] #site-header.theme-dark .theme-btn .bulb-glass { fill: #f2d28b; }
 
   /* ============ PANTALLA DE ENTRADA (logo + gota) ============ */
   #preloader {
@@ -236,8 +292,8 @@
   /* ============ INTERACTIVIDAD: íconos, símbolos y etiquetas ============ */
   .chip { transition: transform .35s cubic-bezier(.34,1.56,.64,1), border-color .3s ease, background-color .3s ease, box-shadow .3s ease; }
   .fx:hover .chip, .fx:focus-visible .chip, .fx:active .chip, .fx.active .chip {
-    transform: translateY(-4px) scale(1.07); border-color: #b2cbe9;
-    background-color: rgba(178,203,233,.10); box-shadow: 0 0 26px rgba(178,203,233,.25);
+    transform: translateY(-4px) scale(1.07); border-color: rgb(var(--c-sky));
+    background-color: rgb(var(--c-sky) / 0.1); box-shadow: 0 0 26px rgb(var(--c-sky) / 0.25);
   }
   .fx { cursor: pointer; }
   .fx svg { transform-box: fill-box; transform-origin: center; }
@@ -269,17 +325,17 @@
 
   /* Tarjetas: elevan y se iluminan al pasar */
   .card-fx { transition: transform .45s cubic-bezier(.22,1,.36,1), border-color .35s ease, background-color .35s ease, box-shadow .35s ease; }
-  .card-fx:hover { transform: translateY(-6px); border-color: rgba(178,203,233,.35); background-color: rgba(22,56,79,.8); box-shadow: 0 18px 40px -18px rgba(0,0,0,.5), 0 0 30px -10px rgba(178,203,233,.25); }
+  .card-fx:hover { transform: translateY(-6px); border-color: rgb(var(--c-sky) / 0.35); background-color: rgb(var(--c-ink3) / .8); box-shadow: 0 18px 40px -18px rgba(0,0,0,.35), 0 0 30px -10px rgb(var(--c-sky) / 0.25); }
   .card-fx:hover .chip-inline { transform: scale(1.1); }
 
   /* Etiquetas pequeñas: se abren al pasar el cursor */
   p.text-sky.uppercase { transition: letter-spacing .5s ease, color .3s ease; }
-  p.text-sky.uppercase:hover { letter-spacing: .36em; color: #dcebff; }
+  p.text-sky.uppercase:hover { letter-spacing: .36em; color: rgb(var(--c-mist)); }
 
   /* Franja de palabras: pausa y resalta */
   .marquee:hover .marquee-track { animation-play-state: paused; }
   .mq-word { transition: color .3s ease, letter-spacing .4s ease, transform .35s cubic-bezier(.34,1.56,.64,1); cursor: default; display: inline-block; }
-  .mq-word:hover { color: #b2cbe9; letter-spacing: .34em; transform: translateY(-2px); }
+  .mq-word:hover { color: rgb(var(--c-sky)); letter-spacing: .34em; transform: translateY(-2px); }
 
   /* Divisor con gota */
   .drop-divider { cursor: pointer; }
@@ -288,16 +344,16 @@
   /* Descripción dinámica de los cinco elementos */
   #el-desc { transition: opacity .25s ease, transform .25s ease; }
   #el-desc.swap { opacity: 0; transform: translateY(4px); }
-  .el-chip.active span { color: #b2cbe9; }
+  .el-chip.active span { color: rgb(var(--c-sky)); }
 
   /* Redes: giro y elevación */
   .social-fx { transition: transform .35s cubic-bezier(.34,1.56,.64,1), color .3s ease, border-color .3s ease, background-color .3s ease; }
-  .social-fx:hover { transform: translateY(-4px) rotate(-8deg) scale(1.1); background-color: rgba(178,203,233,.1); }
+  .social-fx:hover { transform: translateY(-4px) rotate(-8deg) scale(1.1); background-color: rgb(var(--c-sky) / 0.1); }
 
   /* Onda al hacer clic o tocar en cualquier parte */
   .tap-ring {
     position: fixed; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 9999px;
-    border: 1.5px solid rgba(178,203,233,.85); pointer-events: none; z-index: 90;
+    border: 1.5px solid rgb(var(--c-sky) / 0.85); pointer-events: none; z-index: 90;
     animation: tap-ring .85s ease-out forwards;
   }
   @keyframes tap-ring { 0% { opacity: .95; transform: scale(.3); } 100% { opacity: 0; transform: scale(7); } }
@@ -316,10 +372,10 @@
   #modal-img { transition: opacity .3s ease; }
   #modal-body.swap { opacity: 0; transform: translateY(6px); }
   #modal-body { transition: opacity .25s ease, transform .25s ease; }
-  .modal-meta dt { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(243,237,233,.5); }
-  .modal-meta dd { margin-top: 4px; font-size: 14px; color: #f3ede9; }
+  .modal-meta dt { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgb(var(--c-cream) / .55); }
+  .modal-meta dd { margin-top: 4px; font-size: 14px; color: rgb(var(--c-cream)); }
   .proj-plus { transition: transform .4s cubic-bezier(.34,1.56,.64,1), background-color .3s ease, color .3s ease; }
-  .card-zoom:hover .proj-plus { transform: rotate(90deg) scale(1.1); background-color: #b2cbe9; color: #0f2a3d; }
+  .card-zoom:hover .proj-plus { transform: rotate(90deg) scale(1.1); background-color: rgb(var(--c-sky)); color: rgb(var(--c-ink)); }
   @media (hover: none) {
     #proyectos .card-zoom > p { opacity: 1 !important; }
   }
@@ -332,12 +388,12 @@
   #catalog.open { opacity: 1; visibility: visible; }
   #cat-view { transition: opacity .25s ease, transform .25s ease; }
   #cat-view.swap { opacity: 0; transform: translateY(8px); }
-  .cat-input { width: 100%; border-radius: 9999px; background: rgba(15,42,61,.6); border: 1px solid rgba(255,255,255,.15); padding: 14px 20px; font-size: 14px; color: #f3ede9; outline: none; transition: border-color .25s ease; }
-  .cat-input::placeholder { color: rgba(243,237,233,.4); }
-  .cat-input:focus { border-color: #b2cbe9; }
+  .cat-input { width: 100%; border-radius: 9999px; background: rgb(var(--c-ink) / .6); border: 1px solid rgb(var(--c-cream) / .18); padding: 14px 20px; font-size: 14px; color: rgb(var(--c-cream)); outline: none; transition: border-color .25s ease; }
+  .cat-input::placeholder { color: rgb(var(--c-cream) / .4); }
+  .cat-input:focus { border-color: rgb(var(--c-sky)); }
   .cat-input.err { border-color: #e59a9a; }
   .cat-thumb { transition: opacity .3s ease, border-color .3s ease; opacity: .55; border: 2px solid transparent; }
-  .cat-thumb.on, .cat-thumb:hover { opacity: 1; border-color: #b2cbe9; }
+  .cat-thumb.on, .cat-thumb:hover { opacity: 1; border-color: rgb(var(--c-sky)); }
 
   /* Patrón gráfico oficial del manual de identidad */
   .pattern-band {
@@ -373,7 +429,7 @@
 
       <!-- Logo -->
       <a href="#inicio" class="flex items-center" aria-label="AquaBruma — inicio">
-        <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="h-[22px] lg:h-[26px] w-auto">
+        <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="logo-on-dark h-[22px] lg:h-[26px] w-auto"><img src="aquabruma-logo-dark.png" alt="" aria-hidden="true" width="1200" height="214" class="logo-on-light h-[22px] lg:h-[26px] w-auto">
       </a>
 
       <div class="flex items-center gap-5">
@@ -400,6 +456,14 @@
            class="hidden md:inline-flex items-center gap-2 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3">
           Agenda tu consultoría
         </a>
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a fondo claro" title="Fondo claro / oscuro"
+                class="theme-btn flex-shrink-0 w-11 h-11 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 flex items-center justify-center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path class="bulb-rays" d="M12 .8v1.4M4.4 3.4l1 1M19.6 3.4l-1 1M1.8 9.5h1.4M20.8 9.5h1.4"/>
+            <path class="bulb-glass" d="M12 4a5.5 5.5 0 0 0-3.2 10c.5.4.8 1 .8 1.6v.9h4.8v-.9c0-.6.3-1.2.8-1.6A5.5 5.5 0 0 0 12 4z"/>
+            <path d="M9.6 19h4.8M10.6 21.5h2.8"/>
+          </svg>
+        </button>
         <!-- mobile toggle -->
         <button id="menu-btn" class="lg:hidden text-cream" aria-label="Abrir menú">
           <svg id="icon-open" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -764,7 +828,7 @@
     <div class="relative">
       <div class="reveal ml-auto w-full lg:w-[74%] h-[440px] lg:h-[620px] overflow-hidden rounded-3xl relative">
         <img src="https://images.unsplash.com/photo-1617182726501-1f5f7b05a68f?w=1600&h=1400&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Piscina interior de líneas limpias en tonos claros">
-        <span class="absolute bottom-5 right-5 lg:bottom-7 lg:right-7 inline-flex items-center gap-2 rounded-full bg-ink/55 backdrop-blur-md border border-white/20 px-4 py-2 text-[10px] tracking-widest2 uppercase text-cream/90">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</span>
+        <span class="theme-dark absolute bottom-5 right-5 lg:bottom-7 lg:right-7 inline-flex items-center gap-2 rounded-full bg-ink/55 backdrop-blur-md border border-white/20 px-4 py-2 text-[10px] tracking-widest2 uppercase text-cream/90">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</span>
       </div>
 
       <div class="relative lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 -mt-24 lg:mt-0 mx-3 sm:mx-8 lg:mx-0 lg:w-[47%]">
@@ -872,7 +936,7 @@
 <div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ CTA FINAL ============ -->
-<section id="contacto" class="relative py-24 md:py-32 bg-ink overflow-hidden">
+<section id="contacto" class="theme-dark relative py-24 md:py-32 bg-ink overflow-hidden">
   <img src="https://images.unsplash.com/photo-1661333587575-25c87c14f398?w=1920&h=1000&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="">
   <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40"></div>
   <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
@@ -896,7 +960,7 @@
     <div class="grid md:grid-cols-3 gap-12 pb-16 border-b border-white/10">
       <div class="md:col-span-2">
         <a href="#inicio" class="inline-block mb-5" aria-label="AquaBruma — inicio">
-          <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="h-[26px] w-auto">
+          <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="logo-on-dark h-[26px] w-auto"><img src="aquabruma-logo-dark.png" alt="" aria-hidden="true" width="1200" height="214" class="logo-on-light h-[26px] w-auto">
         </a>
         <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</p>
         <p class="text-cream/55 font-light text-sm max-w-xs leading-relaxed">Crear espacios excepcionales alrededor del agua.</p>
@@ -990,7 +1054,7 @@
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M15 5H1M6 1L2 5l4 4"/></svg>
         <span id="cat-back-label">Volver</span>
       </button>
-      <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="h-[18px] w-auto opacity-80 hidden sm:block">
+      <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="logo-on-dark h-[18px] w-auto opacity-80 hidden sm:block"><img src="aquabruma-logo-dark.png" alt="" aria-hidden="true" width="1200" height="214" class="logo-on-light h-[18px] w-auto opacity-80 hidden sm:block">
       <button id="cat-close" type="button" aria-label="Cerrar catálogo" class="w-10 h-10 rounded-full border border-white/20 text-cream hover:bg-sky hover:text-ink hover:rotate-90 transition-all duration-300 flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
@@ -1129,12 +1193,39 @@
     }
   })();
 
+  // Tema claro / oscuro (foquito del encabezado)
+  (function () {
+    const root = document.documentElement;
+    const btn = document.getElementById('theme-toggle');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    function sync() {
+      const light = root.getAttribute('data-theme') === 'light';
+      if (btn) {
+        btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+        btn.setAttribute('aria-label', light ? 'Cambiar a fondo oscuro' : 'Cambiar a fondo claro');
+      }
+      if (meta) meta.setAttribute('content', light ? '#f3ede9' : '#0f2a3d');
+    }
+    sync();
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.classList.add('theme-anim');
+      if (next === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+      try { localStorage.setItem('aq-theme', next); } catch (e) {}
+      sync();
+      setTimeout(() => root.classList.remove('theme-anim'), 600);
+    });
+  })();
+
   // Header scroll state (background) + hide-on-scroll-down / show-on-scroll-up
   const header = document.getElementById('site-header');
   let lastScrollY = window.scrollY;
   const onScroll = () => {
     const y = window.scrollY;
 
+    const menuIsOpen = !document.getElementById('mobile-menu').classList.contains('hidden-menu');
+    header.classList.toggle('theme-dark', y <= 40 && !menuIsOpen);
     if (y > 40) {
       header.classList.remove('bg-transparent');
       header.classList.add('bg-ink/95','backdrop-blur-sm','shadow-lg','shadow-black/20');
@@ -1161,9 +1252,9 @@
   const menuBtn = document.getElementById('menu-btn');
   const menuClose = document.getElementById('menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
-  menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden-menu'));
-  menuClose.addEventListener('click', () => mobileMenu.classList.add('hidden-menu'));
-  document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden-menu')));
+  menuBtn.addEventListener('click', () => { mobileMenu.classList.remove('hidden-menu'); onScroll(); });
+  menuClose.addEventListener('click', () => { mobileMenu.classList.add('hidden-menu'); onScroll(); });
+  document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', () => { mobileMenu.classList.add('hidden-menu'); onScroll(); }));
 
   // Keep --vh synced to the real visible viewport height (fixes the mobile
   // hero showing a flat-color gap when the browser's address bar resizes it).

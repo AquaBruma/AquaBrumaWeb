@@ -13,6 +13,7 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 - Ventana de detalle (`#modal`): al tocar un proyecto o una colección se abre un resumen (foto, ubicación, tipo, superficie, descripción, características y botón de WhatsApp con mensaje prellenado). Navega con flechas del teclado, botones o deslizando en el celular. Los textos viven en el objeto `DATA` del script al final de `index.html`.
 - Catálogo: la opción "Catálogo" del menú lleva a "Seis formas de vivir el agua" (`#colecciones`), cuyas tarjetas abren su resumen en la ventana de detalle.
 - Catálogo de productos: dentro del resumen de cada "forma de vivir el agua" las fotos de la categoría van pasando solas, y el botón "Ver productos" abre un catálogo con filtros por familia, tarjetas, ficha de cada producto (fotos, ficha técnica, características, cotizar por WhatsApp) y un formulario que envía los datos por WhatsApp. Inspirado en la estructura categoría → colecciones → modelos → ficha de ambienteazul.com.co. Todo sale de `catalogo-data.js`.
+- Modo claro / oscuro: el foquito del encabezado alterna entre el fondo oscuro (por defecto) y uno claro (crema, texto marino, acento azul profundo). Se recuerda la elección de cada persona (`localStorage`, clave `aq-theme`) y se aplica antes de pintar para evitar parpadeos. Los colores salen de variables `--c-*` (bloque "TEMAS" del `<style>`); las zonas sobre fotos o video (hero, tarjetas con foto, comparador Día/Noche, "Cuéntanos tu idea") se quedan oscuras en ambos modos.
 - JavaScript vanilla (sin frameworks): menú móvil, dropdown de navegación, header que se oculta/muestra al hacer scroll, animaciones de aparición (`IntersectionObserver`), carrusel deslizable de colecciones.
 
 ## Estructura del proyecto
@@ -21,6 +22,8 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 index.html              → toda la página (una sola sección por bloque, comentada)
 aquabruma-logo.png      → logotipo oficial (celeste de marca, fondo transparente)
 ab-mark.png             → monograma "ab" oficial (se usa en favicon e íconos)
+aquabruma-logo-dark.png → logo en marino (para el modo claro)
+pattern-olas-claro.png  → patrón en celestes de marca (para el modo claro)
 pattern-olas.png        → patrón gráfico oficial (insumos gráficos del manual)
 espacio-dia.jpg,
 espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscina; la de noche es una versión simulada)
