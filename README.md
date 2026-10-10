@@ -18,7 +18,9 @@ aquabruma-logo.png      → logotipo oficial (celeste de marca, fondo transparen
 ab-mark.png             → monograma "ab" oficial (se usa en favicon e íconos)
 pattern-olas.png        → patrón gráfico oficial (insumos gráficos del manual)
 espacio-dia.jpg,
-espacio-noche.jpg       → par de imágenes del comparador Día / Noche (la de noche es una versión simulada)
+espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscina; la de noche es una versión simulada)
+jacuzzi-dia.jpg,
+jacuzzi-noche.jpg       → segundo par del comparador (jacuzzi; la de noche es una versión simulada)
 favicon.*, icon-*.png,
 apple-touch-icon.png,
 site.webmanifest        → íconos y metadatos del sitio
@@ -47,7 +49,7 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 - **Tono de los textos**: están redactados en "tú" (cercano). Si el gerente prefiere "usted", es un ajuste rápido de textos.
 - **Fotografía**: el manual pide detalles, texturas y tonos verde-azulados suaves (nada de piscinas azul saturado, flotadores ni imágenes de IA). Las fotos de stock actuales siguen esa línea, pero deben cambiarse por fotos propias de AquaBruma.
 
-- **Comparador Día / Noche**: `espacio-noche.jpg` es una versión *simulada* (procesada por computador) de `espacio-dia.jpg`. Reemplazar ambas por fotos reales del mismo proyecto de AquaBruma tomadas de día y de noche, con el mismo encuadre.
+- **Comparador Día / Noche** (pestañas Piscina y Jacuzzi): las imágenes de noche (`espacio-noche.jpg`, `jacuzzi-noche.jpg`) son versiones *simuladas* (procesadas por computador) de las de día. Reemplazar cada par por fotos reales del mismo proyecto de AquaBruma, de día y de noche, con el mismo encuadre.
 
 ## Despliegue
 
