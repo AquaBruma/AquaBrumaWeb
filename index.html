@@ -271,9 +271,16 @@
   html:not([data-theme="light"]) #site-header.bg-transparent a[href^="https://wa.me"]:hover,
   html:not([data-theme="light"]) #site-header.bg-transparent .theme-btn:hover { background-color: rgb(var(--c-sky)); color: rgb(var(--c-ink)); text-shadow: none; }
   html:not([data-theme="light"]) #inicio h1, html:not([data-theme="light"]) #inicio p { text-shadow: 0 1px 14px rgba(4,16,28,.55); }
+  @media (min-width: 768px) {
+    html:not([data-theme="light"]) .hero-ov-b { background-image: radial-gradient(ellipse 52% 80% at 18% 56%, rgb(var(--c-ink) / .6), rgb(var(--c-ink) / .32) 55%, rgb(var(--c-ink) / 0) 100%); }
+    html:not([data-theme="light"]) #inicio h1 { text-shadow: 0 2px 22px rgba(4,16,28,.6), 0 1px 3px rgba(4,16,28,.45); }
+  }
   @media (max-width: 767px) {
     html:not([data-theme="light"]) .hero-ov-b { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .1) 8%, rgb(var(--c-ink) / .5) 34%, rgb(var(--c-ink) / .58) 76%, rgb(var(--c-ink) / .15)); }
   }
+
+  /* Video de atardecer volteado: el sol queda a la derecha y el texto sobre el agua */
+  .hero-flip { transform: scaleX(-1); }
 
   /* ============ HERO según el tema ============ */
 
@@ -553,8 +560,8 @@
 <!-- ============ HERO ============ -->
 <section id="inicio" class="relative h-screen min-h-[640px] w-full overflow-hidden bg-ink">
   <div class="absolute inset-0">
-    <img src="hero-atardecer-poster.jpg" alt=""
-         class="hero-for-dark absolute inset-0 w-full h-full object-cover">
+    <img src="hero-atardecer-b-poster.jpg" alt=""
+         class="hero-for-dark hero-flip absolute inset-0 w-full h-full object-cover">
     <img src="hero-dia-poster.jpg" alt="" aria-hidden="true"
          class="hero-for-light absolute inset-0 w-full h-full object-cover">
     <video id="hero-video-light" muted playsinline preload="none"
@@ -563,13 +570,13 @@
            class="hero-for-light absolute inset-0 w-full h-full object-cover"
            aria-label="Piscina de borde infinito con agua celeste frente al mar, con una palmera y montañas al fondo"></video>
     <video id="hero-video" muted playsinline preload="auto"
-           poster="hero-atardecer-poster.jpg"
-           class="hero-for-dark absolute inset-0 w-full h-full object-cover"
-           aria-label="Casa moderna con piscina y cascada frente a una bahía, con palmeras, al atardecer con luz dorada">
-      <source src="hero-atardecer.mp4" type="video/mp4">
+           poster="hero-atardecer-b-poster.jpg"
+           class="hero-for-dark hero-flip absolute inset-0 w-full h-full object-cover"
+           aria-label="Borde de una piscina infinita frente al mar mientras el sol se pone con luz dorada">
+      <source src="hero-atardecer-b.mp4" type="video/mp4">
     </video>
-    <div class="hero-ov-a absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/5 to-ink/30"></div>
-    <div class="hero-ov-b absolute inset-0 bg-gradient-to-r from-ink/70 from-0% via-ink/25 via-40% to-transparent to-65%"></div>
+    <div class="hero-ov-a absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/0 to-ink/20"></div>
+    <div class="hero-ov-b absolute inset-0 bg-gradient-to-r from-ink/45 from-0% via-ink/15 via-40% to-transparent to-60%"></div>
   </div>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true"><span class="bubble" style="left:8%;width:14px;height:14px;animation-duration:17s;animation-delay:0s;--dx:18px"></span><span class="bubble" style="left:17%;width:26px;height:26px;animation-duration:23s;animation-delay:5s;--dx:-22px"></span><span class="bubble" style="left:31%;width:10px;height:10px;animation-duration:15s;animation-delay:9s;--dx:14px"></span><span class="bubble" style="left:44%;width:18px;height:18px;animation-duration:20s;animation-delay:2s;--dx:-16px"></span><span class="bubble" style="left:58%;width:12px;height:12px;animation-duration:18s;animation-delay:11s;--dx:20px"></span><span class="bubble" style="left:68%;width:30px;height:30px;animation-duration:26s;animation-delay:7s;--dx:-26px"></span><span class="bubble" style="left:79%;width:16px;height:16px;animation-duration:19s;animation-delay:3s;--dx:16px"></span><span class="bubble" style="left:90%;width:22px;height:22px;animation-duration:24s;animation-delay:13s;--dx:-18px"></span></div>
 
