@@ -51,19 +51,23 @@
 
     spas: {
       title: 'Jacuzzis & Spas',
-      intro: 'Hidroterapia para descansar y desconectar sin salir de casa: spas independientes, jacuzzis empotrados y tinas de inmersión.',
+      intro: 'Hidroterapia para descansar y desconectar sin salir de casa: spas Jacuzzi® que puedes ver en 3D y en tu propio espacio, jacuzzis empotrados y tinas de inmersión.',
       photos: ['jacuzzi-dia.jpg', 'jacuzzi-noche.jpg', U('1613487700221-38271bedcb52'), U('1777197255393-bade85462eb9'),
                U('1766603636584-38baba9fcfd4'), U('1781455495098-3643ccc923a0'), U('1672865362635-2111835dd0bf'), U('1743440164715-c99801efbb0e')],
-      families: ['Independientes', 'Empotrados', 'Tinas'],
+      families: ['Spas Jacuzzi', 'Empotrados', 'Tinas'],
+      subs: { 'Spas Jacuzzi': (window.AQ_SPA_COLLECTIONS || []).map((c) => c.name) },
       products: [
-        { id: 's-brisa', family: 'Independientes', name: 'Spa Brisa', tagline: 'Para 3 personas',
-          text: 'Un spa compacto con asientos moldeados y chorros dirigidos al cuello, la espalda y los pies. Se conecta y listo.',
-          specs: [['Capacidad', '3 adultos'], ['Medidas', '213 × 173 × 84 cm'], ['Volumen', '925 litros'], ['Chorros', '28 ajustables']],
-          features: ['Chorros de masaje dirigidos', 'Aislamiento térmico completo', 'Filtración continua', 'Iluminación LED ambiental'], photos: [5, 6, 3] },
-        { id: 's-marea', family: 'Independientes', name: 'Spa Marea', tagline: 'Para 5 personas',
-          text: 'Más espacio para compartir. Asientos a distintas alturas para que cada persona elija su masaje.',
-          specs: [['Capacidad', '5 adultos'], ['Medidas', '221 × 221 × 91 cm'], ['Volumen', '1.400 litros'], ['Chorros', '48 ajustables']],
-          features: ['Zona de asiento tipo salón', 'Sistema de sal opcional', 'Cubierta aislante incluida', 'Control digital'], photos: [6, 5, 7] },
+        // Spas Jacuzzi: salen de spas-data.js (cada uno abre su experiencia 3D / realidad aumentada oficial)
+        ...(window.AQ_SPAS || []).map((s) => {
+          const col = ((window.AQ_SPA_COLLECTIONS || []).find((c) => c.key === s.c) || {}).name || s.c;
+          return {
+            id: 'jz-' + s.img, family: 'Spas Jacuzzi', sub: col, embed: s.id, img: 'img/spas/' + s.img + '.webp', photos: [],
+            name: 'Jacuzzi® ' + s.name, tagline: 'Míralo y personalízalo en 3D',
+            text: 'Explora el Jacuzzi® ' + s.name + ' en 3D desde todos los ángulos, cambia sus acabados y míralo en tu propio espacio con realidad aumentada. Nuestro equipo te asesora con medidas, instalación y disponibilidad.',
+            specs: [['Modelo', String(s.year)], ['Experiencia', '3D y realidad aumentada'], ['Marca', 'Jacuzzi®'], ['Colección', col]],
+            features: ['Visor 3D con opciones de gabinete y carcasa', 'Realidad aumentada desde el celular («Ver en tu espacio»)', 'Asesoría de instalación e hidráulica con AquaBruma', 'Cotización personalizada por WhatsApp']
+          };
+        }),
         { id: 's-terraza', family: 'Empotrados', name: 'Jacuzzi Terraza', tagline: 'Integrado al deck',
           text: 'Jacuzzi empotrado en madera o piedra, diseñado a la medida de tu terraza, con acabados que resisten el sol y la humedad.',
           specs: [['Capacidad', '2 a 6 adultos'], ['Medidas', 'A la medida'], ['Acabado', 'Madera, piedra o porcelanato'], ['Calefacción', 'Control de temperatura']],
