@@ -15,6 +15,7 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 - Catálogo de productos: dentro del resumen de cada "forma de vivir el agua" las fotos de la categoría van pasando solas, y el botón "Ver productos" abre un catálogo con filtros por familia, tarjetas, ficha de cada producto (fotos, ficha técnica, características, cotizar por WhatsApp) y un formulario que envía los datos por WhatsApp. Inspirado en la estructura categoría → colecciones → modelos → ficha de ambienteazul.com.co. Todo sale de `catalogo-data.js`.
 - Modo claro / oscuro: el foquito del encabezado alterna entre el fondo oscuro (por defecto) y uno claro (crema, texto marino, acento azul profundo). Se recuerda la elección de cada persona (`localStorage`, clave `aq-theme`) y se aplica antes de pintar para evitar parpadeos. Los colores salen de variables `--c-*` (bloque "TEMAS" del `<style>`); en modo claro la letra es más gruesa y más oscura que en oscuro, los textos pequeños son un punto más grandes y las etiquetas, círculos, botones y tarjetas llevan un borde navy sutil (bloque "Modo claro" del `<style>`); las zonas sobre fotos o video (hero, tarjetas con foto, comparador Día/Noche, "Cuéntanos tu idea") se quedan oscuras en ambos modos.
 - Franja de mensajes (debajo del inicio): tres tarjetas redondeadas que se desplazan en bucle ("Lo que todos ven", "Lo que nosotros sabemos hacer", "La superficie es la experiencia. La profundidad es Aquabruma."); se pausa al pasar el cursor. Son 8 copias del grupo para que el bucle no deje huecos en pantallas muy anchas.
+- Marcas (`#marcas`, antes de "Seis formas de vivir el agua"): cuadrícula de 12 tarjetas blancas con el logo de cada marca; en computador se ven en gris y recuperan su color al pasar el cursor (en celular siempre a color). Cada tarjeta enlaza al sitio de la marca. Para agregar o quitar una marca, editar la lista `<ul>` de esa sección.
 - JavaScript vanilla (sin frameworks): menú móvil, dropdown de navegación, header que se oculta/muestra al hacer scroll, animaciones de aparición (`IntersectionObserver`), carrusel deslizable de colecciones.
 
 ## Estructura del proyecto
@@ -31,6 +32,7 @@ espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscin
 jacuzzi-dia.jpg,
 jacuzzi-noche.jpg       → segundo par del comparador (jacuzzi; la de noche es una versión simulada)
 catalogo-data.js        → productos del catálogo ("Ver productos"): categorías, familias, fichas técnicas y fotos. DATOS DE EJEMPLO
+img/marcas/             → logos (PNG) de las 12 marcas aliadas (Gres Aragón, Renolit Alkorplan, Jacuzzi, Togama, Reviglass, Mapei, AstralPool, Jandy, Pentair, Hayward, Emaux, Tylö), tomados de sus sitios oficiales
 img/                    → fotos del sitio (copias locales de las de stock)
 favicon.*, icon-*.png,
 apple-touch-icon.png,
@@ -79,6 +81,8 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 - **Productos del catálogo**: los 26 productos de `catalogo-data.js` (nombres, medidas, capacidades, descripciones) son de ejemplo. Reemplazar por los productos reales y sus fotos.
 
 - **Fotos de stock**: todas las fotos (32) viven en `img/` (descargadas de Unsplash, licencia gratuita; 1200 px, ~6 MB en total), así que la página no depende de ningún servidor externo. Son de ejemplo: cambiarlas por fotos propias de AquaBruma, manteniendo el mismo nombre o actualizando las rutas en `index.html` y `catalogo-data.js`.
+
+- **Uso de logos de marcas**: los logos pertenecen a sus titulares. Confirmar que AquaBruma tiene autorización para mostrarlos como marcas aliadas/distribuidas, y reemplazar por las versiones oficiales de sus kits de marca si las tienen (algunos logos son de baja resolución: Jandy, Emaux, Reviglass).
 
 ## Despliegue
 
