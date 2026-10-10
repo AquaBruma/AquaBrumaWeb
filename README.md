@@ -37,7 +37,7 @@ espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscin
 jacuzzi-dia.jpg,
 jacuzzi-noche.jpg       → segundo par del comparador (jacuzzi; la de noche es una versión simulada)
 catalogo-data.js        → productos del catálogo ("Ver productos"): categorías, familias, fichas técnicas y fotos. DATOS DE EJEMPLO
-img/spas/               → miniaturas (webp) de los 29 spas Jacuzzi; `spas-data.js` → lista de modelos
+img/spas/               → miniaturas (webp con fondo transparente) de los 29 spas Jacuzzi; `spas-data.js` → lista de modelos
 img/marcas/             → logos (PNG) de las 11 marcas aliadas (Gres Aragón, Renolit, Jacuzzi, Togama, Reviglass, Mapei, AstralPool, Jandy, Pentair, Hayward, Emaux), tomados de sus sitios oficiales
 img/                    → fotos del sitio (copias locales de las de stock)
 favicon.*, icon-*.png,
