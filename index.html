@@ -134,14 +134,46 @@
   .colecciones-scroll::-webkit-scrollbar-track { background: transparent; }
   .colecciones-scroll::-webkit-scrollbar-thumb { background: #2b4d66; border-radius: 9999px; }
 
-  /* Separador sutil entre secciones */
-  .soft-divider {
-    height: 1px;
-    width: 240px;
-    max-width: 60%;
-    margin: 0 auto;
-    background: linear-gradient(90deg, transparent, rgba(178,203,233,0.45) 50%, transparent);
+  /* Separador entre secciones: línea + gota de agua */
+  .drop-divider {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    color: rgba(178,203,233,0.8);
   }
+  .drop-divider::before, .drop-divider::after {
+    content: ''; height: 1px; width: 110px; max-width: 26vw;
+  }
+  .drop-divider::before { background: linear-gradient(90deg, transparent, rgba(178,203,233,0.45)); }
+  .drop-divider::after  { background: linear-gradient(270deg, transparent, rgba(178,203,233,0.45)); }
+
+  /* Burbujas suaves en el hero */
+  .bubble {
+    position: absolute; bottom: -40px; border-radius: 9999px;
+    border: 1px solid rgba(178,203,233,0.35);
+    background: radial-gradient(circle at 30% 30%, rgba(220,235,255,0.22), rgba(178,203,233,0.04) 70%);
+    animation: bubble-rise linear infinite; opacity: 0;
+  }
+  @keyframes bubble-rise {
+    0%   { transform: translate3d(0,0,0); opacity: 0; }
+    12%  { opacity: .9; }
+    100% { transform: translate3d(var(--dx, 24px), -95vh, 0); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .bubble { display: none; } }
+
+  /* Franja de palabras */
+  .marquee { overflow: hidden; }
+  .marquee-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+  /* Comparador Día / Noche */
+  .dn { --pos: 50%; position: relative; overflow: hidden; border-radius: 1.5rem; background: #0a1f2e; }
+  .dn img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38% 50%; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+  .dn .dn-day { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .dn-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: #fff; pointer-events: none; box-shadow: 0 0 14px rgba(255,255,255,.35); }
+  .dn-handle { position: absolute; top: 50%; left: var(--pos); width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 9999px; background: #fff; color: #0f2a3d; display: flex; align-items: center; justify-content: center; pointer-events: none; box-shadow: 0 6px 22px rgba(0,0,0,.35); }
+  .dn input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; -webkit-appearance: none; appearance: none; }
+  .dn-label { transition: opacity .35s ease; }
+  .dn.hide-day .dn-label-day, .dn.hide-night .dn-label-night { opacity: 0; }
 
   /* Patrón gráfico oficial del manual de identidad */
   .pattern-band {
@@ -230,6 +262,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/60"></div>
     <div class="absolute inset-0 bg-gradient-to-r from-ink/70 from-0% via-ink/30 via-40% to-transparent to-70%"></div>
   </div>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true"><span class="bubble" style="left:8%;width:14px;height:14px;animation-duration:17s;animation-delay:0s;--dx:18px"></span><span class="bubble" style="left:17%;width:26px;height:26px;animation-duration:23s;animation-delay:5s;--dx:-22px"></span><span class="bubble" style="left:31%;width:10px;height:10px;animation-duration:15s;animation-delay:9s;--dx:14px"></span><span class="bubble" style="left:44%;width:18px;height:18px;animation-duration:20s;animation-delay:2s;--dx:-16px"></span><span class="bubble" style="left:58%;width:12px;height:12px;animation-duration:18s;animation-delay:11s;--dx:20px"></span><span class="bubble" style="left:68%;width:30px;height:30px;animation-duration:26s;animation-delay:7s;--dx:-26px"></span><span class="bubble" style="left:79%;width:16px;height:16px;animation-duration:19s;animation-delay:3s;--dx:16px"></span><span class="bubble" style="left:90%;width:22px;height:22px;animation-duration:24s;animation-delay:13s;--dx:-18px"></span></div>
 
   <div class="relative z-10 h-full flex flex-col justify-center max-w-[1400px] mx-auto px-6 lg:px-12">
     <p class="reveal text-sky text-[11px] tracking-widest2 uppercase mb-7" style="transition-delay:.0s">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</p>
@@ -248,11 +281,17 @@
   </div>
 
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 text-cream/70">
-    <span class="w-px h-10 bg-cream/40 relative overflow-hidden">
-      <span class="absolute top-0 left-0 w-full h-1/2 bg-sky animate-bounce"></span>
-    </span>
+    <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" class="text-sky/80 animate-bounce" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>
   </div>
 </section>
+
+<!-- ============ FRANJA ============ -->
+<div class="marquee border-y border-white/10 bg-ink py-5" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="flex"><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Agua</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Calma</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Bienestar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Relajación</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Silencio</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Luz</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Respirar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Descanso</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
+    <div class="flex"><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Agua</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Calma</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Bienestar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Relajación</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Silencio</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Luz</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Respirar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Descanso</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
+  </div>
+</div>
 
 <!-- ============ FILOSOFÍA ============ -->
 <section class="bg-ink py-16 md:py-24">
@@ -294,7 +333,7 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ COLECCIONES ============ -->
 <section id="colecciones" class="bg-ink py-16 md:py-24">
@@ -371,7 +410,84 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
+
+<!-- ============ DÍA / NOCHE ============ -->
+<section id="espacios" class="bg-ink py-16 md:py-24">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="reveal text-center max-w-2xl mx-auto mb-12">
+      <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">De día y de noche</p>
+      <h2 class="text-balance text-cream font-light text-4xl md:text-5xl tracking-tight">Tu espacio, <span class="text-sky font-normal">a cualquier hora</span></h2>
+      <p class="text-cream/70 font-light leading-relaxed mt-6">De día invita a la energía y a la luz. De noche, a la calma y al brillo del agua. Mueve la línea y compruébalo.</p>
+    </div>
+
+    <div class="reveal reveal-delay-1">
+      <div id="dn" class="dn aspect-[4/5] sm:aspect-[16/9]">
+        <img class="dn-night" src="espacio-noche.jpg" alt="Piscina y terraza de una casa moderna de noche, con el agua iluminada y los ventanales encendidos" loading="lazy">
+        <img class="dn-day" src="espacio-dia.jpg" alt="Piscina y terraza de una casa moderna de día, con cielo despejado" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-b from-ink/35 via-transparent to-transparent pointer-events-none"></div>
+
+        <div class="dn-label dn-label-day absolute top-5 left-5 sm:top-7 sm:left-8 flex items-center gap-3 text-white pointer-events-none">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+          <span class="text-lg sm:text-2xl font-medium tracking-wide uppercase">Día</span>
+        </div>
+        <div class="dn-label dn-label-night absolute top-5 right-5 sm:top-7 sm:right-8 flex items-center gap-3 text-white pointer-events-none">
+          <span class="text-lg sm:text-2xl font-medium tracking-wide uppercase">Noche</span>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/><path d="M17 3v3M15.5 4.5h3"/></svg>
+        </div>
+
+        <div class="dn-line"></div>
+        <div class="dn-handle" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-4 4 4 4M4 11h16M16 7l4 4-4 4"/></svg>
+        </div>
+        <input id="dn-range" type="range" min="0" max="100" step="0.1" value="50" aria-label="Comparar el espacio de día y de noche">
+
+        <div class="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between gap-4 px-5 sm:px-8 py-4 bg-ink/70 backdrop-blur-md border-t border-white/10">
+          <p class="text-cream text-sm sm:text-base font-medium tracking-wide">Piscina &amp; terraza</p>
+          <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-5 py-2.5 font-medium whitespace-nowrap">Pedir cotización</a>
+        </div>
+      </div>
+      <p class="text-center text-cream/45 text-xs font-light mt-5">Imagen de referencia. Reemplazar por un proyecto real de AquaBruma.</p>
+    </div>
+  </div>
+</section>
+
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
+
+<!-- ============ BIENESTAR ============ -->
+<section id="bienestar" class="bg-ink py-16 md:py-24">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="reveal text-center max-w-2xl mx-auto mb-14">
+      <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Bienestar</p>
+      <h2 class="text-balance text-4xl md:text-5xl font-light tracking-tight">Hecho para <span class="text-sky font-normal">sentirte bien</span></h2>
+      <p class="text-cream/70 font-light leading-relaxed mt-6">El agua se disfruta con el cuerpo y también con la cabeza. Estos son los momentos que queremos darte.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+      <div class="reveal text-center">
+        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/><path d="M17 3v3M15.5 4.5h3"/></svg></div>
+        <h3 class="text-lg font-normal mb-2">Descansar</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Un rato de silencio al final del día, a pocos pasos de tu cama.</p>
+      </div>
+      <div class="reveal reveal-delay-1 text-center">
+        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M12 16.6s-2.5-1.6-2.5-3.2a1.4 1.4 0 0 1 2.5-.8 1.4 1.4 0 0 1 2.5.8c0 1.6-2.5 3.2-2.5 3.2z"/></svg></div>
+        <h3 class="text-lg font-normal mb-2">Compartir</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Familia y amigos alrededor del agua: risas, conversación y tiempo juntos.</p>
+      </div>
+      <div class="reveal reveal-delay-2 text-center">
+        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0M3 14c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0M3 19c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0"/></svg></div>
+        <h3 class="text-lg font-normal mb-2">Recuperarte</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Hidroterapia para aliviar el cuerpo y despejar la mente.</p>
+      </div>
+      <div class="reveal reveal-delay-3 text-center">
+        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c1.8 2 2.6 4 2.6 6.2S13.8 15 12 17c-1.8-2-2.6-3.8-2.6-5.8S10.2 7 12 5z"/><path d="M12 17c-2.6 0-5.2-1.2-6.5-4 0 0 3.6-.2 5.3 1.8"/><path d="M12 17c2.6 0 5.2-1.2 6.5-4 0 0-3.6-.2-5.3 1.8"/><path d="M4 19.5c2.5 1.2 5 1.5 8 1.5s5.5-.3 8-1.5"/></svg></div>
+        <h3 class="text-lg font-normal mb-2">Desconectar</h3>
+        <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Calor, vapor y una pausa de verdad, sin salir de casa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ CINCO ELEMENTOS ============ -->
 <section class="bg-ink py-12 md:py-20">
@@ -380,11 +496,12 @@
       <img src="https://images.unsplash.com/photo-1649966422447-1cb8ec3b1063?w=1200&h=1200&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Detalle de piscina con acabado en piedra y agua tranquila">
     </div>
     <div class="reveal reveal-delay-1 flex flex-col justify-center">
-      <p class="text-sky text-[11px] tracking-widest2 uppercase mb-5">Agua · Piedra · Luz · Temperatura · Espacio</p>
+      <p class="text-sky text-[11px] tracking-widest2 uppercase mb-6">Lo esencial</p>
       <h2 class="text-balance text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight">Cinco elementos, <span class="text-sky font-normal">una sola experiencia</span></h2>
       <p class="text-cream/70 font-light leading-relaxed mb-8 max-w-md">
         En cada proyecto cuidamos lo que se ve y también lo que no se ve, para que lo único que tengas que hacer sea disfrutar.
       </p>
+      <div class="flex flex-wrap gap-x-6 gap-y-5 mb-9"><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Agua</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c0-3.5 3-7 7.5-7S19 11 19 14.5 16 19 12 19 5 17.5 5 15z"/><path d="M9 14c1-1.2 2.5-1.8 4-1.6"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Piedra</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Luz</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5c-1.5 2 1.5 3 0 5s1.5 3 0 5M12.5 5c-1.5 2 1.5 3 0 5s1.5 3 0 5M17 5c-1.5 2 1.5 3 0 5s1.5 3 0 5"/><path d="M5 19.5h14"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Temperatura</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9V5h4M15 5h4v4M19 15v4h-4M9 19H5v-4"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Espacio</span></div></div>
       <ul class="space-y-3 mb-10 text-sm text-cream/80 font-light">
         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky"></span> Una superficie que refleja la luz con exactitud</li>
         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky"></span> Una temperatura que transforma la experiencia</li>
@@ -398,7 +515,7 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ PROCESO ============ -->
 <section id="proceso" class="bg-ink py-16 md:py-24">
@@ -433,7 +550,19 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
+
+<!-- ============ AMAMOS EL AGUA ============ -->
+<section class="bg-ink py-16 md:py-24">
+  <div class="max-w-3xl mx-auto px-6 text-center">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" class="reveal text-sky mx-auto mb-7"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M12 16.6s-2.5-1.6-2.5-3.2a1.4 1.4 0 0 1 2.5-.8 1.4 1.4 0 0 1 2.5.8c0 1.6-2.5 3.2-2.5 3.2z"/></svg>
+    <p class="reveal reveal-delay-1 text-sky text-[11px] tracking-widest2 uppercase mb-6">Lo que nos mueve</p>
+    <h2 class="reveal reveal-delay-2 text-balance text-cream font-light text-3xl sm:text-4xl md:text-5xl leading-snug tracking-tight">Amamos el agua. Y queremos que <span class="text-sky font-normal">tú también la sientas en casa.</span></h2>
+    <p class="reveal reveal-delay-3 text-cream/70 font-light leading-relaxed mt-8 max-w-xl mx-auto">Por eso cada proyecto busca lo mismo: que entres, respires hondo y te olvides del resto.</p>
+  </div>
+</section>
+
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ SOBRE AQUABRUMA ============ -->
 <section id="nosotros" class="bg-ink py-16 md:py-24">
@@ -454,7 +583,7 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ PROYECTOS / GALERÍA ============ -->
 <section id="proyectos" class="bg-ink py-16 md:py-24">
@@ -502,7 +631,7 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ TESTIMONIOS ============ -->
 <section class="bg-ink py-16 md:py-24">
@@ -528,13 +657,14 @@
   </div>
 </section>
 
-<div class="soft-divider"></div>
+<div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ CTA FINAL ============ -->
 <section id="contacto" class="relative py-24 md:py-32 bg-ink overflow-hidden">
   <img src="https://images.unsplash.com/photo-1661333587575-25c87c14f398?w=1920&h=1000&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="">
   <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40"></div>
   <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" class="reveal text-sky mx-auto mb-5"><path d="M12 5c1.8 2 2.6 4 2.6 6.2S13.8 15 12 17c-1.8-2-2.6-3.8-2.6-5.8S10.2 7 12 5z"/><path d="M12 17c-2.6 0-5.2-1.2-6.5-4 0 0 3.6-.2 5.3 1.8"/><path d="M12 17c2.6 0 5.2-1.2 6.5-4 0 0-3.6-.2-5.3 1.8"/><path d="M4 19.5c2.5 1.2 5 1.5 8 1.5s5.5-.3 8-1.5"/></svg>
     <p class="reveal text-sky text-[11px] tracking-widest2 uppercase mb-6">Hablemos</p>
     <h2 class="text-balance reveal reveal-delay-1 text-cream text-4xl md:text-6xl font-light tracking-tight mb-8 leading-tight">Cuéntanos tu <span class="text-sky font-normal">idea</span></h2>
     <p class="reveal reveal-delay-2 text-cream/75 font-light mb-12 max-w-md mx-auto leading-relaxed">Escríbenos y agenda una conversación sin compromiso. Te ayudamos a imaginar lo que el agua puede ser en tu casa.</p>
@@ -657,6 +787,45 @@
     slider.addEventListener('pointerleave', endDrag);
     // Prevent the card link from firing when the drag was an actual swipe.
     slider.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  })();
+
+
+  // Comparador Día / Noche
+  (function () {
+    const box = document.getElementById('dn');
+    const range = document.getElementById('dn-range');
+    if (!box || !range) return;
+    let auto = true;
+    const setPos = (v) => {
+      box.style.setProperty('--pos', v + '%');
+      box.classList.toggle('hide-day', v < 16);
+      box.classList.toggle('hide-night', v > 84);
+    };
+    range.addEventListener('input', () => { auto = false; setPos(parseFloat(range.value)); });
+    range.addEventListener('pointerdown', () => { auto = false; });
+    setPos(50);
+
+    // Pequeña demostración al entrar en pantalla, para invitar a arrastrar
+    const stops = [50, 24, 76, 50];
+    const total = 3200;
+    function demo() {
+      const t0 = performance.now();
+      const ease = (x) => (x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
+      (function frame(now) {
+        if (!auto) return;
+        const k = Math.min((now - t0) / total, 1) * (stops.length - 1);
+        const i = Math.min(Math.floor(k), stops.length - 2);
+        const v = stops[i] + (stops[i + 1] - stops[i]) * ease(k - i);
+        range.value = v; setPos(v);
+        if (k < stops.length - 1) requestAnimationFrame(frame);
+      })(t0);
+    }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const seen = new IntersectionObserver((es) => {
+        if (es[0].isIntersecting) { seen.disconnect(); setTimeout(demo, 700); }
+      }, { threshold: 0.5 });
+      seen.observe(box);
+    }
   })();
 
   // Header scroll state (background) + hide-on-scroll-down / show-on-scroll-up
