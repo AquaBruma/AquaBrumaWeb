@@ -1,19 +1,22 @@
 # AquaBruma
 
-Sitio web de una sola página para **AquaBruma** — piscinas de autor, jacuzzis, saunas/turcos y zonas de bienestar a la medida. Diseño oscuro y elegante (paleta ink/dorado), enfocado en un segmento de clientes exigente.
+Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/turcos y espacios de bienestar alrededor del agua (*Pool · Spa · Wellness*). Diseño cercano, moderno y minimalista, basado en el **Manual de Identidad 2026** (paleta azul marino/celeste, logo oficial, patrón gráfico de marca).
 
 ## Stack técnico
 
 - HTML estático (`index.html`), sin build ni dependencias de Node en producción.
 - [Tailwind CSS](https://tailwindcss.com) vía CDN (`cdn.tailwindcss.com`), con la paleta y tipografías configuradas inline en el `<head>`.
-- Tipografías: **Cormorant Garamond** (serif, títulos) y **Jost** (sans, cuerpo), vía Google Fonts.
+- Tipografía: **Figtree** (Google Fonts) como sustituta de **Kripa**, la fuente oficial del manual (comercial, no disponible en Google Fonts). Si se consigue la licencia/archivo de Kripa, se incrusta con `@font-face` y se cambia `fontFamily.sans` en el `tailwind.config`.
+- Paleta oficial (manual): `ink #0f2a3d`, `ocean #0e5586`, `sky #b2cbe9` (acento), `mist #dcebff`, `cream #f3ede9`, `sand #c9baa3`.
 - JavaScript vanilla (sin frameworks): menú móvil, dropdown de navegación, header que se oculta/muestra al hacer scroll, animaciones de aparición (`IntersectionObserver`), carrusel deslizable de colecciones.
 
 ## Estructura del proyecto
 
 ```
 index.html              → toda la página (una sola sección por bloque, comentada)
-logo-mark.png           → logotipo (marca de agua dorada, fondo transparente)
+aquabruma-logo.png      → logotipo oficial (celeste de marca, fondo transparente)
+ab-mark.png             → monograma "ab" oficial (se usa en favicon e íconos)
+pattern-olas.png        → patrón gráfico oficial (insumos gráficos del manual)
 favicon.*, icon-*.png,
 apple-touch-icon.png,
 site.webmanifest        → íconos y metadatos del sitio
@@ -38,8 +41,9 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 - **Video del hero**: hay dos videos candidatos (`352854_medium.mp4` y `352876_medium.mp4`); actualmente está activo el segundo. Definir cuál se queda.
 - **Datos de contacto**: el número de WhatsApp (+57 300 000 0000), correo y dirección son de ejemplo — reemplazar por los datos reales de AquaBruma.
 - **Dominio**: `robots.txt`, `sitemap.xml` y las etiquetas Open Graph usan `https://www.aquabruma.com` como marcador de posición.
-- **Contenido de marcas, testimonios y cifras**: son de ejemplo, pendientes de contenido real del negocio.
-- **Fotografía real**: varias imágenes son de stock (Unsplash/Pexels) mientras se consigue material fotográfico propio de proyectos de AquaBruma.
+- **Contenido de testimonios y proyectos**: son de ejemplo, pendientes de contenido real del negocio.
+- **Tono de los textos**: están redactados en "tú" (cercano). Si el gerente prefiere "usted", es un ajuste rápido de textos.
+- **Fotografía**: el manual pide detalles, texturas y tonos verde-azulados suaves (nada de piscinas azul saturado, flotadores ni imágenes de IA). Las fotos de stock actuales siguen esa línea, pero deben cambiarse por fotos propias de AquaBruma.
 
 ## Despliegue
 
