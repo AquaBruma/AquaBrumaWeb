@@ -18,12 +18,12 @@
 <link rel="canonical" href="https://www.aquabruma.com/">
 
 <!-- Favicons -->
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 
 <!-- Open Graph / social sharing -->
 <meta property="og:type" content="website">
@@ -38,37 +38,9 @@
 <meta name="twitter:description" content="Piscinas, jacuzzis y espacios de bienestar diseñados alrededor del agua.">
 <meta name="twitter:image" content="https://www.aquabruma.com/hero-poster-1.jpg">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  // Paleta oficial del Manual de Identidad AquaBruma 2026
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          // Estos colores cambian con el tema (ver variables --c-* en el <style>)
-          ink:   'rgb(var(--c-ink) / <alpha-value>)',   // fondo principal (marino / crema)
-          ink2:  'rgb(var(--c-ink2) / <alpha-value>)',  // fondo profundo (footer, telón)
-          ink3:  'rgb(var(--c-ink3) / <alpha-value>)',  // superficie elevada (tarjetas)
-          sky:   'rgb(var(--c-sky) / <alpha-value>)',   // acento (celeste / azul profundo)
-          mist:  'rgb(var(--c-mist) / <alpha-value>)',  // acento al pasar el cursor
-          cream: 'rgb(var(--c-cream) / <alpha-value>)', // texto (crema / marino)
-          ocean: '#0e5586', // azul profundo
-          sand:  '#c9baa3', // arena (secundario)
-        },
-        fontFamily: {
-          sans: ['"Figtree"', 'sans-serif'],
-        },
-        letterSpacing: {
-          widest2: '.24em',
-        },
-      }
-    }
-  }
-</script>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tailwind.css">
 
 <style>
   html { scroll-behavior: smooth; }

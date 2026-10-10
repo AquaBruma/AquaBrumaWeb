@@ -5,8 +5,8 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 ## Stack técnico
 
 - HTML estático (`index.html`), sin build ni dependencias de Node en producción.
-- [Tailwind CSS](https://tailwindcss.com) vía CDN (`cdn.tailwindcss.com`), con la paleta y tipografías configuradas inline en el `<head>`.
-- Tipografía: **Figtree** (Google Fonts) como sustituta de **Kripa**, la fuente oficial del manual (comercial, no disponible en Google Fonts). Si se consigue la licencia/archivo de Kripa, se incrusta con `@font-face` y se cambia `fontFamily.sans` en el `tailwind.config`.
+- [Tailwind CSS](https://tailwindcss.com) v3 **compilado a un archivo propio** (`tailwind.css`), sin depender de internet al abrir la página. La configuración está en `tailwind.config.js` y la fuente del CSS en `src/input.css`.
+- Tipografía: **Figtree** alojada en el propio sitio (`fonts.css` + carpeta `fonts/`, licencia OFL) como sustituta de **Kripa**, la fuente oficial del manual (comercial, no disponible en Google Fonts). Si se consigue la licencia/archivo de Kripa, se incrusta con `@font-face` y se cambia `fontFamily.sans` en el `tailwind.config`.
 - Paleta oficial (manual): `ink #0f2a3d`, `ocean #0e5586`, `sky #b2cbe9` (acento), `mist #dcebff`, `cream #f3ede9`, `sand #c9baa3`.
 - Pantalla de entrada (`#preloader`): el logo se escribe, cae una gota que lo difumina y aparece el monograma "ab" (~4,5 s; se salta con un toque/clic o Enter). El video del hero y las animaciones de aparición arrancan cuando termina.
 - Interactividad: íconos que se animan al pasar (gota, sol, luna, ondas, loto, corazón…), los cinco elementos cambian su descripción, etiquetas que se abren, franja que se pausa y una onda de agua al hacer clic/tocar.
@@ -41,6 +41,16 @@ hero-dia-poster.jpg   → video y portada del hero en modo claro (Pexels 8045121
 352876_medium.mp4       → videos candidatos para el hero de inicio (piscina infinita nocturna)
 ```
 
+## Cómo regenerar tailwind.css
+
+`tailwind.css` es el diseño ya compilado. Si se agregan o cambian clases de Tailwind en `index.html` (o en `catalogo-data.js`), hay que regenerarlo con Node instalado:
+
+```bash
+npx tailwindcss@3.4.17 -c tailwind.config.js -i src/input.css -o tailwind.css --minify
+```
+
+Los estilos propios (animaciones, temas claro/oscuro, etc.) siguen dentro del `<style>` de `index.html` y no necesitan este paso.
+
 ## Ver el sitio en local
 
 No requiere instalación. Basta con levantar cualquier servidor estático desde esta carpeta, por ejemplo:
@@ -65,6 +75,8 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 - **Datos de los proyectos**: ubicaciones, superficies, años y descripciones de la ventana de detalle son de ejemplo. Reemplazar por los datos reales de cada proyecto en el objeto `DATA` (al final de `index.html`).
 
 - **Productos del catálogo**: los 26 productos de `catalogo-data.js` (nombres, medidas, capacidades, descripciones) son de ejemplo. Reemplazar por los productos reales y sus fotos.
+
+- **Fotos de Unsplash**: la mayoría de las imágenes de la página se cargan desde `images.unsplash.com`. Si una red las bloquea, esas fotos no se ven. Lo ideal es reemplazarlas por fotos propias guardadas en la carpeta del proyecto.
 
 ## Despliegue
 
