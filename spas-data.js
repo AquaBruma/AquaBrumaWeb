@@ -6,6 +6,8 @@
     id    → código de la experiencia (https://jg-embed.brand3d.com/<id>)
     img   → miniatura en img/spas/<img>.webp
   Para agregar o quitar un modelo, editar la lista AQ_SPAS.
+  Comparador: si un modelo trae  specs: { capacidad: '5 personas', medidas: '229 × 229 × 91 cm', volumen: '1.400 L', chorros: '55' }
+  la tabla de comparación muestra esas filas (las etiquetas están en AQ_SPA_SPEC_LABELS; agregar una fila = agregar una etiqueta).
   Fuente de la lista: https://brand3d-ar.web.app/jacuzzi-hot-tubs
 */
 window.AQ_SPA_COLLECTIONS = [
@@ -15,6 +17,12 @@ window.AQ_SPA_COLLECTIONS = [
   { key: 'J-300', name: 'Colección J-300' },
   { key: 'J-200', name: 'Colección J-200' },
   { key: 'Play',  name: 'Colección Play' }
+];
+window.AQ_SPA_SPEC_LABELS = [
+  ['capacidad', 'Capacidad'],
+  ['medidas', 'Medidas'],
+  ['volumen', 'Volumen de agua'],
+  ['chorros', 'Chorros']
 ];
 window.AQ_SPAS = [
   { c: 'J5', name: 'J509',  year: 2026, id: '0sW6P3WKTupPRQoVIZE2', img: 'j509' },

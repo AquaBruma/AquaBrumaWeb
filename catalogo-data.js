@@ -61,7 +61,7 @@
         ...(window.AQ_SPAS || []).map((s) => {
           const col = ((window.AQ_SPA_COLLECTIONS || []).find((c) => c.key === s.c) || {}).name || s.c;
           return {
-            id: 'jz-' + s.img, family: 'Spas Jacuzzi', sub: col, embed: s.id, img: 'img/spas/' + s.img + '.webp', photos: [],
+            id: 'jz-' + s.img, family: 'Spas Jacuzzi', sub: col, embed: s.id, img: 'img/spas/' + s.img + '.webp', photos: [], info: s.specs || {},
             name: 'Jacuzzi® ' + s.name, tagline: 'Míralo y personalízalo en 3D',
             text: 'Explora el Jacuzzi® ' + s.name + ' en 3D desde todos los ángulos, cambia sus acabados y míralo en tu propio espacio con realidad aumentada. Nuestro equipo te asesora con medidas, instalación y disponibilidad.',
             specs: [['Modelo', String(s.year)], ['Experiencia', '3D y realidad aumentada'], ['Marca', 'Jacuzzi®'], ['Colección', col]],
