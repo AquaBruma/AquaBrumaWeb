@@ -259,7 +259,17 @@
   }
 
   /* Hero en modo oscuro (video de atardecer, más luminoso): refuerzos de lectura */
-  html:not([data-theme="light"]) #site-header.bg-transparent { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .62), rgb(var(--c-ink) / .28) 60%, rgb(var(--c-ink) / 0)); }
+  html:not([data-theme="light"]) #site-header.bg-transparent { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .78), rgb(var(--c-ink) / .42) 62%, rgb(var(--c-ink) / 0)); }
+  html:not([data-theme="light"]) #site-header.bg-transparent #nav-dropdown-btn,
+  html:not([data-theme="light"]) #site-header.bg-transparent #menu-btn { color: #fff; font-weight: 600; text-shadow: 0 1px 8px rgba(4,16,28,.7); }
+  html:not([data-theme="light"]) #site-header.bg-transparent a[href^="https://wa.me"],
+  html:not([data-theme="light"]) #site-header.bg-transparent .theme-btn {
+    color: #fff; font-weight: 600; border-color: rgba(255,255,255,.8);
+    background-color: rgb(var(--c-ink) / .5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    text-shadow: 0 1px 6px rgba(4,16,28,.6);
+  }
+  html:not([data-theme="light"]) #site-header.bg-transparent a[href^="https://wa.me"]:hover,
+  html:not([data-theme="light"]) #site-header.bg-transparent .theme-btn:hover { background-color: rgb(var(--c-sky)); color: rgb(var(--c-ink)); text-shadow: none; }
   html:not([data-theme="light"]) #inicio h1, html:not([data-theme="light"]) #inicio p { text-shadow: 0 1px 14px rgba(4,16,28,.55); }
   @media (max-width: 767px) {
     html:not([data-theme="light"]) .hero-ov-b { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .1) 8%, rgb(var(--c-ink) / .5) 34%, rgb(var(--c-ink) / .58) 76%, rgb(var(--c-ink) / .15)); }
