@@ -157,7 +157,7 @@
     },
 
     ceramicas: {
-      title: 'Cerámicas para Piscinas',
+      title: 'Porcelanato para Piscinas',
       intro: 'Porcelanatos, mosaicos y piedras seleccionadas pieza por pieza para que cada proyecto tenga color, textura y carácter propios.',
       photos: [U('1729689706848-7dd56e6759fc'), U('1784772663654-b9a89ba18271'), U('1786384452568-141f055b0c8a'),
                U('1769490315056-fd1bb6832239'), U('1769490315674-bc96e16e2cfe'), U('1791220178491-fddf4dd8333a')],
