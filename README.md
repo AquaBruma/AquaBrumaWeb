@@ -35,6 +35,8 @@ apple-touch-icon.png,
 site.webmanifest        → íconos y metadatos del sitio
 robots.txt, sitemap.xml → SEO básico
 hero-poster-1/2.jpg     → fotogramas de respaldo (poster) para los videos del hero
+hero-dia.mp4,
+hero-dia-poster.jpg   → video y portada del hero en modo claro (Pexels, licencia gratuita: piscina de agua en calma entre montañas). Solo se descarga si la persona activa el modo claro
 352854_medium.mp4,
 352876_medium.mp4       → videos candidatos para el hero de inicio (piscina infinita nocturna)
 ```
