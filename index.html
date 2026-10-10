@@ -301,6 +301,24 @@
   /* Tarjetas de colecciones: en pantallas táctiles, un toque muestra la descripción */
   .card-zoom.open p { opacity: 1 !important; }
 
+
+  /* ============ VENTANA DE DETALLE (proyectos y colecciones) ============ */
+  #modal { opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s ease; }
+  #modal.open { opacity: 1; visibility: visible; }
+  #modal-panel { transform: translateY(20px) scale(.98); transition: transform .5s cubic-bezier(.22,1,.36,1); }
+  #modal.open #modal-panel { transform: none; }
+  html.modal-open { overflow: hidden; }
+  #modal-img { transition: opacity .3s ease; }
+  #modal-body.swap { opacity: 0; transform: translateY(6px); }
+  #modal-body { transition: opacity .25s ease, transform .25s ease; }
+  .modal-meta dt { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(243,237,233,.5); }
+  .modal-meta dd { margin-top: 4px; font-size: 14px; color: #f3ede9; }
+  .proj-plus { transition: transform .4s cubic-bezier(.34,1.56,.64,1), background-color .3s ease, color .3s ease; }
+  .card-zoom:hover .proj-plus { transform: rotate(90deg) scale(1.1); background-color: #b2cbe9; color: #0f2a3d; }
+  @media (hover: none) {
+    #proyectos .card-zoom > p { opacity: 1 !important; }
+  }
+
   /* Patrón gráfico oficial del manual de identidad */
   .pattern-band {
     height: 168px;
@@ -487,7 +505,7 @@
 
     <div id="colecciones-slider" class="colecciones-scroll flex gap-5 overflow-x-auto snap-x snap-proximity scroll-px-6 lg:scroll-px-12 pb-6 -mx-6 px-6 lg:-mx-12 lg:px-12 cursor-grab active:cursor-grabbing">
       <!-- Card 1 -->
-      <a href="#" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
+      <a href="#colecciones" data-modal="coleccion:0" role="button" aria-haspopup="dialog" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1766802124827-0bd80273d7ac?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Piscinas a la medida AquaBruma">
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
@@ -497,7 +515,7 @@
         </div>
       </a>
       <!-- Card 2 -->
-      <a href="#" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
+      <a href="#colecciones" data-modal="coleccion:1" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1613487700221-38271bedcb52?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Jacuzzis y spas AquaBruma">
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
@@ -507,7 +525,7 @@
         </div>
       </a>
       <!-- Card 3 -->
-      <a href="#" class="reveal reveal-delay-2 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
+      <a href="#colecciones" data-modal="coleccion:2" role="button" aria-haspopup="dialog" class="reveal reveal-delay-2 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1769011496453-d6c20730843f?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Saunas y baños turcos AquaBruma">
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
@@ -517,7 +535,7 @@
         </div>
       </a>
       <!-- Card 4 -->
-      <a href="#" class="reveal reveal-delay-3 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
+      <a href="#colecciones" data-modal="coleccion:3" role="button" aria-haspopup="dialog" class="reveal reveal-delay-3 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1769339764809-522564cf34c9?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Mantenimiento y servicio AquaBruma">
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
@@ -527,7 +545,7 @@
         </div>
       </a>
       <!-- Card 5 -->
-      <a href="#" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
+      <a href="#colecciones" data-modal="coleccion:4" role="button" aria-haspopup="dialog" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1747139089205-ee42a2221987?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Membranas para piscinas AquaBruma">
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
@@ -537,7 +555,7 @@
         </div>
       </a>
       <!-- Card 6 -->
-      <a href="#" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
+      <a href="#colecciones" data-modal="coleccion:5" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1729689706848-7dd56e6759fc?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Cerámicas para piscinas AquaBruma">
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
@@ -751,35 +769,47 @@
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <a href="#" class="reveal card-zoom relative h-80 overflow-hidden rounded-3xl block group">
+      <a href="#proyectos" data-modal="proyecto:0" role="button" aria-haspopup="dialog" class="reveal card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1721222203704-da4b946207a5?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Llanogrande">
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
-        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Residencia Llanogrande</p>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
+        <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]">Residencia Llanogrande</p>
       </a>
-      <a href="#" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
+      <a href="#proyectos" data-modal="proyecto:1" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1789374398591-fb5f3256b869?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto El Poblado">
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
-        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Penthouse El Poblado</p>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
+        <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]">Penthouse El Poblado</p>
       </a>
-      <a href="#" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
+      <a href="#proyectos" data-modal="proyecto:2" role="button" aria-haspopup="dialog" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1780287857843-b461b70a9b2b?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Rionegro">
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
-        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Finca Rionegro</p>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
+        <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]">Finca Rionegro</p>
       </a>
-      <a href="#" class="reveal card-zoom relative h-80 overflow-hidden rounded-3xl block group">
+      <a href="#proyectos" data-modal="proyecto:3" role="button" aria-haspopup="dialog" class="reveal card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1633368098496-be7b5571547c?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Envigado">
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
-        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Casa Campestre Envigado</p>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
+        <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]">Casa Campestre Envigado</p>
       </a>
-      <a href="#" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
+      <a href="#proyectos" data-modal="proyecto:4" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1784772663654-b9a89ba18271?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Sabaneta">
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
-        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Apartamento Sabaneta</p>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
+        <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]">Apartamento Sabaneta</p>
       </a>
-      <a href="#" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
+      <a href="#proyectos" data-modal="proyecto:5" role="button" aria-haspopup="dialog" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1778166156635-0febdb3303ff?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto La Calera">
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
-        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">Villa La Calera</p>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
+        <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        <p class="absolute bottom-5 left-6 text-cream text-sm tracking-widest2 uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]">Villa La Calera</p>
       </a>
     </div>
   </div>
@@ -876,6 +906,50 @@
   </div>
 </footer>
 
+
+<!-- ============ VENTANA DE DETALLE ============ -->
+<div id="modal" class="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8" aria-hidden="true">
+  <div id="modal-backdrop" class="absolute inset-0 bg-ink2/80 backdrop-blur-md"></div>
+  <div id="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+       class="relative w-full max-w-5xl max-h-[calc(100dvh-2rem)] overflow-y-auto md:overflow-hidden md:h-[min(690px,calc(100dvh-4rem))] rounded-3xl bg-ink border border-white/10 shadow-2xl shadow-black/50 grid md:grid-cols-[1.05fr_1fr] md:grid-rows-[minmax(0,1fr)]">
+    <button id="modal-close" type="button" aria-label="Cerrar"
+            class="fx absolute top-4 right-4 z-20 w-11 h-11 rounded-full bg-ink/70 backdrop-blur-sm border border-white/20 text-cream hover:bg-sky hover:text-ink hover:rotate-90 transition-all duration-300 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="relative h-60 md:h-auto min-h-0 bg-ink2">
+      <img id="modal-img" src="" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-ink/30 pointer-events-none"></div>
+    </div>
+
+    <div class="relative md:overflow-y-auto p-7 sm:p-10 flex flex-col">
+      <div id="modal-body" class="flex flex-col flex-1">
+        <p id="modal-eyebrow" class="text-sky text-[11px] tracking-widest2 uppercase mb-4"></p>
+        <h2 id="modal-title" class="text-3xl sm:text-4xl font-light tracking-tight leading-tight mb-6"></h2>
+        <dl id="modal-meta" class="modal-meta grid grid-cols-2 gap-x-6 gap-y-5 pb-6 mb-6 border-b border-white/10"></dl>
+        <p id="modal-text" class="text-cream/75 font-light leading-relaxed mb-5"></p>
+        <ul id="modal-list" class="space-y-2.5 text-sm text-cream/80 font-light mb-8"></ul>
+        <div class="mt-auto flex flex-wrap items-center gap-4">
+          <a id="modal-cta" href="https://wa.me/573000000000" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5 font-medium">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+            <span id="modal-cta-text">Hablemos</span>
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center justify-between gap-4 mt-8 pt-5 border-t border-white/10">
+        <button id="modal-prev" type="button" class="fx flex items-center gap-2 text-[11px] tracking-widest2 uppercase text-cream/70 hover:text-sky transition-colors" aria-label="Anterior">
+          <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M15 5H1M6 1L2 5l4 4"/></svg> Anterior
+        </button>
+        <span id="modal-count" class="text-[11px] tracking-widest2 text-cream/45"></span>
+        <button id="modal-next" type="button" class="fx flex items-center gap-2 text-[11px] tracking-widest2 uppercase text-cream/70 hover:text-sky transition-colors" aria-label="Siguiente">
+          Siguiente <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // Desktop nav dropdown ("Menú")
   (function () {
@@ -927,12 +1001,11 @@
       moved = false;
       startX = e.clientX;
       startScroll = slider.scrollLeft;
-      slider.setPointerCapture(e.pointerId);
     });
     slider.addEventListener('pointermove', (e) => {
       if (!isDown) return;
       const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
+      if (!moved && Math.abs(dx) > 4) { moved = true; slider.setPointerCapture(e.pointerId); }
       slider.scrollLeft = startScroll - dx;
     });
     const endDrag = () => { isDown = false; };
@@ -1096,17 +1169,154 @@
     });
   })();
 
-  // Colecciones: en pantallas táctiles, un toque muestra la descripción
+
+  // Ventana de detalle: proyectos y colecciones
   (function () {
-    if (!window.matchMedia('(hover: none)').matches) return;
-    document.querySelectorAll('#colecciones-slider .card-zoom').forEach((card) => {
-      card.addEventListener('click', (e) => {
-        if (!card.classList.contains('open')) {
-          e.preventDefault();
-          document.querySelectorAll('#colecciones-slider .card-zoom.open').forEach((c) => c.classList.remove('open'));
-          card.classList.add('open');
-        }
-      });
+    const modal = document.getElementById('modal');
+    if (!modal) return;
+    const $ = (id) => document.getElementById(id);
+    const img = $('modal-img'), body = $('modal-body'), panel = $('modal-panel');
+    const wa = 'https://wa.me/573000000000?text=';
+
+    const DATA = {
+      proyecto: [
+        { title: 'Residencia Llanogrande', eyebrow: 'Proyecto',
+          meta: [['Ubicación', 'Llanogrande, Antioquia'], ['Tipo', 'Piscina a la medida'], ['Superficie', '52 m²'], ['Año', '2026']],
+          text: 'Un espejo de agua que se funde con el jardín. Lo diseñamos junto al arquitecto para que cada ángulo de la casa lo mire.',
+          items: ['Borde con canal de rebose', 'Revestimiento en tonos verde-azulados', 'Iluminación subacuática cálida'] },
+        { title: 'Penthouse El Poblado', eyebrow: 'Proyecto',
+          meta: [['Ubicación', 'El Poblado, Medellín'], ['Tipo', 'Piscina en terraza'], ['Superficie', '18 m²'], ['Año', '2026']],
+          text: 'Un lugar para desconectar sobre la ciudad. Estructura liviana calculada para el edificio y un sistema de filtración que casi no se escucha.',
+          items: ['Piscina en azotea con vista abierta', 'Estructura ligera calculada para el edificio', 'Filtración silenciosa y de bajo consumo'] },
+        { title: 'Finca Rionegro', eyebrow: 'Proyecto',
+          meta: [['Ubicación', 'Rionegro, Antioquia'], ['Tipo', 'Piscina y zona de descanso'], ['Superficie', '64 m²'], ['Año', '2026']],
+          text: 'Piscina pensada para el descanso en familia, rodeada de naturaleza, con un deck amplio para quedarse toda la tarde.',
+          items: ['Forma orgánica que sigue el paisaje', 'Deck en madera tratada', 'Zona de sombra y asoleo'] },
+        { title: 'Casa Campestre Envigado', eyebrow: 'Proyecto',
+          meta: [['Ubicación', 'Envigado, Antioquia'], ['Tipo', 'Piscina de borde infinito'], ['Superficie', '70 m²'], ['Año', '2026']],
+          text: 'Una línea de agua que se encuentra con el paisaje. Bordes en piedra y grava para que todo se vea natural y tranquilo.',
+          items: ['Borde infinito con vista a la montaña', 'Acabados en piedra y grava', 'Automatización desde el celular'] },
+        { title: 'Apartamento Sabaneta', eyebrow: 'Proyecto',
+          meta: [['Ubicación', 'Sabaneta, Antioquia'], ['Tipo', 'Piscina con mosaico'], ['Superficie', '24 m²'], ['Año', '2026']],
+          text: 'Un detalle que marca la diferencia: mosaico seleccionado pieza por pieza para que el agua tenga color y carácter.',
+          items: ['Mosaico vítreo con guarda decorativa', 'Escalera integrada al diseño', 'Climatización opcional'] },
+        { title: 'Villa La Calera', eyebrow: 'Proyecto',
+          meta: [['Ubicación', 'La Calera, Cundinamarca'], ['Tipo', 'Piscina con deck'], ['Superficie', '45 m²'], ['Año', '2026']],
+          text: 'Agua tranquila y madera cálida. Un rincón para el descanso con acabados que resisten el sol y el uso diario.',
+          items: ['Deck antideslizante en madera', 'Escalera y barandas en acero inoxidable', 'Tratamiento de agua de bajo mantenimiento'] }
+      ],
+      coleccion: [
+        { title: 'Piscinas a la medida', eyebrow: 'Qué hacemos',
+          meta: [['Para', 'Casas, fincas y edificios'], ['Incluye', 'Diseño, obra y entrega']],
+          text: 'Desbordantes, infinity, interiores o exteriores. Estudiamos tu espacio y diseñamos una piscina que se sienta tuya desde el primer día.',
+          items: ['Diseño y cálculo a la medida', 'Formas clásicas u orgánicas', 'Iluminación y automatización'], cta: 'Cotizar mi piscina' },
+        { title: 'Jacuzzis & Spas', eyebrow: 'Qué hacemos',
+          meta: [['Para', 'Terrazas, jardines y baños'], ['Incluye', 'Instalación y puesta en marcha']],
+          text: 'Hidroterapia para descansar y desconectar sin salir de casa, con la temperatura y los chorros que más te gusten.',
+          items: ['Modelos empotrados o independientes', 'Calefacción y control de temperatura', 'Iluminación ambiental'], cta: 'Cotizar mi jacuzzi' },
+        { title: 'Saunas & Turcos', eyebrow: 'Qué hacemos',
+          meta: [['Para', 'Casas, spas y gimnasios'], ['Incluye', 'Diseño e instalación']],
+          text: 'Calor, vapor y madera para una pausa que se siente en el cuerpo. Se integran a tu arquitectura sin complicaciones.',
+          items: ['Sauna seco o vapor (turco)', 'Maderas y revestimientos seleccionados', 'Generadores y control digital'], cta: 'Cotizar mi sauna o turco' },
+        { title: 'Servicio & Mantenimiento', eyebrow: 'Qué hacemos',
+          meta: [['Para', 'Piscinas y spas'], ['Incluye', 'Visitas periódicas']],
+          text: 'Cuidamos tu piscina para que siempre esté lista para disfrutar, con un plan de visitas que se adapta a ti.',
+          items: ['Limpieza y balance del agua', 'Revisión de equipos y filtración', 'Reparaciones y repuestos'], cta: 'Pedir mantenimiento' },
+        { title: 'Membranas para Piscinas', eyebrow: 'Qué hacemos',
+          meta: [['Para', 'Obra nueva y renovaciones'], ['Incluye', 'Suministro e instalación']],
+          text: 'Membranas resistentes con impermeabilización total, en acabados para cada proyecto.',
+          items: ['Alta resistencia a químicos y sol', 'Variedad de colores y texturas', 'Renovación sin romper la obra'], cta: 'Cotizar membranas' },
+        { title: 'Cerámicas para Piscinas', eyebrow: 'Qué hacemos',
+          meta: [['Para', 'Piscinas, spas y zonas húmedas'], ['Incluye', 'Selección y asesoría']],
+          text: 'Porcelanatos y mosaicos seleccionados pieza por pieza para que cada proyecto tenga color, textura y carácter propios.',
+          items: ['Mosaicos vítreos y porcelanatos', 'Piezas antideslizantes para bordes', 'Asesoría de color y combinación'], cta: 'Cotizar cerámicas' }
+      ]
+    };
+
+    let group = null, index = 0, lastFocus = null, sources = {};
+    document.querySelectorAll('[data-modal]').forEach((el) => {
+      const [g, i] = el.dataset.modal.split(':');
+      (sources[g] = sources[g] || [])[+i] = el;
+    });
+
+    function render(animate) {
+      const d = DATA[group][index];
+      const src = sources[group][index].querySelector('img');
+      const fill = () => {
+        $('modal-eyebrow').textContent = d.eyebrow;
+        $('modal-title').textContent = d.title;
+        $('modal-text').textContent = d.text;
+        $('modal-meta').innerHTML = d.meta.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+        $('modal-list').innerHTML = d.items.map((t) => `<li class="flex items-start gap-3"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>${t}</li>`).join('');
+        const isProj = group === 'proyecto';
+        const cta = d.cta || 'Quiero algo así';
+        $('modal-cta-text').textContent = cta;
+        $('modal-cta').href = wa + encodeURIComponent(isProj
+          ? `Hola, vi el proyecto «${d.title}» en su página y me gustaría algo parecido.`
+          : `Hola, me interesa ${d.title}. ¿Me pueden dar más información?`);
+        $('modal-count').textContent = `${index + 1} / ${DATA[group].length}`;
+        img.alt = d.title;
+        body.classList.remove('swap');
+        img.style.opacity = 1;
+      };
+      img.src = src.src.replace(/w=\d+&h=\d+/, 'w=1400&h=1400');
+      if (animate) {
+        body.classList.add('swap'); img.style.opacity = 0;
+        setTimeout(fill, 220);
+      } else fill();
+    }
+
+    function open(g, i, trigger) {
+      group = g; index = i; lastFocus = trigger || document.activeElement;
+      render(false);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('modal-open');
+      setTimeout(() => $('modal-close').focus(), 50);
+    }
+    function close() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('modal-open');
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    function step(dir) {
+      const n = DATA[group].length;
+      index = (index + dir + n) % n;
+      render(true);
+    }
+
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-modal]');
+      if (!el) return;
+      e.preventDefault();
+      const [g, i] = el.dataset.modal.split(':');
+      open(g, +i, el);
+    });
+    $('modal-close').addEventListener('click', close);
+    $('modal-backdrop').addEventListener('click', close);
+    $('modal-prev').addEventListener('click', () => step(-1));
+    $('modal-next').addEventListener('click', () => step(1));
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'Tab') {
+        const f = [...panel.querySelectorAll('button, a[href]')].filter((x) => x.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    // Deslizar hacia los lados en el celular para cambiar de proyecto
+    let tx = null;
+    panel.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+    panel.addEventListener('touchend', (e) => {
+      if (tx === null) return;
+      const dx = e.changedTouches[0].clientX - tx; tx = null;
+      if (Math.abs(dx) > 70) step(dx < 0 ? 1 : -1);
     });
   })();
 
