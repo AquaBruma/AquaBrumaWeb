@@ -250,13 +250,23 @@
   }
 
   /* ============ MARCAS ============ */
-  .brand-tile { transition: transform .4s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease; }
-  .brand-tile:hover, .brand-tile:focus-visible { transform: translateY(-4px); border-color: rgb(var(--c-sky)); box-shadow: 0 16px 34px -18px rgba(0,0,0,.45); outline: none; }
-  .brand-logo { transition: filter .35s ease, opacity .35s ease, transform .4s ease; }
+  .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
+  @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
+  .brand-logo { width: auto; height: auto; max-height: 27px; max-width: 62%; object-fit: contain; transition: filter .35s ease, opacity .35s ease, transform .4s ease; }
+  @media (min-width: 640px) { .brand-logo { max-height: 33px; } }
+  .brand-logo[src$="renolit.png"] { max-height: 50px; }
+  @media (min-width: 640px) { .brand-logo[src$="renolit.png"] { max-height: 62px; } }
+  /* Sin recuadros: en oscuro los logos se muestran en blanco; en claro, en gris y a color al pasar el cursor */
+  html:not([data-theme="light"]) .brand-logo { filter: brightness(0) invert(1); opacity: .72; }
+  html:not([data-theme="light"]) .brand-item:hover .brand-logo { opacity: 1; transform: scale(1.05); }
   @media (hover: hover) {
-    .brand-logo { filter: grayscale(1) contrast(1.05); opacity: .78; }
-    .brand-tile:hover .brand-logo, .brand-tile:focus-visible .brand-logo { filter: none; opacity: 1; transform: scale(1.04); }
+    html[data-theme="light"] .brand-logo { filter: grayscale(1) contrast(1.05); opacity: .78; }
+    html[data-theme="light"] .brand-item:hover .brand-logo { filter: none; opacity: 1; transform: scale(1.05); }
   }
+
+  /* Transición suave del hero a la franja: se funde con el color de fondo de la página */
+  .hero-fade { position: relative; z-index: 5; pointer-events: none; height: clamp(120px, 20vh, 220px); margin-top: calc(-1 * clamp(120px, 20vh, 220px));
+    background: linear-gradient(to bottom, rgb(var(--c-ink) / 0) 0%, rgb(var(--c-ink) / .18) 30%, rgb(var(--c-ink) / .55) 60%, rgb(var(--c-ink) / .88) 85%, rgb(var(--c-ink)) 100%); }
 
   /* Hero en modo oscuro (video de atardecer, más luminoso): refuerzos de lectura */
   html:not([data-theme="light"]) #site-header.bg-transparent { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .78), rgb(var(--c-ink) / .42) 62%, rgb(var(--c-ink) / 0)); }
@@ -594,9 +604,10 @@
     <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" class="text-sky/80 animate-bounce" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>
   </div>
 </section>
+<div class="hero-fade" aria-hidden="true"></div>
 
 <!-- ============ FRANJA ============ -->
-<div class="marquee border-y border-white/10 bg-ink py-4" role="region" aria-label="Lo que nos distingue">
+<div class="marquee border-b border-white/10 bg-ink py-4" role="region" aria-label="Lo que nos distingue">
   <div class="marquee-track">
     <div class="flex items-center"><div class="mq-pill flex items-center gap-5 rounded-2xl border border-cream/25 px-6 py-3.5 whitespace-nowrap"><span class="text-cream font-semibold text-[15px] leading-tight">Lo que<br>todos ven</span><span class="w-1.5 h-1.5 rounded-full bg-cream flex-shrink-0"></span><span class="text-cream/90 text-[15px] leading-snug">Agua, arquitectura,<br>belleza, experiencia.</span></div><span class="flex items-center px-6 text-sky/70" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><div class="mq-pill flex items-center gap-5 rounded-2xl border border-cream/25 px-6 py-3.5 whitespace-nowrap"><span class="text-cream font-semibold text-[15px] leading-tight">Lo que nosotros<br>sabemos hacer</span><span class="w-1.5 h-1.5 rounded-full bg-cream flex-shrink-0"></span><span class="text-cream/90 text-[15px] leading-snug">Ingeniería, hidráulica, tecnología,<br>control, precisión, integración.</span></div><span class="flex items-center px-6 text-sky/70" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><div class="mq-pill flex items-center rounded-2xl border border-cream/25 px-6 py-3.5 whitespace-nowrap"><span class="text-cream font-semibold text-[15px] leading-tight">La superficie es la experiencia.<br>La profundidad es Aquabruma.</span></div><span class="flex items-center px-6 text-sky/70" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
     <div class="flex items-center" aria-hidden="true"><div class="mq-pill flex items-center gap-5 rounded-2xl border border-cream/25 px-6 py-3.5 whitespace-nowrap"><span class="text-cream font-semibold text-[15px] leading-tight">Lo que<br>todos ven</span><span class="w-1.5 h-1.5 rounded-full bg-cream flex-shrink-0"></span><span class="text-cream/90 text-[15px] leading-snug">Agua, arquitectura,<br>belleza, experiencia.</span></div><span class="flex items-center px-6 text-sky/70" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><div class="mq-pill flex items-center gap-5 rounded-2xl border border-cream/25 px-6 py-3.5 whitespace-nowrap"><span class="text-cream font-semibold text-[15px] leading-tight">Lo que nosotros<br>sabemos hacer</span><span class="w-1.5 h-1.5 rounded-full bg-cream flex-shrink-0"></span><span class="text-cream/90 text-[15px] leading-snug">Ingeniería, hidráulica, tecnología,<br>control, precisión, integración.</span></div><span class="flex items-center px-6 text-sky/70" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><div class="mq-pill flex items-center rounded-2xl border border-cream/25 px-6 py-3.5 whitespace-nowrap"><span class="text-cream font-semibold text-[15px] leading-tight">La superficie es la experiencia.<br>La profundidad es Aquabruma.</span></div><span class="flex items-center px-6 text-sky/70" aria-hidden="true"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
@@ -661,70 +672,59 @@
     </div>
     <ul class="flex flex-wrap justify-center gap-3 sm:gap-4">
       <li class="reveal w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://gresaragon.com" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Gres Aragón (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/gres-aragon.png" alt="Gres Aragón" width="520" height="125" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/gres-aragon.png" alt="Gres Aragón" width="520" height="125" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-1 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://renolit-alkorplan.com/es/" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Renolit Alkorplan (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/renolit-alkorplan.png" alt="Renolit Alkorplan" width="520" height="37" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/renolit.png" alt="Renolit" width="504" height="504" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-2 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://www.jacuzzi.com/es-co/" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Jacuzzi (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/jacuzzi.png" alt="Jacuzzi" width="520" height="109" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/jacuzzi.png" alt="Jacuzzi" width="520" height="109" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-3 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://togama.com" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Togama (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/togama.png" alt="Togama" width="383" height="97" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/togama.png" alt="Togama" width="383" height="97" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://reviglass.es" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Reviglass (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/reviglass.png" alt="Reviglass" width="248" height="52" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/reviglass.png" alt="Reviglass" width="248" height="52" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-1 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://www.mapei.com/es/es/pagina-de-inicio" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Mapei (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/mapei.png" alt="Mapei" width="520" height="125" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/mapei.png" alt="Mapei" width="520" height="125" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-2 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://www.astralpool.com/es/es.html" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de AstralPool (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/astralpool.png" alt="AstralPool" width="520" height="80" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/astralpool.png" alt="AstralPool" width="520" height="80" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-3 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://www.jandy.com/en" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Jandy (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/jandy.png" alt="Jandy" width="165" height="64" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/jandy.png" alt="Jandy" width="165" height="64" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://www.pentair.com" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Pentair (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/pentair.png" alt="Pentair" width="520" height="131" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/pentair.png" alt="Pentair" width="520" height="131" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-1 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://www.hayward-webinar.com/LatAm" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Hayward (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/hayward.png" alt="Hayward" width="520" height="121" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/hayward.png" alt="Hayward" width="520" height="121" decoding="async" class="brand-logo">
+        </div>
       </li>
       <li class="reveal reveal-delay-2 w-[calc(50%-6px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]">
-        <a href="https://emauxgroup.com/es/emaux-water-technology-es-2/" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio de Emaux (se abre en una pestaña nueva)"
-           class="brand-tile group flex items-center justify-center h-24 sm:h-28 rounded-2xl bg-white border border-white/10 px-5">
-          <img src="img/marcas/emaux.png" alt="Emaux" width="197" height="64" decoding="async" class="brand-logo w-auto h-auto max-h-9 sm:max-h-11 max-w-[78%] object-contain">
-        </a>
+        <div class="brand-item">
+          <img src="img/marcas/emaux.png" alt="Emaux" width="197" height="64" decoding="async" class="brand-logo">
+        </div>
       </li>
     </ul>
   </div>
