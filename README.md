@@ -36,7 +36,7 @@ site.webmanifest        → íconos y metadatos del sitio
 robots.txt, sitemap.xml → SEO básico
 hero-poster-1/2.jpg     → fotogramas de respaldo (poster) para los videos del hero
 hero-dia.mp4,
-hero-dia-poster.jpg   → video y portada del hero en modo claro (Pexels 7559500, licencia gratuita: vista aérea de una mujer flotando en una piscina de agua turquesa; 1920×1080, recortado a 13 s, 9,7 MB). Solo se descarga si la persona activa el modo claro
+hero-dia-poster.jpg   → video y portada del hero en modo claro (Pexels 8045121, licencia gratuita: piscina de borde infinito frente al mar con una palmera; recortado del segundo 8 al 10, 2 s, ~1 MB). Solo se descarga si la persona activa el modo claro
 352854_medium.mp4,
 352876_medium.mp4       → videos candidatos para el hero de inicio (piscina infinita nocturna)
 ```
