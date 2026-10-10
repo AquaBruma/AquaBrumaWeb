@@ -2,6 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>
+  // Siempre empezar en el inicio: sin restaurar el scroll ni saltar a la sección de la dirección (#...)
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AquaBruma — Pool · Spa · Wellness</title>
 <meta name="description" content="AquaBruma diseña piscinas, jacuzzis, spas y espacios de bienestar alrededor del agua. Cercanos, precisos y sin complicaciones.">
@@ -996,6 +1001,10 @@
 
 <script src="catalogo-data.js"></script>
 <script>
+  // Inicio siempre arriba (también al volver con los botones atrás/adelante del navegador)
+  window.scrollTo(0, 0);
+  window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
+
   // Desktop nav dropdown ("Menú")
   (function () {
     const wrap = document.getElementById('nav-dropdown');
