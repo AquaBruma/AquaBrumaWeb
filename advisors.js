@@ -66,25 +66,19 @@
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-labelledby', 'adv-title');
     modal.setAttribute('aria-hidden', 'true');
-    modal.className = 'fixed z-[88] right-4 bottom-24 sm:right-6 w-[calc(100vw-2rem)] max-w-[340px] rounded-3xl bg-ink border border-cream/20 shadow-2xl shadow-black/50 p-5 origin-bottom-right transition-all duration-300 opacity-0 invisible scale-90 translate-y-2';
+    modal.className = 'fixed z-[88] right-4 bottom-24 sm:right-6 w-[calc(100vw-2rem)] max-w-[320px] origin-bottom-right transition-all duration-300 opacity-0 invisible scale-90 translate-y-2';
     modal.innerHTML = `
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <h2 id="adv-title" class="text-lg font-normal leading-tight">Habla con un asesor</h2>
-        <button type="button" data-adv-close aria-label="Cerrar" class="w-8 h-8 -mt-1 -mr-1 rounded-full border border-cream/25 hover:bg-sky hover:text-ink transition-colors flex items-center justify-center flex-shrink-0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-      </div>
-      <p id="adv-text" class="text-xs text-cream/65 font-light leading-relaxed mb-4 line-clamp-3"></p>
-      <div class="space-y-3" id="adv-list"></div>
-      <span aria-hidden="true" class="absolute -bottom-2 right-[22px] w-4 h-4 rotate-45 bg-ink border-r border-b border-cream/20"></span>`;
+      <h2 id="adv-title" class="sr-only">Habla con un asesor</h2>
+      <p id="adv-text" class="sr-only"></p>
+      <div class="space-y-3" id="adv-list"></div>`;
     document.body.appendChild(modal);
-    modal.addEventListener('click', (e) => { if (e.target.closest('[data-adv-close]')) close(); else if (e.target.closest('[data-adv-go]')) setTimeout(close, 150); });
+    modal.addEventListener('click', (e) => { if (e.target.closest('[data-adv-go]')) setTimeout(close, 150); });
   }
 
   function render() {
     modal.querySelector('#adv-text').textContent = T(current);
     modal.querySelector('#adv-list').innerHTML = ADVISORS.map((a) => `
-      <a href="${esc(link(a, T(current)))}" target="_blank" rel="noopener" data-wa-direct data-adv-go class="group flex items-center gap-3 rounded-2xl border border-cream/15 hover:border-sky bg-ink3/40 hover:bg-ink3/70 p-3 transition-colors duration-300">
+      <a href="${esc(link(a, T(current)))}" target="_blank" rel="noopener" data-wa-direct data-adv-go class="group flex items-center gap-3 rounded-2xl border border-cream/20 hover:border-sky bg-ink hover:bg-ink3 shadow-xl shadow-black/40 p-3 transition-colors duration-300">
         <span class="block w-12 h-12 rounded-full overflow-hidden ring-2 ring-sky/40 group-hover:ring-sky transition-all duration-300 flex-shrink-0">${a.photo ? `<img src="${esc(a.photo)}" alt="" class="w-full h-full object-cover">` : AVATARS[a.avatar]}</span>
         <span class="flex-1 min-w-0">
           <span class="block text-[15px] font-normal leading-tight truncate">${esc(a.name)}</span>
