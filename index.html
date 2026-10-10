@@ -249,12 +249,19 @@
   /* En claro, el hero deja de ser una zona oscura: texto marino sobre el cielo, con un velo suave */
   html[data-theme="light"] #inicio {
     --c-ink: 243 237 233; --c-ink2: 233 225 218; --c-ink3: 255 255 255;
-    --c-cream: 15 42 61; --c-sky: 14 85 134; --c-mist: 55 134 190;
+    --c-cream: 6 20 33; --c-sky: 8 66 112; --c-mist: 55 134 190;
   }
   html[data-theme="light"] #inicio [class*="border-white/"] { border-color: rgb(var(--c-cream) / .14); }
-  html[data-theme="light"] .hero-ov-a { background-image: linear-gradient(to top, rgb(243 237 233) 0%, rgb(243 237 233 / .55) 12%, rgb(243 237 233 / 0) 38%, rgb(243 237 233 / 0) 100%); }
-  html[data-theme="light"] .hero-ov-b { background-image: linear-gradient(to right, rgb(243 237 233 / .62) 0%, rgb(243 237 233 / .30) 38%, rgb(243 237 233 / 0) 68%); }
-  html[data-theme="light"] #inicio h1, html[data-theme="light"] #inicio p { text-shadow: 0 1px 18px rgb(243 237 233 / .7); }
+  html[data-theme="light"] .hero-ov-a { background-image: linear-gradient(to top, rgb(243 237 233) 0%, rgb(243 237 233 / .35) 9%, rgb(243 237 233 / 0) 26%); }
+  html[data-theme="light"] .hero-ov-b { background-image: radial-gradient(ellipse 55% 62% at 20% 52%, rgb(243 237 233 / .52), rgb(243 237 233 / .22) 55%, rgb(243 237 233 / 0) 100%); }
+  html[data-theme="light"] .hero-for-light { filter: saturate(1.22) contrast(1.06); }
+  html[data-theme="light"] #site-header.bg-transparent #nav-dropdown-btn { font-weight: 600; color: rgb(6 20 33); }
+  html[data-theme="light"] #site-header.bg-transparent a[href^="https://wa.me"] { font-weight: 600; color: rgb(6 20 33); border-color: rgb(6 20 33 / .65); }
+  html[data-theme="light"] #site-header.bg-transparent .theme-btn { border-color: rgb(6 20 33 / .65); }
+  html[data-theme="light"] #inicio h1 { font-weight: 500; text-shadow: 0 0 26px rgb(243 237 233 / .85), 0 1px 2px rgb(243 237 233 / .5); }
+  html[data-theme="light"] #inicio h1 .calma-reveal { font-weight: 600; }
+  html[data-theme="light"] #inicio p { font-weight: 500; color: rgb(var(--c-cream)); text-shadow: 0 0 20px rgb(243 237 233 / .9); }
+  html[data-theme="light"] #inicio a.reveal { font-weight: 500; border-color: rgb(var(--c-cream) / .55); }
   html[data-theme="light"] .calma-reveal { animation-name: calma-breathe-light; }
   @keyframes calma-breathe-light {
     0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,.55), 0 0 2px rgba(255,255,255,.4); }
