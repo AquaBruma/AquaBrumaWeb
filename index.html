@@ -323,8 +323,6 @@
   /* ============ GALERÍA DE LA VENTANA + CATÁLOGO ============ */
   .gal img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
   .gal img.on { opacity: 1; }
-  .gal-dots span { width: 7px; height: 7px; border-radius: 9999px; background: rgba(243,237,233,.45); transition: width .35s ease, background-color .3s ease; padding: 0; }
-  .gal-dots span.on { width: 22px; background: #b2cbe9; }
   #catalog { opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s ease; overscroll-behavior: contain; }
   #catalog.open { opacity: 1; visibility: visible; }
   #cat-view { transition: opacity .25s ease, transform .25s ease; }
@@ -945,7 +943,6 @@
     <div id="modal-media" class="relative h-60 md:h-auto min-h-0 bg-ink2">
       <div id="modal-gallery" class="gal absolute inset-0"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-ink/30 pointer-events-none"></div>
-      <div id="modal-dots" class="gal-dots absolute bottom-4 inset-x-0 z-10 flex justify-center items-center gap-2 pointer-events-none" aria-hidden="true"></div>
     </div>
 
     <div class="relative md:overflow-y-auto p-7 sm:p-10 flex flex-col">
@@ -1223,7 +1220,7 @@
     const modal = document.getElementById('modal');
     if (!modal) return;
     const $ = (id) => document.getElementById(id);
-    const gal = $('modal-gallery'), gdots = $('modal-dots'), body = $('modal-body'), panel = $('modal-panel');
+    const gal = $('modal-gallery'), body = $('modal-body'), panel = $('modal-panel');
     const wa = 'https://wa.me/573000000000?text=';
 
     const DATA = {
@@ -1293,7 +1290,6 @@
       if (!photos.length) return;
       slide = (n + photos.length) % photos.length;
       gal.querySelectorAll('img').forEach((im, k) => im.classList.toggle('on', k === slide));
-      gdots.querySelectorAll('span').forEach((bt, k) => bt.classList.toggle('on', k === slide));
     }
     function stopTimer() { clearInterval(timer); timer = null; }
     function startTimer() {
@@ -1304,7 +1300,6 @@
     function buildGallery(list, alt) {
       photos = list; slide = 0;
       gal.innerHTML = list.map((u, k) => `<img src="${u}" alt="${k === 0 ? alt : ''}" class="${k === 0 ? 'on' : ''}"${k ? ' loading="lazy"' : ''}>`).join('');
-      gdots.innerHTML = list.length > 1 ? list.map((_, k) => `<span class="${k === 0 ? 'on' : ''}"></span>`).join('') : '';
       startTimer();
     }
 
