@@ -284,6 +284,11 @@
   /* en tema oscuro el filtro apaga el pin de Google: se dibuja uno propio en el centro del mapa */
   html:not([data-theme="light"]) .footer-map.has-map::before { content: ""; position: absolute; z-index: 2; left: 50%; top: 50%; width: 30px; height: 40px; transform: translate(-50%, -96%); pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32'%3E%3Cpath d='M12 1C6.5 1 2.5 5 2.5 10.2 2.5 17 12 31 12 31s9.5-14 9.5-20.8C21.5 5 17.5 1 12 1z' fill='%23b2cbe9' stroke='%230f2a3d' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='10.5' r='3.6' fill='%230f2a3d'/%3E%3C/svg%3E") center / contain no-repeat; filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); }
 
+  /* Catálogo: tarjetas de a 2; si queda una sola en la última fila, va centrada */
+  .cat-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .cat-grid > * { width: 100%; }
+  @media (min-width: 640px) { .cat-grid > * { width: calc(50% - .75rem); } }
+
   /* ============ MARCAS ============ */
   .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
   @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
@@ -1817,8 +1822,8 @@
         <div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>
         ${overview
           ? `<h3 class="text-xl md:text-2xl font-light tracking-tight uppercase mb-6">Colecciones Jacuzzi®</h3>
-        <div class="grid sm:grid-cols-2 gap-5 md:gap-6 max-w-[1100px] mx-auto">${collections}</div>`
-          : `<div class="grid sm:grid-cols-2 gap-5 md:gap-6 max-w-[1100px] mx-auto">${cards}</div>`}
+        <div class="cat-grid">${collections}</div>`
+          : `<div class="cat-grid">${cards}</div>`}
         ${formHTML('')}`;
     }
 
