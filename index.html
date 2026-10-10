@@ -258,6 +258,13 @@
     .brand-tile:hover .brand-logo, .brand-tile:focus-visible .brand-logo { filter: none; opacity: 1; transform: scale(1.04); }
   }
 
+  /* Hero en modo oscuro (video de atardecer, más luminoso): refuerzos de lectura */
+  html:not([data-theme="light"]) #site-header.bg-transparent { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .62), rgb(var(--c-ink) / .28) 60%, rgb(var(--c-ink) / 0)); }
+  html:not([data-theme="light"]) #inicio h1, html:not([data-theme="light"]) #inicio p { text-shadow: 0 1px 14px rgba(4,16,28,.55); }
+  @media (max-width: 767px) {
+    html:not([data-theme="light"]) .hero-ov-b { background-image: linear-gradient(to bottom, rgb(var(--c-ink) / .1) 8%, rgb(var(--c-ink) / .5) 34%, rgb(var(--c-ink) / .58) 76%, rgb(var(--c-ink) / .15)); }
+  }
+
   /* ============ HERO según el tema ============ */
 
   .hero-for-light { display: none; }
@@ -536,8 +543,8 @@
 <!-- ============ HERO ============ -->
 <section id="inicio" class="relative h-screen min-h-[640px] w-full overflow-hidden bg-ink">
   <div class="absolute inset-0">
-    <img src="hero-poster-2.jpg" alt=""
-         class="hero-for-dark absolute inset-0 w-full h-full object-cover opacity-80">
+    <img src="hero-atardecer-poster.jpg" alt=""
+         class="hero-for-dark absolute inset-0 w-full h-full object-cover">
     <img src="hero-dia-poster.jpg" alt="" aria-hidden="true"
          class="hero-for-light absolute inset-0 w-full h-full object-cover">
     <video id="hero-video-light" muted playsinline preload="none"
@@ -546,13 +553,13 @@
            class="hero-for-light absolute inset-0 w-full h-full object-cover"
            aria-label="Piscina de borde infinito con agua celeste frente al mar, con una palmera y montañas al fondo"></video>
     <video id="hero-video" muted playsinline preload="auto"
-           poster="hero-poster-2.jpg"
-           class="hero-for-dark absolute inset-0 w-full h-full object-cover opacity-80"
-           aria-label="Piscina infinita en azotea AquaBruma, entre columnas de piedra con vista nocturna de ciudad">
-      <source src="352876_medium.mp4" type="video/mp4">
+           poster="hero-atardecer-poster.jpg"
+           class="hero-for-dark absolute inset-0 w-full h-full object-cover"
+           aria-label="Casa moderna con piscina y cascada frente a una bahía, con palmeras, al atardecer con luz dorada">
+      <source src="hero-atardecer.mp4" type="video/mp4">
     </video>
-    <div class="hero-ov-a absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/60"></div>
-    <div class="hero-ov-b absolute inset-0 bg-gradient-to-r from-ink/70 from-0% via-ink/30 via-40% to-transparent to-70%"></div>
+    <div class="hero-ov-a absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/5 to-ink/30"></div>
+    <div class="hero-ov-b absolute inset-0 bg-gradient-to-r from-ink/70 from-0% via-ink/25 via-40% to-transparent to-65%"></div>
   </div>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true"><span class="bubble" style="left:8%;width:14px;height:14px;animation-duration:17s;animation-delay:0s;--dx:18px"></span><span class="bubble" style="left:17%;width:26px;height:26px;animation-duration:23s;animation-delay:5s;--dx:-22px"></span><span class="bubble" style="left:31%;width:10px;height:10px;animation-duration:15s;animation-delay:9s;--dx:14px"></span><span class="bubble" style="left:44%;width:18px;height:18px;animation-duration:20s;animation-delay:2s;--dx:-16px"></span><span class="bubble" style="left:58%;width:12px;height:12px;animation-duration:18s;animation-delay:11s;--dx:20px"></span><span class="bubble" style="left:68%;width:30px;height:30px;animation-duration:26s;animation-delay:7s;--dx:-26px"></span><span class="bubble" style="left:79%;width:16px;height:16px;animation-duration:19s;animation-delay:3s;--dx:16px"></span><span class="bubble" style="left:90%;width:22px;height:22px;animation-duration:24s;animation-delay:13s;--dx:-18px"></span></div>
 

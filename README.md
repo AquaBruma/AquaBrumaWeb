@@ -41,8 +41,10 @@ robots.txt, sitemap.xml → SEO básico
 hero-poster-1/2.jpg     → fotogramas de respaldo (poster) para los videos del hero
 hero-dia.mp4,
 hero-dia-poster.jpg   → video y portada del hero en modo claro (Pexels 8045121, licencia gratuita: piscina de borde infinito frente al mar con una palmera; recortado del segundo 8 al 10, 2 s, ~1 MB). Solo se descarga si la persona activa el modo claro
+hero-atardecer.mp4,
+hero-atardecer-poster.jpg → video y portada del hero en modo OSCURO (Pexels 39576530, licencia gratuita: casa con piscina y cascada frente a una bahía, al atardecer; 1920×1080, 5,9 s, 4,3 MB)
 352854_medium.mp4,
-352876_medium.mp4       → videos candidatos para el hero de inicio (piscina infinita nocturna)
+352876_medium.mp4       → videos nocturnos anteriores del hero (ya no se usan; se pueden borrar)
 ```
 
 ## Cómo regenerar tailwind.css
@@ -67,7 +69,6 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 
 ## Pendientes / por confirmar
 
-- **Video del hero**: hay dos videos candidatos (`352854_medium.mp4` y `352876_medium.mp4`); actualmente está activo el segundo. Definir cuál se queda.
 - **Datos de contacto**: el número de WhatsApp (+57 300 000 0000), correo y dirección son de ejemplo — reemplazar por los datos reales de AquaBruma.
 - **Dominio**: `robots.txt`, `sitemap.xml` y las etiquetas Open Graph usan `https://www.aquabruma.com` como marcador de posición.
 - **Contenido de testimonios y proyectos**: son de ejemplo, pendientes de contenido real del negocio.
