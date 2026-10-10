@@ -256,13 +256,9 @@
   @media (min-width: 640px) { .brand-logo { max-height: 33px; } }
   .brand-logo[src$="renolit.png"] { max-height: 50px; }
   @media (min-width: 640px) { .brand-logo[src$="renolit.png"] { max-height: 62px; } }
-  /* Sin recuadros: en oscuro los logos se muestran en blanco; en claro, en gris y a color al pasar el cursor */
-  html:not([data-theme="light"]) .brand-logo { filter: brightness(0) invert(1); opacity: .72; }
-  html:not([data-theme="light"]) .brand-item:hover .brand-logo { opacity: 1; transform: scale(1.05); }
-  @media (hover: hover) {
-    html[data-theme="light"] .brand-logo { filter: grayscale(1) contrast(1.05); opacity: .78; }
-    html[data-theme="light"] .brand-item:hover .brand-logo { filter: none; opacity: 1; transform: scale(1.05); }
-  }
+  /* Sin recuadros y a color: la sección se fija en tonos claros en ambos temas para que todos los logos se vean */
+  html:not([data-theme="light"]) #marcas { --c-ink: 243 237 233; --c-ink2: 233 225 218; --c-ink3: 255 255 255; --c-cream: 15 42 61; --c-sky: 14 85 134; --c-mist: 55 134 190; }
+  .brand-item:hover .brand-logo { transform: scale(1.06); }
 
   /* Transición suave del hero a la franja: se funde con el color de fondo de la página */
   .hero-fade { position: relative; z-index: 5; pointer-events: none; height: clamp(120px, 20vh, 220px); margin-top: calc(-1 * clamp(120px, 20vh, 220px));
