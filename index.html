@@ -241,6 +241,14 @@
   html[data-theme="light"] #site-header.theme-dark .theme-btn .bulb-glass { fill: #f2d28b; }
 
 
+  /* Pantallas bajas (laptops chicas): el bloque de texto del inicio se compacta para no tocar el encabezado */
+  @media (min-width: 768px) and (max-height: 760px) {
+    #inicio h1 { font-size: 62px; line-height: 1.04; }
+    #inicio h1 + p { margin-top: 1.25rem; }
+    #inicio a.reveal { margin-top: 1.5rem; }
+    #inicio p.text-sky { margin-bottom: 1.25rem; }
+  }
+
   /* ============ HERO según el tema ============ */
 
   .hero-for-light { display: none; }
@@ -546,8 +554,8 @@
       <span class="reveal block" style="transition-delay:.7s">se convierte</span>
       <span class="reveal block" style="transition-delay:1.3s">en <span class="calma-reveal text-sky font-normal">calma.</span></span>
     </h1>
-    <p class="reveal text-cream/80 text-base md:text-lg max-w-md mt-8 font-light leading-relaxed" style="transition-delay:2.2s">
-      Diseñamos piscinas, jacuzzis y espacios de bienestar para disfrutar en casa, con calma y sin complicaciones.
+    <p class="reveal text-cream/80 text-base md:text-lg max-w-md md:max-w-lg mt-7 font-light leading-relaxed" style="transition-delay:2.2s">
+      Diseñamos piscinas, spas y espacios wellness desde una visión integral, donde cada componente responde a una misma intención. Crear espacios excepcionales alrededor del agua.
     </p>
     <a href="#proyectos" class="reveal inline-flex items-center gap-3 w-fit rounded-full border border-cream/40 hover:border-sky hover:text-sky transition-colors duration-300 text-cream text-[11px] tracking-widest2 uppercase mt-9 px-7 py-3.5" style="transition-delay:2.5s">
       Ver proyectos
