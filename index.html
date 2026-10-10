@@ -269,6 +269,9 @@
   .cat-cmp[aria-pressed="true"] { background: rgb(var(--c-sky)); border-color: rgb(var(--c-sky)); color: rgb(var(--c-ink)) !important; font-weight: 600; }
   .cat-cmp-row:nth-child(odd) { background: rgb(var(--c-cream) / .04); }
 
+  /* Botón de idioma sobre el hero en tema claro */
+  html[data-theme="light"] #site-header.bg-transparent .lang-btn { color: rgb(6 20 33); font-weight: 700; border-color: rgb(6 20 33 / .65); }
+
   /* ============ MARCAS ============ */
   .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
   @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
@@ -547,6 +550,8 @@
            class="hidden md:inline-flex items-center gap-2 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3">
           Agenda tu consultoría
         </a>
+        <button id="lang-toggle" type="button" aria-label="Cambiar idioma a inglés" title="Español / English"
+                class="theme-btn lang-btn flex-shrink-0 w-11 h-11 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 flex items-center justify-center text-[11px] font-semibold tracking-widest2"><span class="lang-label" data-i18n-skip>EN</span></button>
         <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a fondo claro" title="Fondo claro / oscuro"
                 class="theme-btn flex-shrink-0 w-11 h-11 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 flex items-center justify-center">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1169,7 +1174,8 @@
     <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 pt-8 text-cream/40 text-xs font-light">
       <p>&copy; 2026 AquaBruma. Todos los derechos reservados.</p>
       <div class="flex items-center gap-6">
-        <a href="#" class="link-underline">Política de privacidad</a>
+        <a href="#" class="link-underline" data-open-cookies>Política de privacidad</a>
+        <a href="#" class="link-underline" data-open-cookies>Configurar cookies</a>
         <a href="#" class="link-underline">Términos y condiciones</a>
       </div>
     </div>
@@ -1242,6 +1248,9 @@
   <div id="cat-cmpbar" class="sticky bottom-4 z-20 px-4 pointer-events-none"></div>
 </div>
 
+<script src="i18n-en.js"></script>
+<script src="i18n.js"></script>
+<script src="cookies.js"></script>
 <script src="spas-data.js"></script>
 <script src="catalogo-data.js"></script>
 <script>
@@ -1455,6 +1464,7 @@
     document.body.classList.remove('overflow-hidden');
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     syncHeroVideo();
+    document.dispatchEvent(new CustomEvent('aq:intro-done'));
   }
   // Reproduce solo el video del tema activo (el de día se descarga la primera vez que se usa)
   function syncHeroVideo() {
@@ -1605,9 +1615,10 @@
         const isProj = group === 'proyecto';
         const cta = d.cta || 'Quiero algo así';
         $('modal-cta-text').textContent = cta;
-        $('modal-cta').href = wa + encodeURIComponent(isProj
+        const waText = isProj
           ? `Hola, vi el proyecto «${d.title}» en su página y me gustaría algo parecido.`
-          : `Hola, me interesa ${d.title}. ¿Me pueden dar más información?`);
+          : `Hola, me interesa ${d.title}. ¿Me pueden dar más información?`;
+        $('modal-cta').href = wa + encodeURIComponent(window.AQ_I18N ? window.AQ_I18N.t(waText) : waText);
         $('modal-count').textContent = `${index + 1} / ${DATA[group].length}`;
         $('modal-products').hidden = !cat;
         body.classList.remove('swap');
@@ -1706,11 +1717,12 @@
       }
     }
     const firstSub = (f) => (((CAT[key] || {}).subs || {})[f] || [])[0] || 'all';
-    const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=es';
+    const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=' + (window.AQ_LANG === 'en' ? 'en' : 'es');
+    const third = () => !window.AQConsent || window.AQConsent.third();
 
     const cat = () => CAT[key];
     const photoOf = (p, n) => { if (p.img) return n === 0 ? p.img : null; const c = cat(); const i = p.photos[n]; return i === undefined ? null : c.photos[i]; };
-    const waLink = (text) => wa + encodeURIComponent(text);
+    const waLink = (text) => wa + encodeURIComponent(window.AQ_I18N ? window.AQ_I18N.t(text) : text);
 
     function swap(fn) {
       view.classList.add('swap');
@@ -1836,6 +1848,21 @@
       const btn = view.querySelector(`[data-cmp3d="${id}"]`);
       const p = findProduct(id);
       if (!media || !p || media.dataset.on) return;
+      if (!third()) {
+        media.dataset.on = '1'; media.dataset.photo = media.innerHTML;
+        media.style.aspectRatio = 'auto'; media.style.minHeight = '320px';
+        media.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-6 bg-white" style="color:#5b6b78">
+          <img src="${esc(p.img)}" alt="" class="w-[min(60%,300px)] h-auto">
+          <p class="text-sm max-w-sm">Este visor lo ofrece Jacuzzi® (Brand3D) y usa cookies de terceros. Para verlo necesitamos tu permiso.</p>
+          <button type="button" class="cat-cmp-allow inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium" style="background:#0f4c75;color:#fff">Permitir y ver en 3D</button></div>`;
+        media.querySelector('.cat-cmp-allow').addEventListener('click', () => {
+          window.AQConsent.grantThird();
+          delete media.dataset.on; media.innerHTML = media.dataset.photo; media.style.minHeight = '';
+          show3D(id);
+        });
+        if (btn) btn.textContent = 'Volver a la foto';
+        return;
+      }
       media.dataset.on = '1';
       media.dataset.photo = media.innerHTML;
       media.style.aspectRatio = 'auto'; media.style.height = 'max(660px, min(86dvh, 780px))';
@@ -1855,7 +1882,7 @@
       const btn = view.querySelector(`[data-cmp3d="${id}"]`);
       if (!media || !media.dataset.on) return;
       media.innerHTML = media.dataset.photo;
-      media.style.aspectRatio = '4/3'; media.style.height = '';
+      media.style.aspectRatio = '4/3'; media.style.height = ''; media.style.minHeight = '';
       delete media.dataset.on;
       if (btn) btn.textContent = 'Personalizar en 3D';
     }
@@ -1904,9 +1931,23 @@
     function setup3D(frame) {
       const poster = view.querySelector('.cat-3d-poster');
       const status = poster.querySelector('.cat-3d-status');
+      const consent = poster.querySelector('.cat-3d-consent');
       const go = poster.querySelector('.cat-3d-go');
       const back = view.querySelector('.cat-3d-back');
-      setTimeout(() => { if (view.contains(frame)) { status.style.display = 'none'; go.style.display = 'inline-flex'; } }, 8000);
+      const begin = () => {
+        if (!view.contains(frame)) return;
+        if (frame.dataset.src && !frame.getAttribute('src')) frame.src = frame.dataset.src;
+        consent.style.display = 'none'; status.style.display = 'flex';
+        setTimeout(() => { if (view.contains(frame)) { status.style.display = 'none'; go.style.display = 'inline-flex'; } }, 8000);
+      };
+      if (frame.dataset.src && !frame.getAttribute('src')) {
+        poster.querySelector('.cat-3d-allow').addEventListener('click', () => window.AQConsent.grantThird());
+        document.addEventListener('aq:consent', function onConsent() {
+          if (!window.AQConsent.third()) return;
+          document.removeEventListener('aq:consent', onConsent);
+          begin();
+        });
+      } else begin();
       go.addEventListener('click', () => {
         poster.style.opacity = 0; poster.style.pointerEvents = 'none';
         back.hidden = false;
@@ -1943,10 +1984,17 @@
         <div class="relative rounded-3xl overflow-hidden bg-white border border-white/10 shadow-2xl shadow-black/30 w-full max-w-[1000px] mx-auto h-[max(660px,min(86dvh,780px))]">
           <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white transition-opacity duration-700">
             <img src="${esc(p.img)}" alt="${esc(p.name)}" class="w-[min(78%,560px)] h-auto">
-            <div class="cat-3d-status flex items-center gap-3 text-sm" style="color:#5b6b78"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
+            <div class="cat-3d-status items-center gap-3 text-sm" style="color:#5b6b78;display:${third() ? 'flex' : 'none'}"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
+            <div class="cat-3d-consent flex-col items-center gap-4 text-center px-6" style="color:#5b6b78;display:${third() ? 'none' : 'flex'}">
+              <p class="text-sm max-w-md">Este visor lo ofrece Jacuzzi® (Brand3D) y usa cookies de terceros. Para verlo necesitamos tu permiso.</p>
+              <div class="flex flex-wrap items-center justify-center gap-3">
+                <button type="button" class="cat-3d-allow inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium" style="background:#0f4c75;color:#fff">Permitir y ver en 3D</button>
+                <a href="${esc(embedUrl(p.embed))}" target="_blank" rel="noopener" class="inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-6 py-3.5" style="border:1px solid #0f4c75;color:#0f4c75">Abrir en pantalla completa</a>
+              </div>
+            </div>
             <button type="button" class="cat-3d-go inline-flex items-center gap-3 rounded-full text-[11px] tracking-widest2 uppercase px-8 py-3.5 font-medium" style="background:#0f4c75;color:#fff;display:none">Ver en 3D</button>
           </div>
-          <iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
+          <iframe title="Experiencia 3D de ${esc(p.name)}" ${third() ? 'src' : 'data-src'}="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
         </div>
         <p class="text-cream/55 text-xs font-light mt-4 text-center">Arrastra para girarlo, cambia el gabinete y la carcasa, y toca «Ver en tu espacio» desde tu celular para verlo en realidad aumentada. Los modelos 3D pesan varios MB y pueden tardar unos segundos según tu conexión.</p>
         <p class="text-center mt-2" ><button type="button" class="cat-3d-back text-sky text-xs font-light underline underline-offset-4 hover:text-mist" hidden>¿Tarda mucho? Volver a la foto</button></p>
@@ -2076,7 +2124,7 @@
     }
     function warmUp(k) {
       const first = (CAT[k].products || []).find((p) => p.embed);
-      if (!first) return;
+      if (!first || !third()) return;
       preconnect();
       setTimeout(() => prewarm(first.embed), 1200);
     }
