@@ -1673,6 +1673,7 @@
     const sized = (u, w) => u.replace(/w=\d+/, 'w=' + w);
     const ARROW = '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>';
     let key = null, family = 'all', sub = 'all', product = null, lastFocus = null, listScroll = 0;
+    const firstSub = (f) => (((CAT[key] || {}).subs || {})[f] || [])[0] || 'all';
     const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=es';
 
     const cat = () => CAT[key];
@@ -1689,9 +1690,9 @@
       const prods = c.products.filter((p) => (family === 'all' || p.family === family) && (sub === 'all' || p.sub === sub));
       const subs = (c.subs && c.subs[family]) || [];
       const subChip = (f, label) => `<button type="button" data-sub="${esc(f)}" class="rounded-full px-4 py-2 text-[10px] tracking-widest2 uppercase transition-colors duration-300 ${sub === f ? 'bg-cream/90 text-ink font-medium' : 'border border-white/15 text-cream/70 hover:border-sky hover:text-sky'}">${esc(label)}</button>`;
-      const subRow = subs.length ? `<div class="flex flex-wrap justify-center gap-2 -mt-6 mb-10" role="group" aria-label="Filtrar por colección">${subChip('all', 'Todas')}${subs.map((x) => subChip(x, x.replace('Colección ', 'Jacuzzi '))).join('')}</div>` : '';
+      const subRow = subs.length ? `<div class="flex flex-wrap justify-center gap-2 -mt-6 mb-10" role="group" aria-label="Filtrar por colección">${subs.map((x) => subChip(x, x.replace('Colección ', 'Jacuzzi '))).join('')}</div>` : '';
       const chip = (f, label, n) => `<button type="button" data-family="${esc(f)}" class="rounded-full px-5 py-2.5 text-[11px] tracking-widest2 uppercase transition-colors duration-300 ${family === f ? 'bg-sky text-ink font-medium' : 'border border-white/15 text-cream/80 hover:border-sky hover:text-sky'}">${esc(label)} <span class="opacity-60 ml-1">${n}</span></button>`;
-      const chips = chip('all', 'Todos', c.products.length) + c.families.map((f) => chip(f, f, c.products.filter((p) => p.family === f).length)).join('');
+      const chips = c.families.map((f) => chip(f, f, c.products.filter((p) => p.family === f).length)).join('');
       const cards = prods.map((p) => {
         const a = photoOf(p, 0), b = photoOf(p, 1);
         return `<button type="button" data-product="${p.id}" class="cat-card group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx">
@@ -1788,7 +1789,7 @@
     }
 
     function open(k) {
-      key = k; family = 'all'; sub = 'all'; product = null; listScroll = 0;
+      key = k; family = cat().families[0]; sub = firstSub(family); product = null; listScroll = 0;
       lastFocus = document.activeElement;
       if (window.AQModal) window.AQModal.close(true);
       render();
@@ -1827,7 +1828,7 @@
 
     view.addEventListener('click', (e) => {
       const f = e.target.closest('[data-family]');
-      if (f) { family = f.dataset.family; sub = 'all'; swap(() => render()); return; }
+      if (f) { family = f.dataset.family; sub = firstSub(family); swap(() => render()); return; }
       const sb = e.target.closest('[data-sub]');
       if (sb) { sub = sb.dataset.sub; swap(() => render()); return; }
       const pr = e.target.closest('[data-product]');
