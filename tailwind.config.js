@@ -1,6 +1,6 @@
 /** Configuración de Tailwind (v3). Para regenerar el diseño: ver "Cómo regenerar tailwind.css" en el README. */
 module.exports = {
-  content: ['./index.html', './catalogo-data.js', './cookies.js', './i18n.js'],
+  content: ['./index.html', './catalogo-data.js', './cookies.js', './i18n.js', './advisors.js'],
   theme: {
     extend: {
       colors: {
