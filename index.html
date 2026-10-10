@@ -1853,6 +1853,23 @@
       else refreshCompare();
     }
 
+    // Visor 3D: la foto del spa es la vista por defecto; el modelo carga detrás y se abre con un botón
+    function setup3D(frame) {
+      const poster = view.querySelector('.cat-3d-poster');
+      const status = poster.querySelector('.cat-3d-status');
+      const go = poster.querySelector('.cat-3d-go');
+      const back = view.querySelector('.cat-3d-back');
+      setTimeout(() => { if (view.contains(frame)) { status.style.display = 'none'; go.style.display = 'inline-flex'; } }, 8000);
+      go.addEventListener('click', () => {
+        poster.style.opacity = 0; poster.style.pointerEvents = 'none';
+        back.hidden = false;
+      });
+      back.addEventListener('click', () => {
+        poster.style.opacity = 1; poster.style.pointerEvents = 'auto';
+        back.hidden = true;
+      });
+    }
+
     // Detalle de un producto con visor 3D: el visor ocupa todo el ancho y la información va debajo
     function detail3D() {
       const c = cat(), p = product;
@@ -1877,14 +1894,15 @@
           </div>
         </div>
         <div class="relative rounded-3xl overflow-hidden bg-white border border-white/10 shadow-2xl shadow-black/30 h-[min(82dvh,680px)] min-h-[520px]">
-          <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white pointer-events-none transition-opacity duration-700">
-            <img src="${esc(p.img)}" alt="" class="w-[min(78%,560px)] h-auto">
-            <div class="flex items-center gap-3 text-sm" style="color:#5b6b78"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
+          <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white transition-opacity duration-700">
+            <img src="${esc(p.img)}" alt="${esc(p.name)}" class="w-[min(78%,560px)] h-auto">
+            <div class="cat-3d-status flex items-center gap-3 text-sm" style="color:#5b6b78"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
+            <button type="button" class="cat-3d-go inline-flex items-center gap-3 rounded-full text-[11px] tracking-widest2 uppercase px-8 py-3.5 font-medium" style="background:#0f4c75;color:#fff;display:none">Ver en 3D</button>
           </div>
           <iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
         </div>
         <p class="text-cream/55 text-xs font-light mt-4 text-center">Arrastra para girarlo, cambia el gabinete y la carcasa, y toca «Ver en tu espacio» desde tu celular para verlo en realidad aumentada. Los modelos 3D pesan varios MB y pueden tardar unos segundos según tu conexión.</p>
-        <p class="cat-3d-slow text-sky text-xs font-light mt-2 text-center" hidden>¿Sigue cargando? Prueba <a href="${esc(embedUrl(p.embed))}" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-mist">abrirlo en pantalla completa</a>.</p>
+        <p class="text-center mt-2" ><button type="button" class="cat-3d-back text-sky text-xs font-light underline underline-offset-4 hover:text-mist" hidden>¿Tarda mucho? Volver a la foto</button></p>
         <div class="grid md:grid-cols-2 gap-10 md:gap-16 mt-14 items-start">
           <div>
             <p class="text-cream/75 font-light leading-relaxed mb-8">${esc(p.text)}</p>
@@ -1947,12 +1965,7 @@
       view.innerHTML = product ? detailHTML() : comparing ? compareHTML() : listHTML();
       const frame = view.querySelector('iframe');
       if (frame) stopWarm();
-      if (frame) setTimeout(() => { const n = view.querySelector('.cat-3d-slow'); if (n && view.contains(frame)) n.hidden = false; }, 20000);
-      if (frame) frame.addEventListener('load', () => {
-        const poster = view.querySelector('.cat-3d-poster');
-        if (!poster) return;
-        setTimeout(() => { poster.style.opacity = 0; setTimeout(() => poster.remove(), 750); }, 3500);
-      });
+      if (frame) setup3D(frame);
       refreshCompare();
       backLabel.textContent = product ? (comparing ? 'Volver a comparar' : 'Volver al catálogo') : comparing ? 'Volver al catálogo' : 'Volver a ' + cat().title;
     }
