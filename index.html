@@ -261,7 +261,7 @@
   #nav-dropdown-panel a.nav-sub:hover, #nav-dropdown-panel a.nav-sub:focus-visible { padding-left: 1rem; }
 
   /* Visor 3D: imagen del modelo mientras carga */
-  .cat-3d-dot { width: 9px; height: 9px; border-radius: 9999px; background: #0f4c75; animation: cat3dpulse 1.1s ease-in-out infinite; }
+  .cat-3d-dot { width: 9px; height: 9px; border-radius: 9999px; background: rgb(var(--c-sky)); animation: cat3dpulse 1.1s ease-in-out infinite; }
   @keyframes cat3dpulse { 0%, 100% { transform: scale(.7); opacity: .45; } 50% { transform: scale(1.15); opacity: 1; } }
 
   /* Comparar spas */
@@ -1859,10 +1859,10 @@
       if (!third()) {
         media.dataset.on = '1'; media.dataset.photo = media.innerHTML;
         media.style.aspectRatio = 'auto'; media.style.minHeight = '320px';
-        media.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-6 bg-white" style="color:#5b6b78">
+        media.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-6 bg-ink" style="color:rgb(var(--c-cream) / .7)">
           <img src="${esc(p.img)}" alt="" class="w-[min(60%,300px)] h-auto">
           <p class="text-sm max-w-sm">Este visor lo ofrece Jacuzzi® (Brand3D) y usa cookies de terceros. Para verlo necesitamos tu permiso.</p>
-          <button type="button" class="cat-cmp-allow inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium" style="background:#0f4c75;color:#fff">Permitir y ver en 3D</button></div>`;
+          <button type="button" class="cat-cmp-allow inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium" style="background:rgb(var(--c-sky));color:rgb(var(--c-ink))">Permitir y ver en 3D</button></div>`;
         media.querySelector('.cat-cmp-allow').addEventListener('click', () => {
           window.AQConsent.grantThird();
           delete media.dataset.on; media.innerHTML = media.dataset.photo; media.style.minHeight = '';
@@ -1875,9 +1875,9 @@
       media.dataset.photo = media.innerHTML;
       media.style.aspectRatio = 'auto'; media.style.height = 'max(660px, min(86dvh, 780px))';
       media.innerHTML = `<iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
-        <div class="cat-cmp-wait absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white transition-opacity duration-700">
+        <div class="cat-cmp-wait absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-ink transition-opacity duration-700">
           <img src="${esc(p.img)}" alt="" class="w-[min(78%,420px)] h-auto">
-          <div class="flex items-center gap-3 text-sm" style="color:#5b6b78"><span class="cat-3d-dot"></span>Cargando el modelo 3D…</div>
+          <div class="flex items-center gap-3 text-sm" style="color:rgb(var(--c-cream) / .7)"><span class="cat-3d-dot"></span>Cargando el modelo 3D…</div>
         </div>`;
       if (btn) btn.textContent = 'Volver a la foto';
       setTimeout(() => {
@@ -1989,18 +1989,18 @@
             <button type="button" data-compare="${p.id}" aria-pressed="false" class="cat-cmp inline-flex items-center gap-3 rounded-full border border-white/25 hover:border-sky hover:text-sky text-[11px] tracking-widest2 uppercase px-6 py-3.5"><span class="cat-cmp-t">+ Comparar</span></button>
           </div>
         </div>
-        <div class="relative rounded-3xl overflow-hidden bg-white border border-white/10 shadow-2xl shadow-black/30 w-full max-w-[1000px] mx-auto h-[max(660px,min(86dvh,780px))]">
-          <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white transition-opacity duration-700">
+        <div class="relative rounded-3xl overflow-hidden bg-ink border border-white/10 shadow-2xl shadow-black/30 w-full max-w-[1000px] mx-auto h-[max(660px,min(86dvh,780px))]">
+          <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-ink transition-opacity duration-700">
             <img src="${esc(p.img)}" alt="${esc(p.name)}" class="w-[min(78%,560px)] h-auto">
-            <div class="cat-3d-status items-center gap-3 text-sm" style="color:#5b6b78;display:${third() ? 'flex' : 'none'}"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
-            <div class="cat-3d-consent flex-col items-center gap-4 text-center px-6" style="color:#5b6b78;display:${third() ? 'none' : 'flex'}">
+            <div class="cat-3d-status items-center gap-3 text-sm" style="color:rgb(var(--c-cream) / .7);display:${third() ? 'flex' : 'none'}"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
+            <div class="cat-3d-consent flex-col items-center gap-4 text-center px-6" style="color:rgb(var(--c-cream) / .7);display:${third() ? 'none' : 'flex'}">
               <p class="text-sm max-w-md">Este visor lo ofrece Jacuzzi® (Brand3D) y usa cookies de terceros. Para verlo necesitamos tu permiso.</p>
               <div class="flex flex-wrap items-center justify-center gap-3">
-                <button type="button" class="cat-3d-allow inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium" style="background:#0f4c75;color:#fff">Permitir y ver en 3D</button>
-                <a href="${esc(embedUrl(p.embed))}" target="_blank" rel="noopener" class="inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-6 py-3.5" style="border:1px solid #0f4c75;color:#0f4c75">Abrir en pantalla completa</a>
+                <button type="button" class="cat-3d-allow inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium" style="background:rgb(var(--c-sky));color:rgb(var(--c-ink))">Permitir y ver en 3D</button>
+                <a href="${esc(embedUrl(p.embed))}" target="_blank" rel="noopener" class="inline-flex items-center rounded-full text-[11px] tracking-widest2 uppercase px-6 py-3.5" style="border:1px solid rgb(var(--c-sky));color:rgb(var(--c-sky))">Abrir en pantalla completa</a>
               </div>
             </div>
-            <button type="button" class="cat-3d-go inline-flex items-center gap-3 rounded-full text-[11px] tracking-widest2 uppercase px-8 py-3.5 font-medium" style="background:#0f4c75;color:#fff;display:none">Ver en 3D</button>
+            <button type="button" class="cat-3d-go inline-flex items-center gap-3 rounded-full text-[11px] tracking-widest2 uppercase px-8 py-3.5 font-medium" style="background:rgb(var(--c-sky));color:rgb(var(--c-ink));display:none">Ver en 3D</button>
           </div>
           <iframe title="Experiencia 3D de ${esc(p.name)}" ${third() ? 'src' : 'data-src'}="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
         </div>
