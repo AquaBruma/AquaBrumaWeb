@@ -217,6 +217,35 @@
   html[data-theme="light"] #modal-media [class*="border-white/"] { border-color: rgba(255,255,255,.18); }
   html[data-theme="light"] .card-fx { box-shadow: 0 1px 2px rgba(15,42,61,.06), 0 8px 24px -16px rgba(15,42,61,.18); }
   html[data-theme="light"] #site-header:not(.theme-dark) #nav-dropdown-panel { background: rgb(var(--c-ink) / .92); }
+  /* ---- Modo claro: letra más firme y legible ---- */
+  html[data-theme="light"] body { font-weight: 400; }
+  html[data-theme="light"] .font-light { font-weight: 400; }
+  html[data-theme="light"] .text-cream\/90, html[data-theme="light"] .text-cream\/80, html[data-theme="light"] .text-cream\/75, html[data-theme="light"] .text-cream\/70 { color: rgb(var(--c-cream) / .9); }
+  html[data-theme="light"] .text-cream\/65, html[data-theme="light"] .text-cream\/60, html[data-theme="light"] .text-cream\/55, html[data-theme="light"] .text-cream\/50 { color: rgb(var(--c-cream) / .8); }
+  html[data-theme="light"] .text-cream\/45, html[data-theme="light"] .text-cream\/40, html[data-theme="light"] .text-cream\/35 { color: rgb(var(--c-cream) / .72); }
+  html[data-theme="light"] .text-sky\/40, html[data-theme="light"] .text-sky\/30 { color: rgb(var(--c-sky) / .95); }
+  html[data-theme="light"] .text-sky.uppercase, html[data-theme="light"] .uppercase { font-weight: 500; }
+  html[data-theme="light"] .text-sky.uppercase { font-weight: 600; }
+  html[data-theme="light"] .text-\[10px\] { font-size: 11px; }
+  html[data-theme="light"] .text-\[11px\] { font-size: 12px; }
+  html[data-theme="light"] .text-xs { font-size: 13px; }
+  html[data-theme="light"] .modal-meta dt { color: rgb(var(--c-cream) / .75); font-weight: 500; }
+  html[data-theme="light"] .modal-meta dd { font-weight: 500; }
+  html[data-theme="light"] .cat-input { border-color: rgb(var(--c-cream) / .45); }
+  html[data-theme="light"] .cat-input::placeholder { color: rgb(var(--c-cream) / .6); }
+
+  /* ---- Modo claro: borde navy sutil en etiquetas, botones y objetos ---- */
+  html[data-theme="light"] [class*="border-white/"], html[data-theme="light"] [class*="border-cream/"], html[data-theme="light"] [class*="border-sky/"] { border-color: rgb(15 42 61 / .34); }
+  html[data-theme="light"] .border-y, html[data-theme="light"] .border-b, html[data-theme="light"] .border-t { border-color: rgb(15 42 61 / .18); }
+  html[data-theme="light"] .bg-ink3\/50, html[data-theme="light"] .bg-ink3\/40 { border-color: rgb(15 42 61 / .2); }
+  html[data-theme="light"] .chip { border-color: rgb(15 42 61 / .42); }
+  html[data-theme="light"] .el-chip.active .chip, html[data-theme="light"] .fx:hover .chip { border-color: rgb(var(--c-sky)); }
+  html[data-theme="light"] .social-fx, html[data-theme="light"] .theme-btn { border-color: rgb(15 42 61 / .45); }
+  html[data-theme="light"] .drop-divider { color: rgb(var(--c-sky) / .9); }
+  /* En las zonas que siguen oscuras los bordes vuelven a ser claros */
+  html[data-theme="light"] .theme-dark [class*="border-white/"], html[data-theme="light"] .theme-dark [class*="border-cream/"], html[data-theme="light"] .theme-dark [class*="border-sky/"], html[data-theme="light"] #inicio [class*="border-white/"], html[data-theme="light"] #inicio [class*="border-cream/"], html[data-theme="light"] #inicio [class*="border-sky/"], html[data-theme="light"] .card-zoom [class*="border-white/"], html[data-theme="light"] .card-zoom [class*="border-cream/"], html[data-theme="light"] .card-zoom [class*="border-sky/"], html[data-theme="light"] #dn [class*="border-white/"], html[data-theme="light"] #dn [class*="border-cream/"], html[data-theme="light"] #dn [class*="border-sky/"], html[data-theme="light"] #modal-media [class*="border-white/"], html[data-theme="light"] #modal-media [class*="border-cream/"], html[data-theme="light"] #modal-media [class*="border-sky/"] { border-color: rgba(255,255,255,.3); }
+
+
   html[data-theme="light"] .pattern-band { background-image: url('pattern-olas-claro.png'); opacity: .6; }
 
   /* Logo: versión clara sobre fondo oscuro y versión marino sobre fondo claro */
@@ -858,7 +887,7 @@
     <div class="relative">
       <div class="reveal ml-auto w-full lg:w-[74%] h-[440px] lg:h-[620px] overflow-hidden rounded-3xl relative">
         <img src="https://images.unsplash.com/photo-1617182726501-1f5f7b05a68f?w=1600&h=1400&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Piscina interior de líneas limpias en tonos claros">
-        <span class="theme-dark absolute bottom-5 right-5 lg:bottom-7 lg:right-7 inline-flex items-center gap-2 rounded-full bg-ink/55 backdrop-blur-md border border-white/20 px-4 py-2 text-[10px] tracking-widest2 uppercase text-cream/90">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</span>
+        <span class="theme-dark absolute bottom-5 right-5 lg:bottom-7 lg:right-7 inline-flex items-center gap-2 rounded-full bg-ink/75 backdrop-blur-md border border-white/20 px-4 py-2 text-[10px] tracking-widest2 uppercase text-cream/90">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</span>
       </div>
 
       <div class="relative lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 -mt-24 lg:mt-0 mx-3 sm:mx-8 lg:mx-0 lg:w-[47%]">
