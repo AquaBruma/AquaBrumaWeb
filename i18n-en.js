@@ -311,6 +311,8 @@ window.AQ_EN = {
  "Interior climatizada": "Climate-controlled indoor",
  "Interior o exterior": "Indoor or outdoor",
  "Interiores": "Indoor",
+ "Ir al inicio": "Go to top",
+ "Ir al inicio de la página": "Go to the top of the page",
  "Jacuzzi Azotea": "Rooftop Jacuzzi",
  "Jacuzzi Terraza": "Terrace Jacuzzi",
  "Jacuzzi empotrado en madera o piedra, diseñado a la medida de tu terraza, con acabados que resisten el sol y la humedad.": "Built-in jacuzzi in wood or stone, designed to the size of your terrace, with finishes that withstand sun and humidity.",
