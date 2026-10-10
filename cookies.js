@@ -45,7 +45,7 @@
     banner.id = 'cookie-banner';
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-labelledby', 'cookie-banner-title');
-    banner.className = 'fixed z-[95] left-3 right-3 bottom-3 sm:left-6 sm:right-auto sm:bottom-6 sm:max-w-md rounded-3xl bg-ink border border-cream/20 shadow-2xl shadow-black/50 p-6 transition-all duration-500 opacity-0 translate-y-4';
+    banner.className = 'fixed z-[95] left-3 right-3 bottom-3 sm:left-auto sm:right-6 sm:bottom-24 sm:max-w-md rounded-3xl bg-ink border border-cream/20 shadow-2xl shadow-black/50 p-6 transition-all duration-500 opacity-0 translate-y-4';
     banner.innerHTML = `
       <h2 id="cookie-banner-title" class="text-lg font-normal mb-2">Tu privacidad y las cookies</h2>
       <p class="text-cream/75 text-sm font-light leading-relaxed mb-5">Solo guardamos en tu navegador lo necesario para recordar tus preferencias (tema, idioma y esta elección). El visor 3D de Jacuzzi® carga contenido de terceros que puede usar cookies y analítica: tú decides si lo permites.</p>
