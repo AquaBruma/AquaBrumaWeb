@@ -41,10 +41,8 @@ robots.txt, sitemap.xml → SEO básico
 hero-poster-1/2.jpg     → fotogramas de respaldo (poster) para los videos del hero
 hero-dia.mp4,
 hero-dia-poster.jpg   → video y portada del hero en modo claro (Pexels 8045121, licencia gratuita: piscina de borde infinito frente al mar con una palmera; recortado del segundo 8 al 10, 2 s, ~1 MB). Solo se descarga si la persona activa el modo claro
-hero-atardecer-b.mp4,
-hero-atardecer-b-poster.jpg → video y portada del hero en modo OSCURO (Pexels 8758834, licencia gratuita: borde de piscina infinita con el sol poniéndose sobre el mar; recortado a 0–12 s, 1600×900, 2,8 MB; se muestra VOLTEADO horizontalmente con la clase `hero-flip` para que el sol quede a la derecha)
 hero-atardecer.mp4,
-hero-atardecer-poster.jpg → opción A anterior (casa con piscina y cascada al atardecer, Pexels 39576530); ya no se usa
+hero-atardecer-poster.jpg → video y portada del hero en modo OSCURO (Pexels 39576530, licencia gratuita: casa con piscina y cascada frente a una bahía, al atardecer; 1920×1080, 5,9 s, 4,3 MB)
 352854_medium.mp4,
 352876_medium.mp4       → videos nocturnos anteriores del hero (ya no se usan; se pueden borrar)
 ```
