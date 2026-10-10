@@ -319,6 +319,39 @@
     #proyectos .card-zoom > p { opacity: 1 !important; }
   }
 
+
+  /* ============ FOTOS: color unificado + bordes que se disuelven ============ */
+  .card-zoom img, .blend-img img, #modal-img { filter: saturate(.84) contrast(1.03); }
+  .grade-tint {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(14,85,134,.16), rgba(15,42,61,.26));
+    mix-blend-mode: multiply;
+  }
+  .blend-img { position: relative; overflow: hidden; }
+  .blend-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .blend-l, .blend-r {
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  }
+  @media (min-width: 1024px) {
+    .blend-l {
+      -webkit-mask-image: linear-gradient(to right, #000 48%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+              mask-image: linear-gradient(to right, #000 48%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+      -webkit-mask-composite: source-in; mask-composite: intersect;
+    }
+    .blend-r {
+      -webkit-mask-image: linear-gradient(to left, #000 48%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+              mask-image: linear-gradient(to left, #000 48%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+      -webkit-mask-composite: source-in; mask-composite: intersect;
+    }
+  }
+  /* El texto se alinea con el resto de la página aunque la foto llegue al borde */
+  .align-l, .align-r { padding-left: 1.5rem; padding-right: 1.5rem; }
+  @media (min-width: 1024px) {
+    .align-l { padding-left: max(3rem, calc((100vw - 1400px) / 2 + 3rem)); padding-right: 3rem; }
+    .align-r { padding-right: max(3rem, calc((100vw - 1400px) / 2 + 3rem)); padding-left: 4rem; }
+  }
+
   /* Patrón gráfico oficial del manual de identidad */
   .pattern-band {
     height: 168px;
@@ -507,6 +540,7 @@
       <!-- Card 1 -->
       <a href="#colecciones" data-modal="coleccion:0" role="button" aria-haspopup="dialog" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1766802124827-0bd80273d7ac?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Piscinas a la medida AquaBruma">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
           <h3 class="text-cream text-2xl font-normal mb-2 leading-tight">Piscinas<br>a la medida</h3>
@@ -517,6 +551,7 @@
       <!-- Card 2 -->
       <a href="#colecciones" data-modal="coleccion:1" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1613487700221-38271bedcb52?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Jacuzzis y spas AquaBruma">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
           <h3 class="text-cream text-2xl font-normal mb-2 leading-tight">Jacuzzis<br>&amp; Spas</h3>
@@ -527,6 +562,7 @@
       <!-- Card 3 -->
       <a href="#colecciones" data-modal="coleccion:2" role="button" aria-haspopup="dialog" class="reveal reveal-delay-2 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1769011496453-d6c20730843f?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Saunas y baños turcos AquaBruma">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
           <h3 class="text-cream text-2xl font-normal mb-2 leading-tight">Saunas<br>&amp; Turcos</h3>
@@ -537,6 +573,7 @@
       <!-- Card 4 -->
       <a href="#colecciones" data-modal="coleccion:3" role="button" aria-haspopup="dialog" class="reveal reveal-delay-3 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1769339764809-522564cf34c9?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Mantenimiento y servicio AquaBruma">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
           <h3 class="text-cream text-2xl font-normal mb-2 leading-tight">Servicio &amp;<br>Mantenimiento</h3>
@@ -547,6 +584,7 @@
       <!-- Card 5 -->
       <a href="#colecciones" data-modal="coleccion:4" role="button" aria-haspopup="dialog" class="reveal card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1747139089205-ee42a2221987?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Membranas para piscinas AquaBruma">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
           <h3 class="text-cream text-2xl font-normal mb-2 leading-tight">Membranas<br>para Piscinas</h3>
@@ -557,6 +595,7 @@
       <!-- Card 6 -->
       <a href="#colecciones" data-modal="coleccion:5" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom group relative h-[420px] w-[280px] sm:w-[320px] flex-shrink-0 snap-start overflow-hidden rounded-3xl bg-ink block">
         <img src="https://images.unsplash.com/photo-1729689706848-7dd56e6759fc?w=700&h=900&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Cerámicas para piscinas AquaBruma">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-ink2 via-ink/30 to-transparent"></div>
         <div class="absolute bottom-0 p-7">
           <h3 class="text-cream text-2xl font-normal mb-2 leading-tight">Cerámicas<br>para Piscinas</h3>
@@ -661,12 +700,13 @@
 <div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ CINCO ELEMENTOS ============ -->
-<section class="bg-ink py-12 md:py-20">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-    <div class="reveal h-[420px] lg:h-[560px] overflow-hidden rounded-3xl">
-      <img src="https://images.unsplash.com/photo-1649966422447-1cb8ec3b1063?w=1200&h=1200&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Detalle de piscina con acabado en piedra y agua tranquila">
+<section class="bg-ink py-10 md:py-16 overflow-hidden">
+  <div class="grid lg:grid-cols-2 items-center">
+    <div class="reveal blend-img blend-l h-[360px] lg:h-[680px]">
+      <img src="https://images.unsplash.com/photo-1649966422447-1cb8ec3b1063?w=1600&h=1600&fit=crop&q=80&auto=format" alt="Detalle de piscina con acabado en piedra y agua tranquila">
+      <div class="grade-tint"></div>
     </div>
-    <div class="reveal reveal-delay-1 flex flex-col justify-center">
+    <div class="reveal reveal-delay-1 flex flex-col justify-center align-r py-10 lg:py-0">
       <p class="text-sky text-[11px] tracking-widest2 uppercase mb-6">Lo esencial</p>
       <h2 class="text-balance text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight">Cinco elementos, <span class="text-sky font-normal">una sola experiencia</span></h2>
       <p class="text-cream/70 font-light leading-relaxed mb-8 max-w-md">
@@ -737,9 +777,9 @@
 <div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
 
 <!-- ============ SOBRE AQUABRUMA ============ -->
-<section id="nosotros" class="bg-ink py-16 md:py-24">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
-    <div class="reveal order-2 lg:order-1">
+<section id="nosotros" class="bg-ink py-12 md:py-20 overflow-hidden">
+  <div class="grid lg:grid-cols-2 items-center">
+    <div class="reveal order-2 lg:order-1 align-l py-10 lg:py-0">
       <p class="text-sky text-[11px] tracking-widest2 uppercase mb-5">Quiénes somos</p>
       <h2 class="text-balance text-4xl md:text-5xl font-light tracking-tight mb-8 leading-tight">Dominamos la técnica y la convertimos en <span class="text-sky font-normal">diseño</span></h2>
       <p class="text-cream/70 font-light leading-relaxed mb-6 max-w-lg">
@@ -749,8 +789,9 @@
         Acompañamos a familias, arquitectos e interioristas en cada etapa: desde el primer boceto hasta el último detalle del acabado.
       </p>
     </div>
-    <div class="reveal reveal-delay-1 order-1 lg:order-2 h-[420px] lg:h-[560px] overflow-hidden rounded-3xl">
-      <img src="https://images.unsplash.com/photo-1617182726501-1f5f7b05a68f?w=1000&h=1200&fit=crop&q=80&auto=format" class="w-full h-full object-cover" alt="Piscina interior de líneas limpias en tonos claros">
+    <div class="reveal reveal-delay-1 order-1 lg:order-2 blend-img blend-r h-[360px] lg:h-[640px]">
+      <img src="https://images.unsplash.com/photo-1617182726501-1f5f7b05a68f?w=1600&h=1600&fit=crop&q=80&auto=format" alt="Piscina interior de líneas limpias en tonos claros">
+      <div class="grade-tint"></div>
     </div>
   </div>
 </section>
@@ -771,6 +812,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       <a href="#proyectos" data-modal="proyecto:0" role="button" aria-haspopup="dialog" class="reveal card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1721222203704-da4b946207a5?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Llanogrande">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
         <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -778,6 +820,7 @@
       </a>
       <a href="#proyectos" data-modal="proyecto:1" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1789374398591-fb5f3256b869?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto El Poblado">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
         <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -785,6 +828,7 @@
       </a>
       <a href="#proyectos" data-modal="proyecto:2" role="button" aria-haspopup="dialog" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1780287857843-b461b70a9b2b?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Rionegro">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
         <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -792,6 +836,7 @@
       </a>
       <a href="#proyectos" data-modal="proyecto:3" role="button" aria-haspopup="dialog" class="reveal card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1633368098496-be7b5571547c?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Envigado">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
         <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -799,6 +844,7 @@
       </a>
       <a href="#proyectos" data-modal="proyecto:4" role="button" aria-haspopup="dialog" class="reveal reveal-delay-1 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1784772663654-b9a89ba18271?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto Sabaneta">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
         <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -806,6 +852,7 @@
       </a>
       <a href="#proyectos" data-modal="proyecto:5" role="button" aria-haspopup="dialog" class="reveal reveal-delay-2 card-zoom relative h-80 overflow-hidden rounded-3xl block group">
         <img src="https://images.unsplash.com/photo-1778166156635-0febdb3303ff?w=800&h=640&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover" alt="Proyecto La Calera">
+        <div class="grade-tint"></div>
         <div class="absolute inset-0 bg-ink/0 group-hover:bg-ink/40 transition-colors duration-500"></div>
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink2/85 to-transparent pointer-events-none"></div>
         <span class="proj-plus absolute top-4 right-4 w-10 h-10 rounded-full bg-ink/60 backdrop-blur-sm border border-white/25 text-cream flex items-center justify-center" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -919,6 +966,7 @@
 
     <div class="relative h-60 md:h-auto min-h-0 bg-ink2">
       <img id="modal-img" src="" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <div class="grade-tint"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-ink/30 pointer-events-none"></div>
     </div>
 
