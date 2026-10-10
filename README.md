@@ -8,6 +8,8 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 - [Tailwind CSS](https://tailwindcss.com) vía CDN (`cdn.tailwindcss.com`), con la paleta y tipografías configuradas inline en el `<head>`.
 - Tipografía: **Figtree** (Google Fonts) como sustituta de **Kripa**, la fuente oficial del manual (comercial, no disponible en Google Fonts). Si se consigue la licencia/archivo de Kripa, se incrusta con `@font-face` y se cambia `fontFamily.sans` en el `tailwind.config`.
 - Paleta oficial (manual): `ink #0f2a3d`, `ocean #0e5586`, `sky #b2cbe9` (acento), `mist #dcebff`, `cream #f3ede9`, `sand #c9baa3`.
+- Pantalla de entrada (`#preloader`): el logo se escribe, cae una gota que lo difumina y aparece el monograma "ab" (~4,5 s; se salta con un toque/clic o Enter). El video del hero y las animaciones de aparición arrancan cuando termina.
+- Interactividad: íconos que se animan al pasar (gota, sol, luna, ondas, loto, corazón…), los cinco elementos cambian su descripción, etiquetas que se abren, franja que se pausa y una onda de agua al hacer clic/tocar.
 - JavaScript vanilla (sin frameworks): menú móvil, dropdown de navegación, header que se oculta/muestra al hacer scroll, animaciones de aparición (`IntersectionObserver`), carrusel deslizable de colecciones.
 
 ## Estructura del proyecto

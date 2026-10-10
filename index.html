@@ -177,6 +177,130 @@
   .dn-label { transition: opacity .35s ease; }
   .dn.hide-day .dn-label-day, .dn.hide-night .dn-label-night { opacity: 0; }
 
+
+  /* ============ PANTALLA DE ENTRADA (logo + gota) ============ */
+  #preloader {
+    position: fixed; inset: 0; z-index: 100; background: #0a1f2e;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity .9s ease, visibility .9s ease;
+    cursor: pointer;
+  }
+  #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+  .pl-stage { position: relative; width: min(74vw, 520px); }
+  .pl-word {
+    display: block; width: 100%; height: auto; clip-path: inset(0 100% 0 0);
+    animation: pl-write 1.5s cubic-bezier(.65,0,.35,1) .35s forwards,
+               pl-dissolve 1.15s ease-in 2.6s forwards;
+  }
+  @keyframes pl-write { to { clip-path: inset(0 0 0 0); } }
+  @keyframes pl-dissolve {
+    0%   { filter: blur(0); opacity: 1; transform: scale(1); }
+    100% { filter: blur(22px); opacity: 0; transform: scale(1.07); }
+  }
+  .pl-drop {
+    position: absolute; left: 45%; top: 36%; width: clamp(26px, 4vw, 40px); margin-left: calc(clamp(26px, 4vw, 40px) / -2); opacity: 0;
+    transform: translateY(-60vh);
+    animation: pl-fall .8s cubic-bezier(.55,0,.9,.55) 1.85s forwards;
+    filter: drop-shadow(0 0 8px rgba(178,203,233,.6));
+  }
+  @keyframes pl-fall {
+    0%   { opacity: 0; transform: translateY(-60vh) scaleY(1.3); }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; transform: translateY(0) scaleY(1); }
+    100% { opacity: 0; transform: translateY(6px) scale(.5); }
+  }
+  .pl-ring {
+    position: absolute; left: 45%; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px;
+    border: 1.5px solid rgba(178,203,233,.75); border-radius: 9999px; opacity: 0;
+    animation: pl-ring 1.5s ease-out 2.55s forwards;
+  }
+  .pl-ring.r2 { animation-delay: 2.8s; border-color: rgba(178,203,233,.5); }
+  @keyframes pl-ring { 0% { opacity: .9; transform: scale(.2); } 100% { opacity: 0; transform: scale(11); } }
+  .pl-mono {
+    position: absolute; left: 50%; top: 50%; width: clamp(96px, 16vw, 132px); height: auto;
+    transform: translate(-50%, -50%) scale(.85); opacity: 0; filter: blur(14px);
+    animation: pl-mono 1s ease-out 2.8s forwards;
+  }
+  @keyframes pl-mono { to { opacity: 1; filter: blur(0); transform: translate(-50%, -50%) scale(1); } }
+  .pl-skip { position: absolute; bottom: 28px; left: 0; right: 0; text-align: center; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(243,237,233,.35); }
+  @media (prefers-reduced-motion: reduce) {
+    .pl-word, .pl-drop, .pl-ring { display: none; }
+    .pl-mono { animation-delay: 0s; animation-duration: .4s; }
+  }
+
+  /* ============ INTERACTIVIDAD: íconos, símbolos y etiquetas ============ */
+  .chip { transition: transform .35s cubic-bezier(.34,1.56,.64,1), border-color .3s ease, background-color .3s ease, box-shadow .3s ease; }
+  .fx:hover .chip, .fx:focus-visible .chip, .fx:active .chip, .fx.active .chip {
+    transform: translateY(-4px) scale(1.07); border-color: #b2cbe9;
+    background-color: rgba(178,203,233,.10); box-shadow: 0 0 26px rgba(178,203,233,.25);
+  }
+  .fx { cursor: pointer; }
+  .fx svg { transform-box: fill-box; transform-origin: center; }
+  .fx:hover [data-ico], .fx:active [data-ico], .fx.active [data-ico] { animation-duration: 1s; animation-timing-function: ease-in-out; animation-iteration-count: 1; }
+  .fx[data-anim=drop]:hover svg, .fx[data-anim=drop].active svg { animation: ico-drip .9s ease; }
+  .fx[data-anim=sun]:hover svg,  .fx[data-anim=sun].active svg  { animation: ico-spin 1.4s ease-in-out; }
+  .fx[data-anim=moon]:hover svg, .fx[data-anim=moon].active svg { animation: ico-sway 1.2s ease-in-out; }
+  .fx[data-anim=waves]:hover svg                                 { animation: ico-wave 1.1s ease-in-out; }
+  .fx[data-anim=lotus]:hover svg                                 { animation: ico-bloom 1s ease-in-out; }
+  .fx[data-anim=heart]:hover svg                                 { animation: ico-beat 1s ease-in-out; }
+  .fx[data-anim=stone]:hover svg, .fx[data-anim=stone].active svg { animation: ico-roll 1.1s ease-in-out; }
+  .fx[data-anim=heat]:hover svg,  .fx[data-anim=heat].active svg  { animation: ico-rise 1.1s ease-in-out; }
+  .fx[data-anim=space]:hover svg, .fx[data-anim=space].active svg { animation: ico-expand 1s ease-in-out; }
+  .fx[data-anim=compass]:hover svg { animation: ico-spin 1.6s ease-in-out; }
+  .fx[data-anim=shield]:hover svg  { animation: ico-beat .9s ease-in-out; }
+  svg.fx[data-anim=heart]:hover { animation: ico-beat 1s ease-in-out; }
+  svg.fx[data-anim=lotus]:hover { animation: ico-bloom 1s ease-in-out; }
+  .dn-sun svg { animation: ico-spin 20s linear infinite; }
+  .dn-moon svg { animation: ico-sway 7s ease-in-out infinite; }
+  @keyframes ico-drip   { 0% { transform: translateY(0); } 30% { transform: translateY(-7px) scaleY(1.12); } 60% { transform: translateY(4px) scaleY(.92); } 80% { transform: translateY(-2px); } 100% { transform: translateY(0); } }
+  @keyframes ico-spin   { to { transform: rotate(360deg); } }
+  @keyframes ico-sway   { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-16deg); } 75% { transform: rotate(14deg); } }
+  @keyframes ico-wave   { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  @keyframes ico-bloom  { 0%,100% { transform: scale(1); } 45% { transform: scale(1.28) translateY(-2px); } }
+  @keyframes ico-beat   { 0%,100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(.94); } 60% { transform: scale(1.18); } }
+  @keyframes ico-roll   { 0%,100% { transform: rotate(0); } 50% { transform: rotate(24deg) translateX(2px); } }
+  @keyframes ico-rise   { 0% { transform: translateY(2px); opacity: .6; } 50% { transform: translateY(-5px); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+  @keyframes ico-expand { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+
+  /* Tarjetas: elevan y se iluminan al pasar */
+  .card-fx { transition: transform .45s cubic-bezier(.22,1,.36,1), border-color .35s ease, background-color .35s ease, box-shadow .35s ease; }
+  .card-fx:hover { transform: translateY(-6px); border-color: rgba(178,203,233,.35); background-color: rgba(22,56,79,.8); box-shadow: 0 18px 40px -18px rgba(0,0,0,.5), 0 0 30px -10px rgba(178,203,233,.25); }
+  .card-fx:hover .chip-inline { transform: scale(1.1); }
+
+  /* Etiquetas pequeñas: se abren al pasar el cursor */
+  p.text-sky.uppercase { transition: letter-spacing .5s ease, color .3s ease; }
+  p.text-sky.uppercase:hover { letter-spacing: .36em; color: #dcebff; }
+
+  /* Franja de palabras: pausa y resalta */
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .mq-word { transition: color .3s ease, letter-spacing .4s ease, transform .35s cubic-bezier(.34,1.56,.64,1); cursor: default; display: inline-block; }
+  .mq-word:hover { color: #b2cbe9; letter-spacing: .34em; transform: translateY(-2px); }
+
+  /* Divisor con gota */
+  .drop-divider { cursor: pointer; }
+  .drop-divider:hover svg { animation: ico-drip .9s ease; }
+
+  /* Descripción dinámica de los cinco elementos */
+  #el-desc { transition: opacity .25s ease, transform .25s ease; }
+  #el-desc.swap { opacity: 0; transform: translateY(4px); }
+  .el-chip.active span { color: #b2cbe9; }
+
+  /* Redes: giro y elevación */
+  .social-fx { transition: transform .35s cubic-bezier(.34,1.56,.64,1), color .3s ease, border-color .3s ease, background-color .3s ease; }
+  .social-fx:hover { transform: translateY(-4px) rotate(-8deg) scale(1.1); background-color: rgba(178,203,233,.1); }
+
+  /* Onda al hacer clic o tocar en cualquier parte */
+  .tap-ring {
+    position: fixed; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 9999px;
+    border: 1.5px solid rgba(178,203,233,.85); pointer-events: none; z-index: 90;
+    animation: tap-ring .85s ease-out forwards;
+  }
+  @keyframes tap-ring { 0% { opacity: .95; transform: scale(.3); } 100% { opacity: 0; transform: scale(7); } }
+  @media (prefers-reduced-motion: reduce) { .tap-ring { display: none; } .fx svg, .drop-divider svg { animation: none !important; } }
+
+  /* Tarjetas de colecciones: en pantallas táctiles, un toque muestra la descripción */
+  .card-zoom.open p { opacity: 1 !important; }
+
   /* Patrón gráfico oficial del manual de identidad */
   .pattern-band {
     height: 168px;
@@ -188,7 +312,21 @@
 </style>
 </head>
 
-<body class="bg-ink text-cream antialiased font-light">
+<body class="bg-ink text-cream antialiased font-light overflow-hidden">
+
+<noscript><style>#preloader{display:none!important}body{overflow:auto!important}</style></noscript>
+
+<!-- ============ PANTALLA DE ENTRADA ============ -->
+<div id="preloader" role="status" aria-label="Cargando AquaBruma">
+  <div class="pl-stage">
+    <img class="pl-word" src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214">
+    <svg class="pl-drop" viewBox="0 0 24 32" aria-hidden="true"><defs><linearGradient id="pl-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcebff"/><stop offset="1" stop-color="#b2cbe9"/></linearGradient></defs><path d="M12 1C16.5 8 21 13.200 21 20a9 9 0 0 1-18 0C3 13.200 7.500 8 12 1z" fill="url(#pl-g)"/><path d="M8 20a4 4 0 0 0 3 3.800" fill="none" stroke="#0a1f2e" stroke-opacity=".35" stroke-width="1.400" stroke-linecap="round"/></svg>
+    <span class="pl-ring"></span><span class="pl-ring r2"></span>
+    <img class="pl-mono" src="ab-mark.png" alt="" width="520" height="413">
+  </div>
+  <span class="pl-skip">Toca para entrar</span>
+</div>
+
 
 <!-- ============ HEADER ============ -->
 <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 bg-transparent">
@@ -255,7 +393,7 @@
   <div class="absolute inset-0">
     <img src="hero-poster-2.jpg" alt=""
          class="absolute inset-0 w-full h-full object-cover opacity-80">
-    <video id="hero-video" autoplay muted playsinline preload="auto"
+    <video id="hero-video" muted playsinline preload="auto"
            poster="hero-poster-2.jpg"
            class="absolute inset-0 w-full h-full object-cover opacity-80"
            aria-label="Piscina infinita en azotea AquaBruma, entre columnas de piedra con vista nocturna de ciudad">
@@ -290,8 +428,8 @@
 <!-- ============ FRANJA ============ -->
 <div class="marquee border-y border-white/10 bg-ink py-5" aria-hidden="true">
   <div class="marquee-track">
-    <div class="flex"><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Agua</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Calma</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Bienestar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Relajación</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Silencio</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Luz</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Respirar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Descanso</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
-    <div class="flex"><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Agua</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Calma</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Bienestar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Relajación</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Silencio</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Luz</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Respirar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="text-[11px] tracking-widest2 uppercase text-cream/70">Descanso</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
+    <div class="flex"><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Agua</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Calma</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Bienestar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Relajación</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Silencio</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Luz</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Respirar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Descanso</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
+    <div class="flex"><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Agua</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Calma</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Bienestar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Relajación</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Silencio</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Luz</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Respirar</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="flex items-center gap-8 px-4"><span class="mq-word text-[11px] tracking-widest2 uppercase text-cream/70">Descanso</span><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-sky/70"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span></div>
   </div>
 </div>
 
@@ -308,7 +446,7 @@
   </div>
   <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid md:grid-cols-3 gap-5 md:gap-6">
 
-    <div class="reveal rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10">
+    <div class="reveal rounded-3xl bg-ink3/50 border border-white/5 card-fx fx p-8 md:p-10" data-anim="compass">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-sky mb-7">
         <circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><path d="M9.5 14.5L15 9l-1.5 5.5L8 17l1.5-2.5z"/>
       </svg>
@@ -316,7 +454,7 @@
       <p class="text-cream/70 font-light leading-relaxed text-sm">Estudiamos tu espacio e interpretamos su arquitectura para crear algo que se sienta tuyo desde el primer día.</p>
     </div>
 
-    <div class="reveal reveal-delay-1 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10">
+    <div class="reveal reveal-delay-1 rounded-3xl bg-ink3/50 border border-white/5 card-fx fx p-8 md:p-10" data-anim="drop">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-sky mb-7">
         <path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.800 9 7 12 3z"/><path d="M9.500 14a2.500 2.500 0 0 0 2.500 2.500"/>
       </svg>
@@ -324,7 +462,7 @@
       <p class="text-cream/70 font-light leading-relaxed text-sm">Ingeniería, hidráulica y tecnología trabajando en silencio para que todo funcione como debe.</p>
     </div>
 
-    <div class="reveal reveal-delay-2 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10">
+    <div class="reveal reveal-delay-2 rounded-3xl bg-ink3/50 border border-white/5 card-fx fx p-8 md:p-10" data-anim="shield">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-sky mb-7">
         <path d="M12 3l7 3v6c0 4.500-3 7.700-7 9-4-1.300-7-4.500-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>
       </svg>
@@ -442,11 +580,11 @@
         </div>
         <div class="absolute inset-0 bg-gradient-to-b from-ink/35 via-transparent to-transparent pointer-events-none"></div>
 
-        <div class="dn-label dn-label-day absolute top-5 left-5 sm:top-7 sm:left-8 flex items-center gap-3 text-white pointer-events-none">
+        <div class="dn-label dn-label-day absolute top-5 left-5 sm:top-7 sm:left-8 flex items-center gap-3 text-white pointer-events-none dn-sun">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
           <span class="text-lg sm:text-2xl font-medium tracking-wide uppercase">Día</span>
         </div>
-        <div class="dn-label dn-label-night absolute top-5 right-5 sm:top-7 sm:right-8 flex items-center gap-3 text-white pointer-events-none">
+        <div class="dn-label dn-label-night absolute top-5 right-5 sm:top-7 sm:right-8 flex items-center gap-3 text-white pointer-events-none dn-moon">
           <span class="text-lg sm:text-2xl font-medium tracking-wide uppercase">Noche</span>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/><path d="M17 3v3M15.5 4.5h3"/></svg>
         </div>
@@ -478,23 +616,23 @@
       <p class="text-cream/70 font-light leading-relaxed mt-6">El agua se disfruta con el cuerpo y también con la cabeza. Estos son los momentos que queremos darte.</p>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-      <div class="reveal text-center">
-        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/><path d="M17 3v3M15.5 4.5h3"/></svg></div>
+      <div class="reveal text-center fx" data-anim="moon">
+        <div class="mx-auto mb-6 chip w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/><path d="M17 3v3M15.5 4.5h3"/></svg></div>
         <h3 class="text-lg font-normal mb-2">Descansar</h3>
         <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Un rato de silencio al final del día, a pocos pasos de tu cama.</p>
       </div>
-      <div class="reveal reveal-delay-1 text-center">
-        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M12 16.6s-2.5-1.6-2.5-3.2a1.4 1.4 0 0 1 2.5-.8 1.4 1.4 0 0 1 2.5.8c0 1.6-2.5 3.2-2.5 3.2z"/></svg></div>
+      <div class="reveal reveal-delay-1 text-center fx" data-anim="heart">
+        <div class="mx-auto mb-6 chip w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M12 16.6s-2.5-1.6-2.5-3.2a1.4 1.4 0 0 1 2.5-.8 1.4 1.4 0 0 1 2.5.8c0 1.6-2.5 3.2-2.5 3.2z"/></svg></div>
         <h3 class="text-lg font-normal mb-2">Compartir</h3>
         <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Familia y amigos alrededor del agua: risas, conversación y tiempo juntos.</p>
       </div>
-      <div class="reveal reveal-delay-2 text-center">
-        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0M3 14c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0M3 19c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0"/></svg></div>
+      <div class="reveal reveal-delay-2 text-center fx" data-anim="waves">
+        <div class="mx-auto mb-6 chip w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0M3 14c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0M3 19c2.2-2 4.3-2 6 0s3.8 2 6 0 3.3-1.5 6 0"/></svg></div>
         <h3 class="text-lg font-normal mb-2">Recuperarte</h3>
         <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Hidroterapia para aliviar el cuerpo y despejar la mente.</p>
       </div>
-      <div class="reveal reveal-delay-3 text-center">
-        <div class="mx-auto mb-6 w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c1.8 2 2.6 4 2.6 6.2S13.8 15 12 17c-1.8-2-2.6-3.8-2.6-5.8S10.2 7 12 5z"/><path d="M12 17c-2.6 0-5.2-1.2-6.5-4 0 0 3.6-.2 5.3 1.8"/><path d="M12 17c2.6 0 5.2-1.2 6.5-4 0 0-3.6-.2-5.3 1.8"/><path d="M4 19.5c2.5 1.2 5 1.5 8 1.5s5.5-.3 8-1.5"/></svg></div>
+      <div class="reveal reveal-delay-3 text-center fx" data-anim="lotus">
+        <div class="mx-auto mb-6 chip w-[72px] h-[72px] rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c1.8 2 2.6 4 2.6 6.2S13.8 15 12 17c-1.8-2-2.6-3.8-2.6-5.8S10.2 7 12 5z"/><path d="M12 17c-2.6 0-5.2-1.2-6.5-4 0 0 3.6-.2 5.3 1.8"/><path d="M12 17c2.6 0 5.2-1.2 6.5-4 0 0-3.6-.2-5.3 1.8"/><path d="M4 19.5c2.5 1.2 5 1.5 8 1.5s5.5-.3 8-1.5"/></svg></div>
         <h3 class="text-lg font-normal mb-2">Desconectar</h3>
         <p class="text-cream/70 font-light text-sm leading-relaxed max-w-[240px] mx-auto">Calor, vapor y una pausa de verdad, sin salir de casa.</p>
       </div>
@@ -516,7 +654,8 @@
       <p class="text-cream/70 font-light leading-relaxed mb-8 max-w-md">
         En cada proyecto cuidamos lo que se ve y también lo que no se ve, para que lo único que tengas que hacer sea disfrutar.
       </p>
-      <div class="flex flex-wrap gap-x-6 gap-y-5 mb-9"><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Agua</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c0-3.5 3-7 7.5-7S19 11 19 14.5 16 19 12 19 5 17.5 5 15z"/><path d="M9 14c1-1.2 2.5-1.8 4-1.6"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Piedra</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Luz</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5c-1.5 2 1.5 3 0 5s1.5 3 0 5M12.5 5c-1.5 2 1.5 3 0 5s1.5 3 0 5M17 5c-1.5 2 1.5 3 0 5s1.5 3 0 5"/><path d="M5 19.5h14"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Temperatura</span></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9V5h4M15 5h4v4M19 15v4h-4M9 19H5v-4"/></svg></div><span class="text-[10px] tracking-widest2 uppercase text-cream/60">Espacio</span></div></div>
+      <div class="flex flex-wrap gap-x-6 gap-y-5 mb-5" role="group" aria-label="Los cinco elementos"><button type="button" class="el-chip fx flex flex-col items-center gap-2 active" data-el="agua" data-anim="drop" aria-pressed="true"><span class="chip w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></span><span class="text-[10px] tracking-widest2 uppercase text-cream/60 transition-colors">Agua</span></button><button type="button" class="el-chip fx flex flex-col items-center gap-2" data-el="piedra" data-anim="stone" aria-pressed="false"><span class="chip w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c0-3.5 3-7 7.5-7S19 11 19 14.5 16 19 12 19 5 17.5 5 15z"/><path d="M9 14c1-1.2 2.5-1.8 4-1.6"/></svg></span><span class="text-[10px] tracking-widest2 uppercase text-cream/60 transition-colors">Piedra</span></button><button type="button" class="el-chip fx flex flex-col items-center gap-2" data-el="luz" data-anim="sun" aria-pressed="false"><span class="chip w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></span><span class="text-[10px] tracking-widest2 uppercase text-cream/60 transition-colors">Luz</span></button><button type="button" class="el-chip fx flex flex-col items-center gap-2" data-el="temperatura" data-anim="heat" aria-pressed="false"><span class="chip w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5c-1.5 2 1.5 3 0 5s1.5 3 0 5M12.5 5c-1.5 2 1.5 3 0 5s1.5 3 0 5M17 5c-1.5 2 1.5 3 0 5s1.5 3 0 5"/><path d="M5 19.5h14"/></svg></span><span class="text-[10px] tracking-widest2 uppercase text-cream/60 transition-colors">Temperatura</span></button><button type="button" class="el-chip fx flex flex-col items-center gap-2" data-el="espacio" data-anim="space" aria-pressed="false"><span class="chip w-12 h-12 rounded-full border border-sky/30 flex items-center justify-center text-sky"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9V5h4M15 5h4v4M19 15v4h-4M9 19H5v-4"/></svg></span><span class="text-[10px] tracking-widest2 uppercase text-cream/60 transition-colors">Espacio</span></button></div>
+      <p id="el-desc" class="text-sky text-sm font-light leading-relaxed min-h-[3.2rem] mb-6 max-w-md" aria-live="polite">La materia de diseño: se contiene, se ilumina, se climatiza y se contempla.</p>
       <ul class="space-y-3 mb-10 text-sm text-cream/80 font-light">
         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky"></span> Una superficie que refleja la luz con exactitud</li>
         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky"></span> Una temperatura que transforma la experiencia</li>
@@ -570,7 +709,7 @@
 <!-- ============ AMAMOS EL AGUA ============ -->
 <section class="bg-ink py-16 md:py-24">
   <div class="max-w-3xl mx-auto px-6 text-center">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" class="reveal text-sky mx-auto mb-7"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M12 16.6s-2.5-1.6-2.5-3.2a1.4 1.4 0 0 1 2.5-.8 1.4 1.4 0 0 1 2.5.8c0 1.6-2.5 3.2-2.5 3.2z"/></svg>
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" class="reveal text-sky mx-auto mb-7 fx" data-anim="heart"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M12 16.6s-2.5-1.6-2.5-3.2a1.4 1.4 0 0 1 2.5-.8 1.4 1.4 0 0 1 2.5.8c0 1.6-2.5 3.2-2.5 3.2z"/></svg>
     <p class="reveal reveal-delay-1 text-sky text-[11px] tracking-widest2 uppercase mb-6">Lo que nos mueve</p>
     <h2 class="reveal reveal-delay-2 text-balance text-cream font-light text-3xl sm:text-4xl md:text-5xl leading-snug tracking-tight">Amamos el agua. Y queremos que <span class="text-sky font-normal">tú también la sientas en casa.</span></h2>
     <p class="reveal reveal-delay-3 text-cream/70 font-light leading-relaxed mt-8 max-w-xl mx-auto">Por eso cada proyecto busca lo mismo: que entres, respires hondo y te olvides del resto.</p>
@@ -653,17 +792,17 @@
   <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
     <p class="reveal text-center text-sky text-[11px] tracking-widest2 uppercase mb-14">Lo que dicen de nosotros</p>
     <div class="grid md:grid-cols-3 gap-5 md:gap-6">
-      <div class="reveal rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10">
+      <div class="reveal rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10 card-fx">
         <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-sky mb-6"><path d="M0 20V11.5C0 4.8 4.3 0.6 11 0V4.3C7.4 5 5.7 7.3 5.4 10.6H11V20H0ZM17 20V11.5C17 4.8 21.3 0.6 28 0V4.3C24.4 5 22.7 7.3 22.4 10.6H28V20H17Z" fill="currentColor"/></svg>
         <p class="text-lg font-light leading-relaxed mb-6">"No nos hicieron solo una piscina: cambiaron la forma en que vivimos nuestra casa."</p>
         <p class="text-[11px] tracking-widest2 uppercase text-cream/55">Residencia privada — Llanogrande</p>
       </div>
-      <div class="reveal reveal-delay-1 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10">
+      <div class="reveal reveal-delay-1 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10 card-fx">
         <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-sky mb-6"><path d="M0 20V11.5C0 4.8 4.3 0.6 11 0V4.3C7.4 5 5.7 7.3 5.4 10.6H11V20H0ZM17 20V11.5C17 4.8 21.3 0.6 28 0V4.3C24.4 5 22.7 7.3 22.4 10.6H28V20H17Z" fill="currentColor"/></svg>
         <p class="text-lg font-light leading-relaxed mb-6">"Escucharon lo que queríamos y lo explicaron todo con claridad. Cuidan cada detalle."</p>
         <p class="text-[11px] tracking-widest2 uppercase text-cream/55">Penthouse — El Poblado</p>
       </div>
-      <div class="reveal reveal-delay-2 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10">
+      <div class="reveal reveal-delay-2 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-10 card-fx">
         <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-sky mb-6"><path d="M0 20V11.5C0 4.8 4.3 0.6 11 0V4.3C7.4 5 5.7 7.3 5.4 10.6H11V20H0ZM17 20V11.5C17 4.8 21.3 0.6 28 0V4.3C24.4 5 22.7 7.3 22.4 10.6H28V20H17Z" fill="currentColor"/></svg>
         <p class="text-lg font-light leading-relaxed mb-6">"Nuestro arquitecto los recomendó y hoy entendemos por qué: cumplieron cada plazo y cada acabado."</p>
         <p class="text-[11px] tracking-widest2 uppercase text-cream/55">Finca campestre — Rionegro</p>
@@ -679,7 +818,7 @@
   <img src="https://images.unsplash.com/photo-1661333587575-25c87c14f398?w=1920&h=1000&fit=crop&q=80&auto=format" class="absolute inset-0 w-full h-full object-cover opacity-50" alt="">
   <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40"></div>
   <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
-    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" class="reveal text-sky mx-auto mb-5"><path d="M12 5c1.8 2 2.6 4 2.6 6.2S13.8 15 12 17c-1.8-2-2.6-3.8-2.6-5.8S10.2 7 12 5z"/><path d="M12 17c-2.6 0-5.2-1.2-6.5-4 0 0 3.6-.2 5.3 1.8"/><path d="M12 17c2.6 0 5.2-1.2 6.5-4 0 0-3.6-.2-5.3 1.8"/><path d="M4 19.5c2.5 1.2 5 1.5 8 1.5s5.5-.3 8-1.5"/></svg>
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" class="reveal text-sky mx-auto mb-5 fx" data-anim="lotus"><path d="M12 5c1.8 2 2.6 4 2.6 6.2S13.8 15 12 17c-1.8-2-2.6-3.8-2.6-5.8S10.2 7 12 5z"/><path d="M12 17c-2.6 0-5.2-1.2-6.5-4 0 0 3.6-.2 5.3 1.8"/><path d="M12 17c2.6 0 5.2-1.2 6.5-4 0 0-3.6-.2-5.3 1.8"/><path d="M4 19.5c2.5 1.2 5 1.5 8 1.5s5.5-.3 8-1.5"/></svg>
     <p class="reveal text-sky text-[11px] tracking-widest2 uppercase mb-6">Hablemos</p>
     <h2 class="text-balance reveal reveal-delay-1 text-cream text-4xl md:text-6xl font-light tracking-tight mb-8 leading-tight">Cuéntanos tu <span class="text-sky font-normal">idea</span></h2>
     <p class="reveal reveal-delay-2 text-cream/75 font-light mb-12 max-w-md mx-auto leading-relaxed">Escríbenos y agenda una conversación sin compromiso. Te ayudamos a imaginar lo que el agua puede ser en tu casa.</p>
@@ -704,13 +843,13 @@
         <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Pool &nbsp;•&nbsp; Spa &nbsp;•&nbsp; Wellness</p>
         <p class="text-cream/55 font-light text-sm max-w-xs leading-relaxed">Crear espacios excepcionales alrededor del agua.</p>
         <div class="flex items-center gap-3 mt-7">
-          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-cream/60 hover:text-sky hover:border-sky transition-colors">
+          <a href="#" aria-label="Instagram" class="social-fx w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-cream/60 hover:text-sky hover:border-sky">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
           </a>
-          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-cream/60 hover:text-sky hover:border-sky transition-colors">
+          <a href="#" aria-label="Facebook" class="social-fx w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-cream/60 hover:text-sky hover:border-sky">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 8h2V4h-2a4 4 0 0 0-4 4v2H9v4h2v6h4v-6h2.5l.5-4H15V8z"/></svg>
           </a>
-          <a href="#" aria-label="Pinterest" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-cream/60 hover:text-sky hover:border-sky transition-colors">
+          <a href="#" aria-label="Pinterest" class="social-fx w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-cream/60 hover:text-sky hover:border-sky">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M9 17c1-3 1.5-5 1.5-6.5a2.5 2.5 0 0 1 5 0c0 1.5-1 4-2 4.5-1 .5-2-.2-2-1.3"/></svg>
           </a>
         </div>
@@ -906,11 +1045,83 @@
   window.addEventListener('resize', setVH);
   window.addEventListener('orientationchange', setVH);
 
-  // Scroll reveal
+  // Scroll reveal (se activa cuando termina la pantalla de entrada)
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  let introDone = false;
+  function finishIntro() {
+    if (introDone) return;
+    introDone = true;
+    const pre = document.getElementById('preloader');
+    if (pre) { pre.classList.add('done'); setTimeout(() => pre.remove(), 1000); }
+    document.body.classList.remove('overflow-hidden');
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    const v = document.getElementById('hero-video');
+    if (v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+  }
+  (function () {
+    const pre = document.getElementById('preloader');
+    if (!pre) { finishIntro(); return; }
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    pre.addEventListener('click', finishIntro);
+    document.addEventListener('keydown', (e) => { if (!introDone && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) finishIntro(); });
+    setTimeout(finishIntro, reduce ? 1000 : 4500);
+  })();
+
+  // Cinco elementos: texto que cambia al elegir o pasar sobre cada uno
+  (function () {
+    const desc = document.getElementById('el-desc');
+    const chips = document.querySelectorAll('.el-chip');
+    if (!desc || !chips.length) return;
+    const TEXT = {
+      agua: 'La materia de diseño: se contiene, se ilumina, se climatiza y se contempla.',
+      piedra: 'Acabados que dan carácter y pertenecen al lugar, elegidos pieza por pieza.',
+      luz: 'Una superficie que refleja la luz con exactitud, de día y de noche.',
+      temperatura: 'Calor, vapor o frescura: la temperatura que transforma la experiencia.',
+      espacio: 'Una geometría que se ajusta a tu espacio y a tu arquitectura.'
+    };
+    let current = 'agua';
+    function select(key) {
+      if (key === current) return;
+      current = key;
+      chips.forEach((c) => { const on = c.dataset.el === key; c.classList.toggle('active', on); c.setAttribute('aria-pressed', on); });
+      desc.classList.add('swap');
+      setTimeout(() => { desc.textContent = TEXT[key]; desc.classList.remove('swap'); }, 220);
+    }
+    chips.forEach((c) => {
+      c.addEventListener('click', () => select(c.dataset.el));
+      c.addEventListener('mouseenter', () => select(c.dataset.el));
+      c.addEventListener('focus', () => select(c.dataset.el));
+    });
+  })();
+
+  // Colecciones: en pantallas táctiles, un toque muestra la descripción
+  (function () {
+    if (!window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('#colecciones-slider .card-zoom').forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if (!card.classList.contains('open')) {
+          e.preventDefault();
+          document.querySelectorAll('#colecciones-slider .card-zoom.open').forEach((c) => c.classList.remove('open'));
+          card.classList.add('open');
+        }
+      });
+    });
+  })();
+
+  // Onda de agua al tocar o hacer clic
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.addEventListener('pointerdown', (e) => {
+      const r = document.createElement('span');
+      r.className = 'tap-ring';
+      r.style.left = e.clientX + 'px';
+      r.style.top = e.clientY + 'px';
+      document.body.appendChild(r);
+      setTimeout(() => r.remove(), 900);
+    });
+  })();
 </script>
 
 </body>
