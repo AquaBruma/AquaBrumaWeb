@@ -30,6 +30,7 @@ espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscin
 jacuzzi-dia.jpg,
 jacuzzi-noche.jpg       → segundo par del comparador (jacuzzi; la de noche es una versión simulada)
 catalogo-data.js        → productos del catálogo ("Ver productos"): categorías, familias, fichas técnicas y fotos. DATOS DE EJEMPLO
+img/                    → fotos del sitio (copias locales de las de stock)
 favicon.*, icon-*.png,
 apple-touch-icon.png,
 site.webmanifest        → íconos y metadatos del sitio
@@ -76,7 +77,7 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 
 - **Productos del catálogo**: los 26 productos de `catalogo-data.js` (nombres, medidas, capacidades, descripciones) son de ejemplo. Reemplazar por los productos reales y sus fotos.
 
-- **Fotos de Unsplash**: la mayoría de las imágenes de la página se cargan desde `images.unsplash.com`. Si una red las bloquea, esas fotos no se ven. Lo ideal es reemplazarlas por fotos propias guardadas en la carpeta del proyecto.
+- **Fotos de stock**: todas las fotos (32) viven en `img/` (descargadas de Unsplash, licencia gratuita; 1200 px, ~6 MB en total), así que la página no depende de ningún servidor externo. Son de ejemplo: cambiarlas por fotos propias de AquaBruma, manteniendo el mismo nombre o actualizando las rutas en `index.html` y `catalogo-data.js`.
 
 ## Despliegue
 

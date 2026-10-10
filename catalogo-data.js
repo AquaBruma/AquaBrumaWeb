@@ -16,7 +16,7 @@
         photos   → posiciones (empezando en 0) de las fotos de la categoría que usa el producto
 */
 (function () {
-  const U = (id) => 'https://images.unsplash.com/photo-' + id + '?w=1400&q=80&auto=format&fit=crop';
+  const U = (id) => 'img/photo-' + id + '.jpg';
 
   window.AQ_CATALOG = {
     piscinas: {
