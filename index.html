@@ -1716,7 +1716,6 @@
         darkBeforeLight = null;
       }
     }
-    const firstSub = (f) => (((CAT[key] || {}).subs || {})[f] || [])[0] || 'all';
     const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=' + (window.AQ_LANG === 'en' ? 'en' : 'es');
     const third = () => !window.AQConsent || window.AQConsent.third();
 
@@ -1737,6 +1736,29 @@
       const subRow = subs.length ? `<div class="flex flex-wrap justify-center gap-2 -mt-6 mb-10" role="group" aria-label="Filtrar por colección">${subs.map((x) => subChip(x, x.replace('Colección ', 'Jacuzzi '))).join('')}</div>` : '';
       const chip = (f, label, n) => `<button type="button" data-family="${esc(f)}" class="rounded-full px-5 py-2.5 text-[11px] tracking-widest2 uppercase transition-colors duration-300 ${family === f ? 'bg-sky text-ink font-medium' : 'border border-white/15 text-cream/80 hover:border-sky hover:text-sky'}">${esc(label)} <span class="opacity-60 ml-1">${n}</span></button>`;
       const chips = c.families.map((f) => chip(f, f, c.products.filter((p) => p.family === f).length)).join('');
+      const overview = subs.length > 0 && sub === 'all';
+      const ico = {
+        grid: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>',
+        cal: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>',
+        cube: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>'
+      };
+      const badge = (svg, text) => `<li class="flex items-center gap-2.5 text-[10px] tracking-widest2 uppercase text-cream/80"><span class="text-sky flex-shrink-0">${svg}</span>${esc(text)}</li>`;
+      const collections = subs.map((name) => {
+        const items = c.products.filter((p) => p.family === family && p.sub === name);
+        if (!items.length) return '';
+        const years = [...new Set(items.map((p) => p.specs[0][1]))].sort();
+        const names = items.map((p) => p.name.replace('Jacuzzi® ', ''));
+        const line = names.slice(0, 4).join(' · ') + (names.length > 4 ? ' +' + (names.length - 4) : '');
+        return `<button type="button" data-sub="${esc(name)}" class="cat-col group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx flex flex-col">
+          <div class="relative aspect-[4/3] overflow-hidden bg-white"><img src="${esc(items[0].img)}" alt="${esc(name)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"></div>
+          <div class="p-6 md:p-8 flex flex-col flex-1">
+            <h3 class="text-xl md:text-2xl font-normal mb-2"><span class="underline underline-offset-[7px] decoration-sky/50 group-hover:decoration-sky transition-colors">${esc(name)}</span></h3>
+            <p class="text-sky text-sm font-light mb-6">${esc(line)}</p>
+            <ul class="flex flex-wrap gap-x-7 gap-y-3 mb-6">${badge(ico.grid, items.length + (items.length === 1 ? ' modelo' : ' modelos'))}${badge(ico.cal, 'Modelos ' + (years.length > 1 ? years[0] + '–' + years[years.length - 1] : years[0]))}${badge(ico.cube, '3D y realidad aumentada')}</ul>
+            <span class="mt-auto inline-flex items-center gap-2 text-[10px] tracking-widest2 uppercase text-cream/80 group-hover:text-sky transition-colors">Ver modelos ${ARROW}</span>
+          </div>
+        </button>`;
+      }).join('');
       const cards = prods.map((p) => {
         const a = photoOf(p, 0), b = photoOf(p, 1);
         const card = `<button type="button" data-product="${p.id}" class="cat-card group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx ${p.embed ? 'w-full h-full block' : ''}">
@@ -1762,8 +1784,11 @@
           <p class="text-cream/70 font-light leading-relaxed">${esc(c.intro)}</p>
         </header>
         <div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>
-        ${subRow}
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${cards}</div>
+        ${overview
+          ? `<h3 class="text-xl md:text-2xl font-light tracking-tight uppercase mb-6">Colecciones Jacuzzi®</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">${collections}</div>`
+          : `${subs.length ? `<div class="flex justify-center -mt-4 mb-6"><button type="button" data-sub="all" class="text-sky text-xs tracking-widest2 uppercase hover:text-mist transition-colors inline-flex items-center gap-2"><svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M15 5H1M6 1L2 5l4 4"/></svg>Todas las colecciones</button></div>` : ''}${subRow}
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${cards}</div>`}
         ${formHTML('')}`;
     }
 
@@ -2067,7 +2092,7 @@
     }
 
     function open(k) {
-      key = k; family = cat().families[0]; sub = firstSub(family); product = null; listScroll = 0; cmp = []; comparing = false;
+      key = k; family = cat().families[0]; sub = 'all'; product = null; listScroll = 0; cmp = []; comparing = false;
       lastFocus = document.activeElement;
       if (window.AQModal) window.AQModal.close(true);
       render();
@@ -2156,7 +2181,7 @@
       const rm = e.target.closest('[data-cmp-rm]');
       if (rm) { removeCompare(rm.dataset.cmpRm); return; }
       const f = e.target.closest('[data-family]');
-      if (f) { family = f.dataset.family; sub = firstSub(family); swap(() => render()); return; }
+      if (f) { family = f.dataset.family; sub = 'all'; swap(() => render()); return; }
       const sb = e.target.closest('[data-sub]');
       if (sb) { sub = sb.dataset.sub; swap(() => render()); return; }
       const pr = e.target.closest('[data-product]');

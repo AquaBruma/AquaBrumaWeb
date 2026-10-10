@@ -122,6 +122,7 @@ window.AQ_EN = {
  "Climatización de agua y ambiente": "Water and room climate control",
  "Climatización opcional": "Optional climate control",
  "Cobertor de seguridad opcional": "Optional safety cover",
+ "Colecciones Jacuzzi®": "Jacuzzi® Collections",
  "Colección": "Collection",
  "Color con brillo propio": "Color with its own sheen",
  "Color uniforme, limpieza fácil": "Uniform color, easy cleaning",
@@ -568,6 +569,7 @@ window.AQ_EN = {
  "Tipo": "Type",
  "Tipos": "Types",
  "Toca para entrar": "Tap to enter",
+ "Todas las colecciones": "All collections",
  "Todo lo del plan esencial + equipos": "Everything in the essential plan + equipment",
  "Trabajamos con fabricantes reconocidos en piscinas, spas, saunas y acabados, para que cada proyecto tenga una base técnica sólida.": "We work with recognized manufacturers in pools, spas, saunas and finishes, so every project has a solid technical foundation.",
  "Tratamiento de agua de bajo mantenimiento": "Low-maintenance water treatment",
@@ -606,6 +608,7 @@ window.AQ_EN = {
  "Ver ficha": "View sheet",
  "Ver galería completa": "View full gallery",
  "Ver los dos en 3D y personalizar": "View both in 3D and customize",
+ "Ver modelos": "View models",
  "Ver más productos": "View more products",
  "Ver productos": "View products",
  "Ver proyectos": "View projects",
@@ -661,6 +664,10 @@ window.AQ_EN = {
   window.AQ_EN_PATTERNS = [
     // Marcas y modelos: no se traducen
     [/^Jacuzzi®? [\w\-® ]+$/, (m) => m],
+    // Tarjetas de colección
+    [/^(\d+) modelos?$/, (m, n) => n + (n === '1' ? ' model' : ' models')],
+    [/^Modelos (.+)$/, (m, a) => 'Models ' + a],
+    [/^[\w\-]+(?: · [\w\-]+)+(?: \+\d+)?$/, (m) => m],
     // Colecciones
     [/^Colección (.+)$/, (m, a) => 'Collection ' + a],
     [/^Experiencia 3D de (.+)$/, (m, a) => '3D experience of ' + a],
