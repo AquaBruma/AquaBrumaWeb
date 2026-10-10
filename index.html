@@ -1883,7 +1883,8 @@
           </div>
           <iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
         </div>
-        <p class="text-cream/55 text-xs font-light mt-4 text-center">Arrastra para girarlo, cambia el gabinete y la carcasa, y toca «Ver en tu espacio» desde tu celular para verlo en realidad aumentada.</p>
+        <p class="text-cream/55 text-xs font-light mt-4 text-center">Arrastra para girarlo, cambia el gabinete y la carcasa, y toca «Ver en tu espacio» desde tu celular para verlo en realidad aumentada. Los modelos 3D pesan varios MB y pueden tardar unos segundos según tu conexión.</p>
+        <p class="cat-3d-slow text-sky text-xs font-light mt-2 text-center" hidden>¿Sigue cargando? Prueba <a href="${esc(embedUrl(p.embed))}" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-mist">abrirlo en pantalla completa</a>.</p>
         <div class="grid md:grid-cols-2 gap-10 md:gap-16 mt-14 items-start">
           <div>
             <p class="text-cream/75 font-light leading-relaxed mb-8">${esc(p.text)}</p>
@@ -1945,6 +1946,8 @@
     function render() {
       view.innerHTML = product ? detailHTML() : comparing ? compareHTML() : listHTML();
       const frame = view.querySelector('iframe');
+      if (frame) stopWarm();
+      if (frame) setTimeout(() => { const n = view.querySelector('.cat-3d-slow'); if (n && view.contains(frame)) n.hidden = false; }, 20000);
       if (frame) frame.addEventListener('load', () => {
         const poster = view.querySelector('.cat-3d-poster');
         if (!poster) return;
@@ -1984,7 +1987,7 @@
       else backToModal();
     }
     // Visores 3D más rápidos: conexiones anticipadas y una precarga invisible de lo que comparten todos los modelos
-    const warm = { linked: false, framed: false };
+    const warm = { linked: false, framed: false, frame: null };
     function preconnect() {
       if (warm.linked) return;
       warm.linked = true;
@@ -1995,6 +1998,9 @@
         document.head.appendChild(l);
       });
     }
+    function stopWarm() {
+      if (warm.frame) { warm.frame.remove(); warm.frame = null; }
+    }
     function prewarm(id) {
       if (warm.framed || !id) return;
       warm.framed = true;
@@ -2002,7 +2008,8 @@
       f.src = embedUrl(id); f.tabIndex = -1; f.setAttribute('aria-hidden', 'true');
       f.style.cssText = 'position:fixed;left:-700px;top:0;width:640px;height:480px;border:0;opacity:0;pointer-events:none';
       document.body.appendChild(f);
-      setTimeout(() => f.remove(), 9000);
+      warm.frame = f;
+      setTimeout(() => stopWarm(), 5000);
     }
     function warmUp(k) {
       const first = (CAT[k].products || []).find((p) => p.embed);
