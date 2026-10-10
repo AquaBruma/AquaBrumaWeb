@@ -1759,7 +1759,7 @@
         const a = photoOf(p, 0), b = photoOf(p, 1);
         const card = `<button type="button" data-product="${p.id}" class="cat-card group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx ${p.embed ? 'w-full h-full block' : ''}">
           <div class="relative aspect-[4/3] overflow-hidden ${p.img ? '' : 'bg-ink2'}">
-            <img src="${esc(p.img ? a : sized(a, 900))}" alt="${esc(p.name)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            <img src="${esc(p.img ? a : sized(a, 900))}" alt="${esc(p.name)}" loading="lazy" class="absolute inset-0 w-full h-full ${p.img ? 'object-contain' : 'object-cover'} transition-transform duration-700 ${p.img ? 'group-hover:scale-[1.03]' : 'group-hover:scale-105'}"${p.img ? ' style="padding:3.5rem 1rem 1rem"' : ''}>
             ${b ? `<img src="${esc(sized(b, 900))}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105">` : ''}
             <span class="absolute top-4 left-4 rounded-full bg-ink/65 backdrop-blur-sm border border-white/15 px-3 py-1 text-[10px] tracking-widest2 uppercase text-cream/90">${esc(p.sub ? p.sub.replace('Colección ', 'Jacuzzi ') : p.family)}</span>
           </div>
