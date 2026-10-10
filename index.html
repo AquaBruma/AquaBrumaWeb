@@ -1689,7 +1689,7 @@
       const prods = c.products.filter((p) => (family === 'all' || p.family === family) && (sub === 'all' || p.sub === sub));
       const subs = (c.subs && c.subs[family]) || [];
       const subChip = (f, label) => `<button type="button" data-sub="${esc(f)}" class="rounded-full px-4 py-2 text-[10px] tracking-widest2 uppercase transition-colors duration-300 ${sub === f ? 'bg-cream/90 text-ink font-medium' : 'border border-white/15 text-cream/70 hover:border-sky hover:text-sky'}">${esc(label)}</button>`;
-      const subRow = subs.length ? `<div class="flex flex-wrap justify-center gap-2 -mt-6 mb-10" role="group" aria-label="Filtrar por colección">${subChip('all', 'Todas')}${subs.map((x) => subChip(x, x.replace('Colección ', ''))).join('')}</div>` : '';
+      const subRow = subs.length ? `<div class="flex flex-wrap justify-center gap-2 -mt-6 mb-10" role="group" aria-label="Filtrar por colección">${subChip('all', 'Todas')}${subs.map((x) => subChip(x, x.replace('Colección ', 'Jacuzzi '))).join('')}</div>` : '';
       const chip = (f, label, n) => `<button type="button" data-family="${esc(f)}" class="rounded-full px-5 py-2.5 text-[11px] tracking-widest2 uppercase transition-colors duration-300 ${family === f ? 'bg-sky text-ink font-medium' : 'border border-white/15 text-cream/80 hover:border-sky hover:text-sky'}">${esc(label)} <span class="opacity-60 ml-1">${n}</span></button>`;
       const chips = chip('all', 'Todos', c.products.length) + c.families.map((f) => chip(f, f, c.products.filter((p) => p.family === f).length)).join('');
       const cards = prods.map((p) => {
@@ -1698,7 +1698,7 @@
           <div class="relative aspect-[4/3] overflow-hidden ${p.img ? 'bg-white' : 'bg-ink2'}">
             <img src="${esc(p.img ? a : sized(a, 900))}" alt="${esc(p.name)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
             ${b ? `<img src="${esc(sized(b, 900))}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105">` : ''}
-            <span class="absolute top-4 left-4 rounded-full bg-ink/65 backdrop-blur-sm border border-white/15 px-3 py-1 text-[10px] tracking-widest2 uppercase text-cream/90">${esc(p.sub || p.family)}</span>
+            <span class="absolute top-4 left-4 rounded-full bg-ink/65 backdrop-blur-sm border border-white/15 px-3 py-1 text-[10px] tracking-widest2 uppercase text-cream/90">${esc(p.sub ? p.sub.replace('Colección ', 'Jacuzzi ') : p.family)}</span>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-normal mb-1">${esc(p.name)}</h3>
