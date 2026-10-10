@@ -1693,6 +1693,18 @@
     const ARROW = '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>';
     let key = null, family = 'all', sub = 'all', product = null, lastFocus = null, listScroll = 0;
     let cmp = [], comparing = false;
+    // Las fichas con visor 3D (y la comparación) usan siempre el fondo claro del tema claro, porque el visor de Jacuzzi es blanco
+    let darkBeforeLight = null;
+    function catalogLight(on) {
+      const html = document.documentElement;
+      if (on && darkBeforeLight === null) {
+        if (html.getAttribute('data-theme') !== 'light') { html.setAttribute('data-theme', 'light'); darkBeforeLight = true; }
+        else darkBeforeLight = false;
+      } else if (!on && darkBeforeLight !== null) {
+        if (darkBeforeLight) html.removeAttribute('data-theme');
+        darkBeforeLight = null;
+      }
+    }
     const firstSub = (f) => (((CAT[key] || {}).subs || {})[f] || [])[0] || 'all';
     const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=es';
 
@@ -1997,6 +2009,7 @@
     }
 
     function render() {
+      catalogLight(!!(product && product.embed) || comparing);
       view.innerHTML = product ? detailHTML() : comparing ? compareHTML() : listHTML();
       const frame = view.querySelector('iframe');
       if (frame) stopWarm();
@@ -2018,12 +2031,14 @@
       setTimeout(() => document.getElementById('cat-close').focus(), 60);
     }
     function closeAll() {
+      catalogLight(false);
       root.classList.remove('open');
       root.setAttribute('aria-hidden', 'true');
       document.documentElement.classList.remove('modal-open');
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
     function backToModal() {
+      catalogLight(false);
       root.classList.remove('open');
       root.setAttribute('aria-hidden', 'true');
       if (window.AQModal) window.AQModal.open('coleccion', window.AQModal.order.indexOf(key), lastFocus);
