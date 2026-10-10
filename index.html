@@ -253,7 +253,10 @@
   }
   html[data-theme="light"] #inicio [class*="border-white/"] { border-color: rgb(var(--c-cream) / .14); }
   html[data-theme="light"] .hero-ov-a { background-image: linear-gradient(to top, rgb(243 237 233) 0%, rgb(243 237 233 / .35) 9%, rgb(243 237 233 / 0) 26%); }
-  html[data-theme="light"] .hero-ov-b { background-image: radial-gradient(ellipse 55% 62% at 20% 52%, rgb(243 237 233 / .52), rgb(243 237 233 / .22) 55%, rgb(243 237 233 / 0) 100%); }
+  html[data-theme="light"] .hero-ov-b { background-image: radial-gradient(ellipse 52% 78% at 19% 56%, rgb(243 237 233 / .62), rgb(243 237 233 / .30) 58%, rgb(243 237 233 / 0) 100%); }
+  @media (max-width: 767px) {
+    html[data-theme="light"] .hero-ov-b { background-image: linear-gradient(to bottom, rgb(243 237 233 / 0) 14%, rgb(243 237 233 / .62) 34%, rgb(243 237 233 / .62) 74%, rgb(243 237 233 / 0) 94%); }
+  }
   html[data-theme="light"] .hero-for-light { filter: saturate(1.22) contrast(1.06); }
   html[data-theme="light"] #site-header.bg-transparent #nav-dropdown-btn { font-weight: 600; color: rgb(6 20 33); }
   html[data-theme="light"] #site-header.bg-transparent a[href^="https://wa.me"] { font-weight: 600; color: rgb(6 20 33); border-color: rgb(6 20 33 / .65); }
@@ -533,7 +536,7 @@
            data-src="hero-dia.mp4"
            poster="hero-dia-poster.jpg"
            class="hero-for-light absolute inset-0 w-full h-full object-cover"
-           aria-label="Jacuzzi con agua burbujeante y azulejos azules, bajo el sol"></video>
+           aria-label="Vista aérea de una mujer nadando en una piscina rectangular de una casa, con terraza de piedra y sombrillas blancas"></video>
     <video id="hero-video" muted playsinline preload="auto"
            poster="hero-poster-2.jpg"
            class="hero-for-dark absolute inset-0 w-full h-full object-cover opacity-80"
