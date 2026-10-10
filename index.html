@@ -1851,7 +1851,7 @@
     function renderBar() {
       const bar = document.getElementById('cat-cmpbar');
       if (!bar) return;
-      if (!cmp.length || comparing || product) { bar.innerHTML = ''; return; }
+      if (!cmp.length || comparing) { bar.innerHTML = ''; return; }
       const slot = (id) => {
         const p = id && findProduct(id);
         return p
@@ -2070,7 +2070,7 @@
       const rm = e.target.closest('[data-cmp-rm]');
       if (rm) { removeCompare(rm.dataset.cmpRm); return; }
       if (e.target.closest('[data-cmp-clear]')) { cmp = []; refreshCompare(); return; }
-      if (e.target.closest('[data-cmp-go]') && cmp.length === 2) { listScroll = root.scrollTop; swap(() => { comparing = true; render(); }); }
+      if (e.target.closest('[data-cmp-go]') && cmp.length === 2) { if (!product) listScroll = root.scrollTop; swap(() => { product = null; comparing = true; render(); }); }
     });
 
     window.AQCatalog = { open };
