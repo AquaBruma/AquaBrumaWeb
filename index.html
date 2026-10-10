@@ -254,6 +254,16 @@
   #nav-dropdown-panel a { color: rgb(var(--c-cream)); font-weight: 500; border-radius: .75rem; padding: .8rem 1.1rem; transition: background-color .25s ease, color .25s ease, padding-left .25s ease; }
   #nav-dropdown-panel a:hover, #nav-dropdown-panel a:focus-visible { background: rgb(var(--c-cream) / .09); color: rgb(var(--c-sky)); padding-left: 1.4rem; outline: none; }
 
+  /* Menú: "Spas Jacuzzi" cuelga de "Catálogo" como una rama con su gota */
+  #nav-dropdown-panel a.nav-sub { white-space: nowrap; margin-left: 1.5rem; padding: .55rem 1.1rem .55rem 1rem; border-left: 1px solid rgb(var(--c-cream) / .28); border-radius: 0 .75rem .75rem 0; color: rgb(var(--c-sky)); font-weight: 600; }
+  #nav-dropdown-panel a.nav-sub svg { flex-shrink: 0; transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+  #nav-dropdown-panel a.nav-sub:hover svg, #nav-dropdown-panel a.nav-sub:focus-visible svg { transform: translateY(-2px) scale(1.25); }
+  #nav-dropdown-panel a.nav-sub:hover, #nav-dropdown-panel a.nav-sub:focus-visible { padding-left: 1rem; }
+
+  /* Visor 3D: imagen del modelo mientras carga */
+  .cat-3d-dot { width: 9px; height: 9px; border-radius: 9999px; background: #0f4c75; animation: cat3dpulse 1.1s ease-in-out infinite; }
+  @keyframes cat3dpulse { 0%, 100% { transform: scale(.7); opacity: .45; } 50% { transform: scale(1.15); opacity: 1; } }
+
   /* ============ MARCAS ============ */
   .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
   @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
@@ -518,9 +528,9 @@
             </svg>
           </button>
           <div id="nav-dropdown-panel"
-               class="absolute right-0 top-full mt-5 w-52 rounded-2xl bg-ink/30 backdrop-blur-md border border-cream/15 shadow-xl shadow-black/25 py-3 opacity-0 invisible -translate-y-2 transition-all duration-300">
+               class="absolute right-0 top-full mt-5 w-60 rounded-2xl bg-ink/30 backdrop-blur-md border border-cream/15 shadow-xl shadow-black/25 py-3 opacity-0 invisible -translate-y-2 transition-all duration-300">
             <a href="#colecciones" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Catálogo</a>
-            <a href="#colecciones" data-open-catalog="spas" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Spas Jacuzzi</a>
+            <a href="#colecciones" data-open-catalog="spas" class="nav-sub flex items-center gap-2.5 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas Jacuzzi</a>
             <a href="#proyectos" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Proyectos</a>
             <a href="#nosotros" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Nosotros</a>
             <a href="#contacto" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Contacto</a>
@@ -552,8 +562,10 @@
     <button id="menu-close" class="absolute top-7 right-6 text-cream" aria-label="Cerrar menú">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <a href="#colecciones" class="mobile-link text-3xl font-light">Catálogo</a>
-    <a href="#colecciones" data-open-catalog="spas" class="mobile-link text-3xl font-light">Spas Jacuzzi</a>
+    <div class="flex flex-col items-center gap-4">
+      <a href="#colecciones" class="mobile-link text-3xl font-light">Catálogo</a>
+      <a href="#colecciones" data-open-catalog="spas" class="mobile-link flex items-center gap-2.5 text-lg font-light text-sky"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas Jacuzzi</a>
+    </div>
     <a href="#proyectos" class="mobile-link text-3xl font-light">Proyectos</a>
     <a href="#nosotros" class="mobile-link text-3xl font-light">Nosotros</a>
     <a href="#contacto" class="mobile-link text-3xl font-light">Contacto</a>
@@ -1762,8 +1774,11 @@
           </div>
         </div>
         <div class="relative rounded-3xl overflow-hidden bg-white border border-white/10 shadow-2xl shadow-black/30 h-[min(82dvh,680px)] min-h-[520px]">
-          <div class="cat-3d-msg absolute inset-0 flex items-center justify-center text-center p-6 text-sm" style="color:#5b6b78">Cargando el modelo 3D…</div>
-          <iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0" onload="var m=this.parentNode.querySelector('.cat-3d-msg');if(m)m.remove()"></iframe>
+          <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white pointer-events-none transition-opacity duration-700">
+            <img src="${esc(p.img)}" alt="" class="w-[min(78%,560px)] h-auto">
+            <div class="flex items-center gap-3 text-sm" style="color:#5b6b78"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
+          </div>
+          <iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
         </div>
         <p class="text-cream/55 text-xs font-light mt-4 text-center">Arrastra para girarlo, cambia el gabinete y la carcasa, y toca «Ver en tu espacio» desde tu celular para verlo en realidad aumentada.</p>
         <div class="grid md:grid-cols-2 gap-10 md:gap-16 mt-14 items-start">
@@ -1826,6 +1841,12 @@
 
     function render() {
       view.innerHTML = product ? detailHTML() : listHTML();
+      const frame = view.querySelector('iframe');
+      if (frame) frame.addEventListener('load', () => {
+        const poster = view.querySelector('.cat-3d-poster');
+        if (!poster) return;
+        setTimeout(() => { poster.style.opacity = 0; setTimeout(() => poster.remove(), 750); }, 3500);
+      });
       backLabel.textContent = product ? 'Volver al catálogo' : 'Volver a ' + cat().title;
     }
 
@@ -1834,6 +1855,7 @@
       lastFocus = document.activeElement;
       if (window.AQModal) window.AQModal.close(true);
       render();
+      warmUp(k);
       root.scrollTop = 0;
       root.classList.add('open');
       root.setAttribute('aria-hidden', 'false');
@@ -1856,6 +1878,34 @@
       if (product) { swap(() => { product = null; render(); root.scrollTo({ top: listScroll }); }); }
       else backToModal();
     }
+    // Visores 3D más rápidos: conexiones anticipadas y una precarga invisible de lo que comparten todos los modelos
+    const warm = { linked: false, framed: false };
+    function preconnect() {
+      if (warm.linked) return;
+      warm.linked = true;
+      ['https://jg-embed.brand3d.com', 'https://p3d.in', 'https://us-central1-imp-master-p3d.cloudfunctions.net', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'].forEach((h) => {
+        const l = document.createElement('link');
+        l.rel = 'preconnect'; l.href = h;
+        if (h.includes('gstatic')) l.crossOrigin = '';
+        document.head.appendChild(l);
+      });
+    }
+    function prewarm(id) {
+      if (warm.framed || !id) return;
+      warm.framed = true;
+      const f = document.createElement('iframe');
+      f.src = embedUrl(id); f.tabIndex = -1; f.setAttribute('aria-hidden', 'true');
+      f.style.cssText = 'position:fixed;left:-700px;top:0;width:640px;height:480px;border:0;opacity:0;pointer-events:none';
+      document.body.appendChild(f);
+      setTimeout(() => f.remove(), 9000);
+    }
+    function warmUp(k) {
+      const first = (CAT[k].products || []).find((p) => p.embed);
+      if (!first) return;
+      preconnect();
+      setTimeout(() => prewarm(first.embed), 1200);
+    }
+
     window.AQCatalog = { open };
     document.addEventListener('click', (e) => {
       const a = e.target.closest('[data-open-catalog]');
