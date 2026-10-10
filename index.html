@@ -254,6 +254,24 @@
   #nav-dropdown-panel a { color: rgb(var(--c-cream)); font-weight: 500; border-radius: .75rem; padding: .8rem 1.1rem; transition: background-color .25s ease, color .25s ease, padding-left .25s ease; }
   #nav-dropdown-panel a:hover, #nav-dropdown-panel a:focus-visible { background: rgb(var(--c-cream) / .09); color: rgb(var(--c-sky)); padding-left: 1.4rem; outline: none; }
 
+  /* ============ SPAS JACUZZI 3D ============ */
+  .spa-chip { border: 1px solid rgb(var(--c-cream) / .22); color: rgb(var(--c-cream) / .8); border-radius: 9999px; padding: .55rem 1.1rem; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; transition: background-color .3s ease, color .3s ease, border-color .3s ease; }
+  .spa-chip:hover { border-color: rgb(var(--c-sky)); color: rgb(var(--c-sky)); }
+  .spa-chip.active { background: rgb(var(--c-sky)); border-color: rgb(var(--c-sky)); color: rgb(var(--c-ink)); font-weight: 600; }
+  .spa-card { display: block; width: 100%; text-align: left; border-radius: 1.25rem; overflow: hidden; background: rgb(var(--c-ink3) / .5); border: 1px solid rgb(var(--c-cream) / .12); transition: transform .45s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease; }
+  .spa-card:hover, .spa-card:focus-visible { transform: translateY(-5px); border-color: rgb(var(--c-sky)); box-shadow: 0 22px 40px -22px rgba(0,0,0,.55); outline: none; }
+  .spa-card .spa-img { background: #fff; aspect-ratio: 4 / 3; overflow: hidden; }
+  .spa-card .spa-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22,1,.36,1); }
+  .spa-card:hover .spa-img img { transform: scale(1.06); }
+  .spa-badge { display: inline-flex; align-items: center; gap: .4rem; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgb(var(--c-sky)); }
+  #spa-modal { opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s ease; }
+  #spa-modal.open { opacity: 1; visibility: visible; }
+  #spa-modal .spa-panel { transform: translateY(16px) scale(.98); transition: transform .4s cubic-bezier(.22,1,.36,1); }
+  #spa-modal.open .spa-panel { transform: none; }
+  #spa-frame-wrap { background: #fff; border-radius: 1rem; overflow: hidden; height: min(68dvh, 700px); position: relative; }
+  #spa-frame-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #spa-frame-msg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; color: #5b6b78; font-size: 14px; pointer-events: none; }
+
   /* ============ MARCAS ============ */
   .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
   @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
@@ -520,6 +538,7 @@
           <div id="nav-dropdown-panel"
                class="absolute right-0 top-full mt-5 w-52 rounded-2xl bg-ink/30 backdrop-blur-md border border-cream/15 shadow-xl shadow-black/25 py-3 opacity-0 invisible -translate-y-2 transition-all duration-300">
             <a href="#colecciones" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Catálogo</a>
+            <a href="#spas" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Spas Jacuzzi</a>
             <a href="#proyectos" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Proyectos</a>
             <a href="#nosotros" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Nosotros</a>
             <a href="#contacto" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Contacto</a>
@@ -552,6 +571,7 @@
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
     <a href="#colecciones" class="mobile-link text-3xl font-light">Catálogo</a>
+    <a href="#spas" class="mobile-link text-3xl font-light">Spas Jacuzzi</a>
     <a href="#proyectos" class="mobile-link text-3xl font-light">Proyectos</a>
     <a href="#nosotros" class="mobile-link text-3xl font-light">Nosotros</a>
     <a href="#contacto" class="mobile-link text-3xl font-light">Contacto</a>
@@ -813,6 +833,20 @@
 </section>
 
 <div class="drop-divider" aria-hidden="true"><svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg></div>
+
+<!-- ============ SPAS JACUZZI 3D ============ -->
+<section id="spas" class="bg-ink py-16 md:py-24">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="reveal max-w-2xl mb-10">
+      <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Spas Jacuzzi&reg;</p>
+      <h2 class="text-balance text-cream font-light text-4xl md:text-5xl tracking-tight">Elige tu spa y míralo <span class="text-sky font-normal">en 3D</span></h2>
+      <p class="text-cream/70 font-light leading-relaxed mt-6">Explora cada modelo desde todos los ángulos, cambia sus acabados y, desde tu celular, míralo en realidad aumentada dentro de tu propio espacio.</p>
+    </div>
+    <div id="spa-filters" class="flex flex-wrap gap-2.5 mb-10" role="group" aria-label="Filtrar por colección"></div>
+    <ul id="spa-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5"></ul>
+    <p class="text-cream/50 text-xs font-light mt-8">Modelos y experiencias 3D proporcionados por Jacuzzi&reg;. Consulta con nuestro equipo disponibilidad, medidas y acabados.</p>
+  </div>
+</section>
 
 <!-- ============ DÍA / NOCHE ============ -->
 <section id="espacios" class="bg-ink py-16 md:py-24">
@@ -1200,6 +1234,27 @@
           Siguiente <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ VENTANA SPA 3D ============ -->
+<div id="spa-modal" class="fixed inset-0 z-[82] flex items-center justify-center p-3 sm:p-6" aria-hidden="true">
+  <div id="spa-backdrop" class="absolute inset-0 bg-ink2/85 backdrop-blur-md"></div>
+  <div class="spa-panel relative w-full max-w-5xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-3xl bg-ink border border-white/10 shadow-2xl shadow-black/50 p-5 sm:p-8" role="dialog" aria-modal="true" aria-labelledby="spa-title">
+    <button id="spa-close" type="button" aria-label="Cerrar"
+            class="fx absolute top-4 right-4 z-20 w-11 h-11 rounded-full bg-ink/70 backdrop-blur-sm border border-white/20 text-cream hover:bg-sky hover:text-ink hover:rotate-90 transition-all duration-300 flex items-center justify-center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <p id="spa-eyebrow" class="text-sky text-[11px] tracking-widest2 uppercase mb-2 pr-14"></p>
+    <h2 id="spa-title" class="text-2xl sm:text-3xl font-light tracking-tight mb-5 pr-14"></h2>
+    <div id="spa-frame-wrap"><div id="spa-frame-msg">Cargando el modelo 3D…</div></div>
+    <div class="flex flex-wrap items-center gap-3 mt-5">
+      <a id="spa-cta" href="https://wa.me/573000000000" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-5 py-3.5 font-medium">Cotizar por WhatsApp</a>
+      <a id="spa-full" href="#" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-3 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-5 py-3.5 font-medium">Abrir en pantalla completa</a>
+      <p class="text-cream/60 text-xs font-light basis-full sm:basis-auto sm:flex-1 sm:min-w-[220px]">Toca «Ver en tu espacio» desde tu celular para verlo en realidad aumentada.</p>
     </div>
   </div>
 </div>
@@ -1866,5 +1921,68 @@
   })();
 </script>
 
+<script src="spas-data.js"></script>
+<script>
+  // Spas Jacuzzi en 3D: cuadrícula con filtro por colección y ventana con la experiencia oficial (se carga al abrir)
+  (function () {
+    const spas = window.AQ_SPAS || [], cols = window.AQ_SPA_COLLECTIONS || [];
+    const grid = document.getElementById('spa-grid'), filters = document.getElementById('spa-filters');
+    const modal = document.getElementById('spa-modal'), wrap = document.getElementById('spa-frame-wrap');
+    if (!grid || !modal) return;
+    const colName = (k) => (cols.find((c) => c.key === k) || {}).name || k;
+    const esc = (t) => String(t).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+    const embed = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=es';
+    let current = '', lastFocus = null;
+
+    function render() {
+      grid.innerHTML = spas.filter((s) => !current || s.c === current).map((s, i) =>
+        '<li><button type="button" class="spa-card group" data-spa="' + esc(s.id) + '" aria-haspopup="dialog" aria-label="Ver Jacuzzi ' + esc(s.name) + ' en 3D">' +
+        '<div class="spa-img"><img src="img/spas/' + s.img + '.webp" alt="Spa Jacuzzi ' + esc(s.name) + '" width="800" height="600" ' + (i < 4 ? '' : 'loading="lazy" ') + 'decoding="async"></div>' +
+        '<div class="p-4 sm:p-5"><p class="text-cream/60 text-[10px] tracking-widest2 uppercase mb-1">' + esc(colName(s.c)) + '</p>' +
+        '<h3 class="text-cream text-xl font-normal mb-3">Jacuzzi&reg; ' + esc(s.name) + '</h3>' +
+        '<span class="spa-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Ver en 3D</span></div>' +
+        '</button></li>').join('');
+    }
+    function renderFilters() {
+      const mk = (key, label) => '<button type="button" class="spa-chip' + (key === current ? ' active' : '') + '" data-col="' + esc(key) + '" aria-pressed="' + (key === current) + '">' + esc(label) + '</button>';
+      filters.innerHTML = mk('', 'Todos') + cols.map((c) => mk(c.key, c.key)).join('');
+    }
+    filters.addEventListener('click', (e) => {
+      const b = e.target.closest('.spa-chip'); if (!b) return;
+      current = b.dataset.col; renderFilters(); render();
+    });
+
+    function open(id) {
+      const s = spas.find((x) => x.id === id); if (!s) return;
+      lastFocus = document.activeElement;
+      document.getElementById('spa-eyebrow').textContent = colName(s.c) + ' · ' + s.year;
+      document.getElementById('spa-title').textContent = 'Jacuzzi® ' + s.name;
+      document.getElementById('spa-full').href = embed(id);
+      document.getElementById('spa-cta').href = 'https://wa.me/573000000000?text=' + encodeURIComponent('Hola, me interesa el spa Jacuzzi ' + s.name + '. ¿Me pueden dar más información?');
+      wrap.innerHTML = '<div id="spa-frame-msg">Cargando el modelo 3D…</div>';
+      const f = document.createElement('iframe');
+      f.title = 'Experiencia 3D del Jacuzzi ' + s.name; f.src = embed(id);
+      f.allow = 'clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope';
+      f.allowFullscreen = true;
+      f.addEventListener('load', () => { const m = document.getElementById('spa-frame-msg'); if (m) m.remove(); });
+      wrap.appendChild(f);
+      modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('modal-open');
+      document.getElementById('spa-close').focus();
+    }
+    function close() {
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('modal-open');
+      setTimeout(() => { if (!modal.classList.contains('open')) wrap.innerHTML = ''; }, 400);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    grid.addEventListener('click', (e) => { const b = e.target.closest('[data-spa]'); if (b) open(b.dataset.spa); });
+    document.getElementById('spa-close').addEventListener('click', close);
+    document.getElementById('spa-backdrop').addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (modal.classList.contains('open') && e.key === 'Escape') close(); });
+
+    renderFilters(); render();
+  })();
+</script>
 </body>
 </html>

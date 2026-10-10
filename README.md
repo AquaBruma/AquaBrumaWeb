@@ -16,6 +16,7 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 - Modo claro / oscuro: el foquito del encabezado alterna entre el fondo oscuro (por defecto) y uno claro (crema, texto marino, acento azul profundo). Se recuerda la elección de cada persona (`localStorage`, clave `aq-theme`) y se aplica antes de pintar para evitar parpadeos. Los colores salen de variables `--c-*` (bloque "TEMAS" del `<style>`); en modo claro la letra es más gruesa y más oscura que en oscuro, los textos pequeños son un punto más grandes y las etiquetas, círculos, botones y tarjetas llevan un borde navy sutil (bloque "Modo claro" del `<style>`); las zonas sobre fotos o video (hero, tarjetas con foto, comparador Día/Noche, "Cuéntanos tu idea") se quedan oscuras en ambos modos.
 - Franja de mensajes (debajo del inicio): tres tarjetas redondeadas que se desplazan en bucle ("Lo que todos ven", "Lo que nosotros sabemos hacer", "La superficie es la experiencia. La profundidad es Aquabruma."); se pausa al pasar el cursor. Son 8 copias del grupo para que el bucle no deje huecos en pantallas muy anchas.
 - Transición hero → franja: el hero se funde con el color de fondo de la página (`.hero-fade`, funciona en ambos temas).
+- Spas Jacuzzi en 3D (`#spas`, después de "Seis formas de vivir el agua"): 29 modelos de Jacuzzi (colecciones J5, J-4, J-400, J-300, J-200 y Play, versión más reciente de cada modelo) con filtro por colección. Cada tarjeta abre una ventana con la experiencia 3D / realidad aumentada oficial de Jacuzzi (Brand3D, `jg-embed.brand3d.com`, en español), que **solo se carga al abrirla** (es el único contenido externo del sitio). Los datos están en `spas-data.js` (id de la experiencia + miniatura en `img/spas/`); fuente: https://brand3d-ar.web.app/jacuzzi-hot-tubs. En esa página, cada experiencia ofrece su código de inserción (iframe) para distribuidores.
 - Marcas (`#marcas`, antes de "Seis formas de vivir el agua"): cuadrícula de 11 logos PNG sin recuadro y sin enlaces (75 % del tamaño original; el de Renolit, que es cuadrado, va un poco más grande). En tema oscuro se ven en blanco y se aclaran al pasar el cursor; en tema claro, en gris y a color al pasar el cursor (en celular a color). Para agregar o quitar una marca, editar la lista `<ul>` de esa sección.
 - JavaScript vanilla (sin frameworks): menú móvil, dropdown de navegación, header que se oculta/muestra al hacer scroll, animaciones de aparición (`IntersectionObserver`), carrusel deslizable de colecciones.
 
@@ -33,6 +34,7 @@ espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscin
 jacuzzi-dia.jpg,
 jacuzzi-noche.jpg       → segundo par del comparador (jacuzzi; la de noche es una versión simulada)
 catalogo-data.js        → productos del catálogo ("Ver productos"): categorías, familias, fichas técnicas y fotos. DATOS DE EJEMPLO
+img/spas/               → miniaturas (webp) de los 29 spas Jacuzzi; `spas-data.js` → lista de modelos
 img/marcas/             → logos (PNG) de las 11 marcas aliadas (Gres Aragón, Renolit, Jacuzzi, Togama, Reviglass, Mapei, AstralPool, Jandy, Pentair, Hayward, Emaux), tomados de sus sitios oficiales
 img/                    → fotos del sitio (copias locales de las de stock)
 favicon.*, icon-*.png,
@@ -84,6 +86,7 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 
 - **Fotos de stock**: todas las fotos (32) viven en `img/` (descargadas de Unsplash, licencia gratuita; 1200 px, ~6 MB en total), así que la página no depende de ningún servidor externo. Son de ejemplo: cambiarlas por fotos propias de AquaBruma, manteniendo el mismo nombre o actualizando las rutas en `index.html` y `catalogo-data.js`.
 
+- **Spas Jacuzzi 3D**: confirmar con Jacuzzi/Brand3D que AquaBruma puede mostrar sus modelos (miniaturas y visor) como distribuidor; el visor muestra al final de cada experiencia las opciones de acabado de Jacuzzi. Pendiente: agregar precios/medidas reales y revisar qué modelos se venderán en Colombia (se muestran los 29 de la lista pública).
 - **Uso de logos de marcas**: los logos pertenecen a sus titulares. Confirmar que AquaBruma tiene autorización para mostrarlos como marcas aliadas/distribuidas, y reemplazar por las versiones oficiales de sus kits de marca si las tienen (algunos logos son de baja resolución: Jandy, Emaux, Reviglass).
 
 ## Despliegue
