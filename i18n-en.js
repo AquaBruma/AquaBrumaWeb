@@ -623,6 +623,7 @@ window.AQ_EN = {
  "Vista abierta y barandas de cristal": "Open view and glass railings",
  "Volver": "Back",
  "Volver a la foto": "Back to the photo",
+ "Volver a las colecciones": "Back to collections",
  "Volver al catálogo": "Back to the catalog",
  "Zona baja para niños": "Shallow area for children",
  "Zona de sombra y asoleo": "Shade and sun area",
