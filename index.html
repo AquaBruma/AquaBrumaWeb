@@ -1773,14 +1773,15 @@
       ];
       const hasData = labels.some(([k]) => pair.some((p) => (p.info || {})[k]));
       const column = (p) => `<article class="rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 flex flex-col">
-          <div class="relative aspect-[4/3] bg-white"><img src="${esc(p.img)}" alt="${esc(p.name)}" class="absolute inset-0 w-full h-full object-cover"></div>
+          <div class="cat-cmp-media relative bg-white" data-id="${p.id}" style="aspect-ratio:4/3"><img src="${esc(p.img)}" alt="${esc(p.name)}" class="absolute inset-0 w-full h-full object-cover"></div>
           <div class="p-6 md:p-8 flex flex-col gap-5 flex-1">
             <div>
               <p class="text-sky text-[11px] tracking-widest2 uppercase mb-2">${esc(p.sub.replace('Colección ', 'Jacuzzi '))}</p>
               <h3 class="text-2xl md:text-3xl font-light tracking-tight">${esc(p.name)}</h3>
             </div>
             <div class="mt-auto flex flex-wrap gap-3">
-              <button type="button" data-product="${p.id}" class="inline-flex items-center gap-2 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 text-[10px] tracking-widest2 uppercase px-5 py-3">Ver en 3D ${ARROW}</button>
+              <button type="button" data-cmp3d="${p.id}" class="inline-flex items-center gap-2 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[10px] tracking-widest2 uppercase px-5 py-3 font-medium">Personalizar en 3D</button>
+              <button type="button" data-product="${p.id}" class="inline-flex items-center gap-2 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 text-[10px] tracking-widest2 uppercase px-5 py-3">Ver ficha ${ARROW}</button>
               <button type="button" data-cmp-rm="${p.id}" class="inline-flex items-center rounded-full border border-white/25 hover:border-sky hover:text-sky transition-colors duration-300 text-[10px] tracking-widest2 uppercase px-5 py-3">Quitar</button>
             </div>
           </div>
@@ -1803,6 +1804,10 @@
           <p class="text-sky text-[11px] tracking-widest2 uppercase mb-3">Spas Jacuzzi&reg;</p>
           <h2 id="cat-title" class="text-4xl md:text-5xl font-light tracking-tight">Comparar dos spas</h2>
         </header>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-6">
+          <button type="button" data-cmp3d-both class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5 font-medium">Ver los dos en 3D y personalizar</button>
+          <p class="text-cream/60 text-xs font-light max-w-xl">Cada visor se personaliza por separado: elige los mismos acabados en los dos para compararlos de igual a igual.</p>
+        </div>
         <div class="grid md:grid-cols-2 gap-5 md:gap-6">${pair.map(column).join('')}</div>
         <section class="mt-8 rounded-3xl border border-white/10 overflow-hidden" aria-label="Comparación de características">${table}</section>
         ${hasData ? '' : `<p class="text-cream/60 text-sm font-light mt-6 max-w-2xl">¿Quieres la comparación completa con capacidad, medidas, volumen de agua y chorros? Un asesor te la envía con las fichas técnicas de Jacuzzi&reg;.</p>`}
@@ -1811,6 +1816,36 @@
           <button type="button" data-act="list" class="inline-flex items-center gap-3 rounded-full border border-white/25 hover:border-sky hover:text-sky transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5">Elegir otros</button>
         </div>
         ${formHTML(' y la comparación de «' + esc(pair[0].name) + '» con «' + esc(pair[1].name) + '»')}`;
+    }
+
+    // Visores 3D dentro de la comparación: cada spa se personaliza por separado, en su propia columna
+    function show3D(id) {
+      const media = view.querySelector(`.cat-cmp-media[data-id="${id}"]`);
+      const btn = view.querySelector(`[data-cmp3d="${id}"]`);
+      const p = findProduct(id);
+      if (!media || !p || media.dataset.on) return;
+      media.dataset.on = '1';
+      media.dataset.photo = media.innerHTML;
+      media.style.aspectRatio = 'auto'; media.style.height = 'min(78dvh, 700px)'; media.style.minHeight = '560px';
+      media.innerHTML = `<iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
+        <div class="cat-cmp-wait absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-white transition-opacity duration-700">
+          <img src="${esc(p.img)}" alt="" class="w-[min(78%,420px)] h-auto">
+          <div class="flex items-center gap-3 text-sm" style="color:#5b6b78"><span class="cat-3d-dot"></span>Cargando el modelo 3D…</div>
+        </div>`;
+      if (btn) btn.textContent = 'Volver a la foto';
+      setTimeout(() => {
+        const w = media.querySelector('.cat-cmp-wait');
+        if (w) { w.style.opacity = 0; w.style.pointerEvents = 'none'; setTimeout(() => w.remove(), 750); }
+      }, 9000);
+    }
+    function hide3D(id) {
+      const media = view.querySelector(`.cat-cmp-media[data-id="${id}"]`);
+      const btn = view.querySelector(`[data-cmp3d="${id}"]`);
+      if (!media || !media.dataset.on) return;
+      media.innerHTML = media.dataset.photo;
+      media.style.aspectRatio = '4/3'; media.style.height = ''; media.style.minHeight = '';
+      delete media.dataset.on;
+      if (btn) btn.textContent = 'Personalizar en 3D';
     }
 
     function renderBar() {
@@ -2050,6 +2085,9 @@
     document.getElementById('cat-close').addEventListener('click', closeAll);
 
     view.addEventListener('click', (e) => {
+      const c3 = e.target.closest('[data-cmp3d]');
+      if (c3) { const id = c3.dataset.cmp3d; const m = view.querySelector(`.cat-cmp-media[data-id="${id}"]`); if (m && m.dataset.on) hide3D(id); else { stopWarm(); show3D(id); } return; }
+      if (e.target.closest('[data-cmp3d-both]')) { stopWarm(); show3D(cmp[0]); setTimeout(() => { if (comparing) show3D(cmp[1]); }, 5000); return; }
       const cb = e.target.closest('[data-compare]');
       if (cb) { toggleCompare(cb.dataset.compare); return; }
       const rm = e.target.closest('[data-cmp-rm]');
