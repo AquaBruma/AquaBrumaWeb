@@ -2,7 +2,7 @@
   ASESORES DE WHATSAPP
   --------------------
   Todos los botones de WhatsApp del sitio (flotante, encabezado, catálogo, fichas de producto, comparador,
-  formularios, pie de página) abren esta ventana para elegir con quién hablar. El mensaje que se envía ya lleva
+  formularios) abren un globito sobre el botón flotante para elegir con quién hablar. El mensaje que se envía ya lleva
   el producto o proyecto que la persona estaba viendo, para que el asesor sepa cómo atenderla.
 
   Para cambiar un asesor: editar AQ_ADVISORS (nombre, cargo, número con indicativo de país y sin símbolos).
@@ -59,27 +59,24 @@
     return 'https://wa.me/' + a.phone + '?text=' + encodeURIComponent(personalize(text, a.first));
   }
 
+  // Globito que sale sobre el botón flotante de WhatsApp (sin ventana ni fondo oscuro)
   function build() {
     modal = document.createElement('div');
     modal.id = 'advisor-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', 'adv-title');
     modal.setAttribute('aria-hidden', 'true');
-    modal.className = 'fixed inset-0 z-[97] flex items-center justify-center p-3 sm:p-6 opacity-0 invisible transition-opacity duration-300';
+    modal.className = 'fixed z-[88] right-4 bottom-24 sm:right-6 w-[calc(100vw-2rem)] max-w-[340px] rounded-3xl bg-ink border border-cream/20 shadow-2xl shadow-black/50 p-5 origin-bottom-right transition-all duration-300 opacity-0 invisible scale-90 translate-y-2';
     modal.innerHTML = `
-      <div data-adv-close class="absolute inset-0 bg-ink2/85 backdrop-blur-md"></div>
-      <div role="dialog" aria-modal="true" aria-labelledby="adv-title" class="relative w-full max-w-xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-3xl bg-ink border border-cream/15 shadow-2xl shadow-black/50 p-6 sm:p-9 translate-y-3 transition-transform duration-300">
-        <button type="button" data-adv-close aria-label="Cerrar" class="absolute top-4 right-4 w-10 h-10 rounded-full border border-cream/25 hover:bg-sky hover:text-ink transition-colors flex items-center justify-center">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <div class="flex items-start justify-between gap-3 mb-3">
+        <h2 id="adv-title" class="text-lg font-normal leading-tight">Habla con un asesor</h2>
+        <button type="button" data-adv-close aria-label="Cerrar" class="w-8 h-8 -mt-1 -mr-1 rounded-full border border-cream/25 hover:bg-sky hover:text-ink transition-colors flex items-center justify-center flex-shrink-0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <p class="text-sky text-[11px] tracking-widest2 uppercase mb-3">WhatsApp</p>
-        <h2 id="adv-title" class="text-2xl sm:text-3xl font-light tracking-tight mb-3 pr-12">Habla con un asesor</h2>
-        <p class="text-cream/70 text-sm font-light leading-relaxed mb-5">Elige con quién quieres hablar. Le llegará tu mensaje, con lo que estás viendo, para que te asesore mejor.</p>
-        <div class="rounded-2xl border border-cream/15 bg-ink3/50 px-4 py-3 mb-6">
-          <p class="text-[10px] tracking-widest2 uppercase text-cream/55 mb-1">Tu mensaje</p>
-          <p id="adv-text" class="text-sm text-cream/90 font-light leading-relaxed"></p>
-        </div>
-        <div class="grid sm:grid-cols-2 gap-4" id="adv-list"></div>
-        <p class="text-cream/50 text-xs font-light mt-5 text-center">Se abrirá WhatsApp en una pestaña nueva.</p>
-      </div>`;
+      </div>
+      <p id="adv-text" class="text-xs text-cream/65 font-light leading-relaxed mb-4 line-clamp-3"></p>
+      <div class="space-y-3" id="adv-list"></div>
+      <span aria-hidden="true" class="absolute -bottom-2 right-[22px] w-4 h-4 rotate-45 bg-ink border-r border-b border-cream/20"></span>`;
     document.body.appendChild(modal);
     modal.addEventListener('click', (e) => { if (e.target.closest('[data-adv-close]')) close(); else if (e.target.closest('[data-adv-go]')) setTimeout(close, 150); });
   }
@@ -87,47 +84,45 @@
   function render() {
     modal.querySelector('#adv-text').textContent = T(current);
     modal.querySelector('#adv-list').innerHTML = ADVISORS.map((a) => `
-      <a href="${esc(link(a, T(current)))}" target="_blank" rel="noopener" data-wa-direct data-adv-go class="group flex flex-col items-center text-center rounded-2xl border border-cream/15 hover:border-sky bg-ink3/40 hover:bg-ink3/70 p-5 transition-colors duration-300">
-        <span class="block w-24 h-24 rounded-full overflow-hidden ring-2 ring-sky/40 group-hover:ring-sky transition-all duration-300 mb-4">${a.photo ? `<img src="${esc(a.photo)}" alt="" class="w-full h-full object-cover">` : AVATARS[a.avatar]}</span>
-        <span class="text-lg font-normal leading-tight">${esc(a.name)}</span>
-        <span class="text-sky text-[10px] tracking-[.14em] uppercase mt-1 mb-1 whitespace-nowrap">${esc(a.role)}</span>
-        <span class="text-cream/55 text-xs font-light mb-4" data-i18n-skip>${esc(a.show)}</span>
-        <span class="inline-flex items-center gap-2 rounded-full bg-sky group-hover:bg-mist text-ink text-[10px] tracking-[.14em] uppercase px-4 py-2.5 font-medium transition-colors whitespace-nowrap">${WA}<span>Escribir por WhatsApp</span></span>
+      <a href="${esc(link(a, T(current)))}" target="_blank" rel="noopener" data-wa-direct data-adv-go class="group flex items-center gap-3 rounded-2xl border border-cream/15 hover:border-sky bg-ink3/40 hover:bg-ink3/70 p-3 transition-colors duration-300">
+        <span class="block w-12 h-12 rounded-full overflow-hidden ring-2 ring-sky/40 group-hover:ring-sky transition-all duration-300 flex-shrink-0">${a.photo ? `<img src="${esc(a.photo)}" alt="" class="w-full h-full object-cover">` : AVATARS[a.avatar]}</span>
+        <span class="flex-1 min-w-0">
+          <span class="block text-[15px] font-normal leading-tight truncate">${esc(a.name)}</span>
+          <span class="block text-sky text-[10px] tracking-[.14em] uppercase mt-0.5 truncate">${esc(a.role)}</span>
+        </span>
+        <span class="flex-shrink-0 w-9 h-9 rounded-full bg-sky group-hover:bg-mist text-ink flex items-center justify-center transition-colors" aria-hidden="true">${WA}</span>
+        <span class="sr-only">Escribir por WhatsApp</span>
       </a>`).join('');
   }
 
+  function isOpen() { return modal && modal.getAttribute('aria-hidden') === 'false'; }
   function open(opts) {
     if (!modal) build();
     current = (opts && opts.text) || DEFAULT_TEXT;
-    lastFocus = document.activeElement;
+    if (!isOpen()) lastFocus = document.activeElement;
     render();
-    modal.classList.remove('opacity-0', 'invisible');
-    modal.firstElementChild.nextElementSibling.classList.remove('translate-y-3');
+    modal.classList.remove('opacity-0', 'invisible', 'scale-90', 'translate-y-2');
     modal.setAttribute('aria-hidden', 'false');
-    document.documentElement.classList.add('modal-open');
-    setTimeout(() => { const f = modal.querySelector('[data-adv-go]'); if (f) f.focus(); }, 60);
+    const fab = document.querySelector('.whatsapp-fab'); if (fab) fab.setAttribute('aria-expanded', 'true');
   }
   function close() {
-    if (!modal || modal.getAttribute('aria-hidden') === 'true') return;
-    modal.classList.add('opacity-0', 'invisible');
-    modal.firstElementChild.nextElementSibling.classList.add('translate-y-3');
+    if (!isOpen()) return;
+    modal.classList.add('opacity-0', 'invisible', 'scale-90', 'translate-y-2');
     modal.setAttribute('aria-hidden', 'true');
-    if (!document.querySelector('#catalog.open, #modal.open, #cookie-modal[aria-hidden="false"]')) document.documentElement.classList.remove('modal-open');
+    const fab = document.querySelector('.whatsapp-fab'); if (fab) fab.setAttribute('aria-expanded', 'false');
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   }
 
   document.addEventListener('keydown', (e) => {
-    if (!modal || modal.getAttribute('aria-hidden') === 'true') return;
-    if (e.key === 'Escape') { e.stopImmediatePropagation(); e.preventDefault(); close(); }
-    else if (e.key === 'Tab') {
-      const f = [...modal.querySelectorAll('button, a[href]')].filter((x) => x.offsetParent !== null);
-      if (!f.length) return;
-      const first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
+    if (isOpen() && e.key === 'Escape') { e.stopImmediatePropagation(); e.preventDefault(); close(); }
   }, true);
-  document.addEventListener('aq:lang', () => { if (modal && modal.getAttribute('aria-hidden') === 'false') render(); });
+  document.addEventListener('aq:lang', () => { if (isOpen()) render(); });
+  // Tocar fuera del globito lo cierra
+  document.addEventListener('pointerdown', (e) => {
+    if (!isOpen()) return;
+    if (modal.contains(e.target) || (e.target.closest && e.target.closest('a[href^="https://wa.me/"]'))) return;
+    close();
+  }, true);
 
   // Intercepta cualquier enlace de WhatsApp del sitio (también los que se crean después)
   document.addEventListener('click', (e) => {
@@ -135,6 +130,7 @@
     const a = e.target.closest && e.target.closest('a[href^="https://wa.me/"]');
     if (!a || a.hasAttribute('data-wa-direct')) return;
     e.preventDefault();
+    if (a.classList.contains('whatsapp-fab') && isOpen()) { close(); return; }
     let text = '';
     try { text = new URL(a.href).searchParams.get('text') || ''; } catch (err) {}
     open({ text: text || a.getAttribute('data-wa-text') || DEFAULT_TEXT });
