@@ -1438,13 +1438,15 @@
       if (window.syncHeroVideo) window.syncHeroVideo();
       setTimeout(() => root.classList.remove('theme-anim'), 600);
     }));
-    // El foquito flotante aparece al bajar de la portada (el encabezado se oculta al desplazarse)
+    // Un solo foquito a la vista: el flotante aparece únicamente cuando el encabezado se oculta al bajar
     const fab = document.getElementById('theme-fab');
-    if (fab) {
+    const hdr = document.getElementById('site-header');
+    if (fab && hdr) {
       const upd = () => {
-        const show = window.scrollY > 420;
+        const show = window.scrollY > 160 && hdr.classList.contains('header-hidden');
         fab.classList.toggle('opacity-0', !show); fab.classList.toggle('pointer-events-none', !show); fab.classList.toggle('translate-y-3', !show);
       };
+      new MutationObserver(upd).observe(hdr, { attributes: true, attributeFilter: ['class'] });
       window.addEventListener('scroll', upd, { passive: true }); upd();
     }
   })();
