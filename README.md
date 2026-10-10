@@ -12,6 +12,7 @@ Sitio web de una sola página para **AquaBruma** — piscinas, jacuzzis, saunas/
 - Interactividad: íconos que se animan al pasar (gota, sol, luna, ondas, loto, corazón…), los cinco elementos cambian su descripción, etiquetas que se abren, franja que se pausa y una onda de agua al hacer clic/tocar.
 - Ventana de detalle (`#modal`): al tocar un proyecto o una colección se abre un resumen (foto, ubicación, tipo, superficie, descripción, características y botón de WhatsApp con mensaje prellenado). Navega con flechas del teclado, botones o deslizando en el celular. Los textos viven en el objeto `DATA` del script al final de `index.html`.
 - Catálogo: la opción "Catálogo" del menú lleva a "Seis formas de vivir el agua" (`#colecciones`), cuyas tarjetas abren su resumen en la ventana de detalle.
+- Catálogo de productos: dentro del resumen de cada "forma de vivir el agua" las fotos de la categoría van pasando solas, y el botón "Ver productos" abre un catálogo con filtros por familia, tarjetas, ficha de cada producto (fotos, ficha técnica, características, cotizar por WhatsApp) y un formulario que envía los datos por WhatsApp. Inspirado en la estructura categoría → colecciones → modelos → ficha de ambienteazul.com.co. Todo sale de `catalogo-data.js`.
 - JavaScript vanilla (sin frameworks): menú móvil, dropdown de navegación, header que se oculta/muestra al hacer scroll, animaciones de aparición (`IntersectionObserver`), carrusel deslizable de colecciones.
 
 ## Estructura del proyecto
@@ -25,6 +26,7 @@ espacio-dia.jpg,
 espacio-noche.jpg       → par de imágenes del comparador Día / Noche (piscina; la de noche es una versión simulada)
 jacuzzi-dia.jpg,
 jacuzzi-noche.jpg       → segundo par del comparador (jacuzzi; la de noche es una versión simulada)
+catalogo-data.js        → productos del catálogo ("Ver productos"): categorías, familias, fichas técnicas y fotos. DATOS DE EJEMPLO
 favicon.*, icon-*.png,
 apple-touch-icon.png,
 site.webmanifest        → íconos y metadatos del sitio
@@ -56,6 +58,8 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 - **Comparador Día / Noche** (pestañas Piscina y Jacuzzi): las imágenes de noche (`espacio-noche.jpg`, `jacuzzi-noche.jpg`) son versiones *simuladas* (procesadas por computador) de las de día. Reemplazar cada par por fotos reales del mismo proyecto de AquaBruma, de día y de noche, con el mismo encuadre.
 
 - **Datos de los proyectos**: ubicaciones, superficies, años y descripciones de la ventana de detalle son de ejemplo. Reemplazar por los datos reales de cada proyecto en el objeto `DATA` (al final de `index.html`).
+
+- **Productos del catálogo**: los 26 productos de `catalogo-data.js` (nombres, medidas, capacidades, descripciones) son de ejemplo. Reemplazar por los productos reales y sus fotos.
 
 ## Despliegue
 

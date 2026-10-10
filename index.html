@@ -319,6 +319,23 @@
     #proyectos .card-zoom > p { opacity: 1 !important; }
   }
 
+
+  /* ============ GALERÍA DE LA VENTANA + CATÁLOGO ============ */
+  .gal img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
+  .gal img.on { opacity: 1; }
+  .gal-dots button { width: 7px; height: 7px; border-radius: 9999px; background: rgba(243,237,233,.45); transition: width .35s ease, background-color .3s ease; padding: 0; }
+  .gal-dots button.on { width: 22px; background: #b2cbe9; }
+  #catalog { opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s ease; overscroll-behavior: contain; }
+  #catalog.open { opacity: 1; visibility: visible; }
+  #cat-view { transition: opacity .25s ease, transform .25s ease; }
+  #cat-view.swap { opacity: 0; transform: translateY(8px); }
+  .cat-input { width: 100%; border-radius: 9999px; background: rgba(15,42,61,.6); border: 1px solid rgba(255,255,255,.15); padding: 14px 20px; font-size: 14px; color: #f3ede9; outline: none; transition: border-color .25s ease; }
+  .cat-input::placeholder { color: rgba(243,237,233,.4); }
+  .cat-input:focus { border-color: #b2cbe9; }
+  .cat-input.err { border-color: #e59a9a; }
+  .cat-thumb { transition: opacity .3s ease, border-color .3s ease; opacity: .55; border: 2px solid transparent; }
+  .cat-thumb.on, .cat-thumb:hover { opacity: 1; border-color: #b2cbe9; }
+
   /* Patrón gráfico oficial del manual de identidad */
   .pattern-band {
     height: 168px;
@@ -925,9 +942,16 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
 
-    <div class="relative h-60 md:h-auto min-h-0 bg-ink2">
-      <img id="modal-img" src="" alt="" class="absolute inset-0 w-full h-full object-cover">
+    <div id="modal-media" class="relative h-60 md:h-auto min-h-0 bg-ink2">
+      <div id="modal-gallery" class="gal absolute inset-0"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-ink/30 pointer-events-none"></div>
+      <button id="modal-gprev" type="button" hidden aria-label="Foto anterior" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-ink/55 backdrop-blur-sm border border-white/20 text-cream hover:bg-sky hover:text-ink transition-colors flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button id="modal-gnext" type="button" hidden aria-label="Foto siguiente" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-ink/55 backdrop-blur-sm border border-white/20 text-cream hover:bg-sky hover:text-ink transition-colors flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <div id="modal-dots" class="gal-dots absolute bottom-4 inset-x-0 z-10 flex justify-center items-center gap-2"></div>
     </div>
 
     <div class="relative md:overflow-y-auto p-7 sm:p-10 flex flex-col">
@@ -937,9 +961,13 @@
         <dl id="modal-meta" class="modal-meta grid grid-cols-2 gap-x-6 gap-y-5 pb-6 mb-6 border-b border-white/10"></dl>
         <p id="modal-text" class="text-cream/75 font-light leading-relaxed mb-5"></p>
         <ul id="modal-list" class="space-y-2.5 text-sm text-cream/80 font-light mb-8"></ul>
-        <div class="mt-auto flex flex-wrap items-center gap-4">
+        <div class="mt-auto flex flex-wrap items-center gap-3">
+          <button id="modal-products" type="button" hidden class="inline-flex items-center gap-3 rounded-full border border-sky/60 text-sky hover:bg-sky hover:text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-5 py-3.5 font-medium">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>
+            Ver productos
+          </button>
           <a id="modal-cta" href="https://wa.me/573000000000" target="_blank" rel="noopener"
-             class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5 font-medium">
+             class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-5 py-3.5 font-medium">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
             <span id="modal-cta-text">Hablemos</span>
           </a>
@@ -958,6 +986,24 @@
   </div>
 </div>
 
+<!-- ============ CATÁLOGO DE PRODUCTOS ============ -->
+<div id="catalog" class="fixed inset-0 z-[85] bg-ink overflow-y-auto" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cat-title">
+  <div class="sticky top-0 z-10 bg-ink/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between gap-4">
+      <button id="cat-back" type="button" class="fx flex items-center gap-2 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors">
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M15 5H1M6 1L2 5l4 4"/></svg>
+        <span id="cat-back-label">Volver</span>
+      </button>
+      <img src="aquabruma-logo.png" alt="aquabruma" width="1200" height="214" class="h-[18px] w-auto opacity-80 hidden sm:block">
+      <button id="cat-close" type="button" aria-label="Cerrar catálogo" class="w-10 h-10 rounded-full border border-white/20 text-cream hover:bg-sky hover:text-ink hover:rotate-90 transition-all duration-300 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="cat-view" class="max-w-[1400px] mx-auto px-6 lg:px-12 pb-20"></div>
+</div>
+
+<script src="catalogo-data.js"></script>
 <script>
   // Desktop nav dropdown ("Menú")
   (function () {
@@ -1183,7 +1229,7 @@
     const modal = document.getElementById('modal');
     if (!modal) return;
     const $ = (id) => document.getElementById(id);
-    const img = $('modal-img'), body = $('modal-body'), panel = $('modal-panel');
+    const gal = $('modal-gallery'), gdots = $('modal-dots'), body = $('modal-body'), panel = $('modal-panel');
     const wa = 'https://wa.me/573000000000?text=';
 
     const DATA = {
@@ -1247,8 +1293,31 @@
       (sources[g] = sources[g] || [])[+i] = el;
     });
 
+    const ORDER = window.AQ_CATALOG_ORDER || [];
+    let slide = 0, timer = null, photos = [];
+    function setSlide(n) {
+      if (!photos.length) return;
+      slide = (n + photos.length) % photos.length;
+      gal.querySelectorAll('img').forEach((im, k) => im.classList.toggle('on', k === slide));
+      gdots.querySelectorAll('button').forEach((bt, k) => bt.classList.toggle('on', k === slide));
+    }
+    function stopTimer() { clearInterval(timer); timer = null; }
+    function startTimer() {
+      stopTimer();
+      if (photos.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      timer = setInterval(() => setSlide(slide + 1), 4200);
+    }
+    function buildGallery(list, alt) {
+      photos = list; slide = 0;
+      gal.innerHTML = list.map((u, k) => `<img src="${u}" alt="${k === 0 ? alt : ''}" class="${k === 0 ? 'on' : ''}"${k ? ' loading="lazy"' : ''}>`).join('');
+      gdots.innerHTML = list.length > 1 ? list.map((_, k) => `<button type="button" aria-label="Foto ${k + 1}" data-k="${k}" class="${k === 0 ? 'on' : ''}"></button>`).join('') : '';
+      $('modal-gprev').hidden = $('modal-gnext').hidden = list.length < 2;
+      startTimer();
+    }
+
     function render(animate) {
       const d = DATA[group][index];
+      const cat = group === 'coleccion' && window.AQ_CATALOG ? window.AQ_CATALOG[ORDER[index]] : null;
       const src = sources[group][index].querySelector('img');
       const fill = () => {
         $('modal-eyebrow').textContent = d.eyebrow;
@@ -1263,31 +1332,33 @@
           ? `Hola, vi el proyecto «${d.title}» en su página y me gustaría algo parecido.`
           : `Hola, me interesa ${d.title}. ¿Me pueden dar más información?`);
         $('modal-count').textContent = `${index + 1} / ${DATA[group].length}`;
-        img.alt = d.title;
+        $('modal-products').hidden = !cat;
         body.classList.remove('swap');
-        img.style.opacity = 1;
       };
-      img.src = src.src.replace(/w=\d+&h=\d+/, 'w=1400&h=1400');
+      buildGallery(cat ? cat.photos : [src.src.replace(/w=\d+&h=\d+/, 'w=1400&h=1400')], d.title);
       if (animate) {
-        body.classList.add('swap'); img.style.opacity = 0;
+        body.classList.add('swap');
         setTimeout(fill, 220);
       } else fill();
     }
 
     function open(g, i, trigger) {
-      group = g; index = i; lastFocus = trigger || document.activeElement;
+      group = g; index = i; lastFocus = trigger || lastFocus || document.activeElement;
       render(false);
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.documentElement.classList.add('modal-open');
       setTimeout(() => $('modal-close').focus(), 50);
     }
-    function close() {
+    function close(keepLock) {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
+      stopTimer();
+      if (keepLock === true) return;
       document.documentElement.classList.remove('modal-open');
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
+    window.AQModal = { open, close, order: ORDER, index: () => index };
     function step(dir) {
       const n = DATA[group].length;
       index = (index + dir + n) % n;
@@ -1301,8 +1372,14 @@
       const [g, i] = el.dataset.modal.split(':');
       open(g, +i, el);
     });
-    $('modal-close').addEventListener('click', close);
-    $('modal-backdrop').addEventListener('click', close);
+    $('modal-close').addEventListener('click', () => close());
+    $('modal-backdrop').addEventListener('click', () => close());
+    $('modal-gprev').addEventListener('click', () => { setSlide(slide - 1); startTimer(); });
+    $('modal-gnext').addEventListener('click', () => { setSlide(slide + 1); startTimer(); });
+    gdots.addEventListener('click', (e) => { const bt = e.target.closest('button[data-k]'); if (bt) { setSlide(+bt.dataset.k); startTimer(); } });
+    $('modal-products').addEventListener('click', () => {
+      if (window.AQCatalog) window.AQCatalog.open(ORDER[index]);
+    });
     $('modal-prev').addEventListener('click', () => step(-1));
     $('modal-next').addEventListener('click', () => step(1));
     document.addEventListener('keydown', (e) => {
@@ -1325,6 +1402,201 @@
       if (tx === null) return;
       const dx = e.changedTouches[0].clientX - tx; tx = null;
       if (Math.abs(dx) > 70) step(dx < 0 ? 1 : -1);
+    });
+  })();
+
+
+  // Catálogo de productos (se abre desde "Ver productos")
+  (function () {
+    const root = document.getElementById('catalog');
+    const CAT = window.AQ_CATALOG;
+    if (!root || !CAT) return;
+    const view = document.getElementById('cat-view');
+    const backLabel = document.getElementById('cat-back-label');
+    const wa = 'https://wa.me/573000000000?text=';
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const sized = (u, w) => u.replace(/w=\d+/, 'w=' + w);
+    const ARROW = '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>';
+    let key = null, family = 'all', product = null, lastFocus = null, listScroll = 0;
+
+    const cat = () => CAT[key];
+    const photoOf = (p, n) => { const c = cat(); const i = p.photos[n]; return i === undefined ? null : c.photos[i]; };
+    const waLink = (text) => wa + encodeURIComponent(text);
+
+    function swap(fn) {
+      view.classList.add('swap');
+      setTimeout(() => { fn(); root.scrollTo({ top: 0 }); view.classList.remove('swap'); }, 220);
+    }
+
+    function listHTML() {
+      const c = cat();
+      const prods = c.products.filter((p) => family === 'all' || p.family === family);
+      const chip = (f, label, n) => `<button type="button" data-family="${esc(f)}" class="rounded-full px-5 py-2.5 text-[11px] tracking-widest2 uppercase transition-colors duration-300 ${family === f ? 'bg-sky text-ink font-medium' : 'border border-white/15 text-cream/80 hover:border-sky hover:text-sky'}">${esc(label)} <span class="opacity-60 ml-1">${n}</span></button>`;
+      const chips = chip('all', 'Todos', c.products.length) + c.families.map((f) => chip(f, f, c.products.filter((p) => p.family === f).length)).join('');
+      const cards = prods.map((p) => {
+        const a = photoOf(p, 0), b = photoOf(p, 1);
+        return `<button type="button" data-product="${p.id}" class="cat-card group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx">
+          <div class="relative aspect-[4/3] overflow-hidden bg-ink2">
+            <img src="${esc(sized(a, 900))}" alt="${esc(p.name)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            ${b ? `<img src="${esc(sized(b, 900))}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105">` : ''}
+            <span class="absolute top-4 left-4 rounded-full bg-ink/65 backdrop-blur-sm border border-white/15 px-3 py-1 text-[10px] tracking-widest2 uppercase text-cream/90">${esc(p.family)}</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-normal mb-1">${esc(p.name)}</h3>
+            <p class="text-sky text-sm font-light mb-4">${esc(p.tagline)}</p>
+            <p class="text-cream/55 text-xs font-light mb-5">${esc(p.specs.slice(0, 2).map((s) => s[1]).join(' · '))}</p>
+            <span class="inline-flex items-center gap-2 text-[10px] tracking-widest2 uppercase text-cream/80 group-hover:text-sky transition-colors">Ver detalle ${ARROW}</span>
+          </div>
+        </button>`;
+      }).join('');
+      const input = 'cat-input';
+      return `
+        <header class="text-center max-w-3xl mx-auto pt-12 pb-10">
+          <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Catálogo</p>
+          <h2 id="cat-title" class="text-balance text-4xl md:text-5xl font-light tracking-tight mb-5">${esc(c.title)}</h2>
+          <p class="text-cream/70 font-light leading-relaxed">${esc(c.intro)}</p>
+        </header>
+        <div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${cards}</div>
+        ${formHTML('')}`;
+    }
+
+    function formHTML(extra) {
+      const c = cat();
+      return `<section class="mt-20 rounded-3xl bg-ink3/50 border border-white/5 p-8 md:p-12 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">¿Te interesa?</p>
+          <h3 class="text-3xl md:text-4xl font-light tracking-tight mb-4">Déjanos tus datos y te escribimos</h3>
+          <p class="text-cream/70 font-light leading-relaxed">Un asesor te contactará por WhatsApp con la información de ${esc(c.title)}${extra}. Si no ves lo que buscas, también lo diseñamos a la medida.</p>
+        </div>
+        <form id="cat-form" class="grid grid-cols-2 gap-4" novalidate>
+          <input class="cat-input col-span-2" name="nombre" autocomplete="name" placeholder="Nombre y apellidos" aria-label="Nombre y apellidos" required>
+          <input class="cat-input" name="tel" type="tel" autocomplete="tel" placeholder="Teléfono / WhatsApp" aria-label="Teléfono" required>
+          <input class="cat-input" name="ciudad" autocomplete="address-level2" placeholder="Ciudad" aria-label="Ciudad">
+          <button type="submit" class="col-span-2 inline-flex justify-center items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-8 py-4 font-medium">Enviar por WhatsApp</button>
+        </form>
+      </section>`;
+    }
+
+    function detailHTML() {
+      const c = cat(), p = product;
+      const imgs = p.photos.map((i) => c.photos[i]);
+      const idx = c.products.indexOf(p);
+      const prev = c.products[(idx - 1 + c.products.length) % c.products.length];
+      const next = c.products[(idx + 1) % c.products.length];
+      return `
+        <nav class="pt-8 pb-6 text-[11px] tracking-widest2 uppercase text-cream/50 flex flex-wrap items-center gap-2" aria-label="Ubicación">
+          <button type="button" data-act="list" class="hover:text-sky transition-colors">Catálogo</button><span>/</span>
+          <button type="button" data-act="list" class="hover:text-sky transition-colors">${esc(c.title)}</button><span>/</span>
+          <span class="text-cream/80">${esc(p.name)}</span>
+        </nav>
+        <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14 items-start">
+          <div>
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-ink2">
+              <img id="cat-main" src="${esc(sized(imgs[0], 1400))}" alt="${esc(p.name)}" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300">
+            </div>
+            ${imgs.length > 1 ? `<div class="flex gap-3 mt-4">${imgs.map((u, k) => `<button type="button" data-thumb="${k}" aria-label="Foto ${k + 1}" class="cat-thumb ${k === 0 ? 'on' : ''} w-24 h-[72px] rounded-xl overflow-hidden"><img src="${esc(sized(u, 300))}" alt="" class="w-full h-full object-cover"></button>`).join('')}</div>` : ''}
+          </div>
+          <div>
+            <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">${esc(p.family)}</p>
+            <h2 id="cat-title" class="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-3">${esc(p.name)}</h2>
+            <p class="text-sky font-light mb-6">${esc(p.tagline)}</p>
+            <p class="text-cream/75 font-light leading-relaxed mb-8">${esc(p.text)}</p>
+            <dl class="modal-meta grid grid-cols-2 gap-x-6 gap-y-5 py-6 mb-6 border-y border-white/10">${p.specs.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+            <ul class="space-y-2.5 text-sm text-cream/80 font-light mb-9">${p.features.map((f) => `<li class="flex items-start gap-3"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>${esc(f)}</li>`).join('')}</ul>
+            <div class="flex flex-wrap items-center gap-3">
+              <a href="${waLink('Hola, me interesa «' + p.name + '» (' + c.title + '). ¿Me pueden dar más información?')}" target="_blank" rel="noopener" class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5 font-medium">Cotizar este producto</a>
+              <button type="button" data-act="list" class="inline-flex items-center gap-3 rounded-full border border-white/25 hover:border-sky hover:text-sky transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5">Ver más productos</button>
+            </div>
+            <div class="flex items-center justify-between gap-4 mt-10 pt-5 border-t border-white/10 text-[11px] tracking-widest2 uppercase text-cream/70">
+              <button type="button" data-product="${prev.id}" class="flex items-center gap-2 hover:text-sky transition-colors"><svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M15 5H1M6 1L2 5l4 4"/></svg> ${esc(prev.name)}</button>
+              <button type="button" data-product="${next.id}" class="flex items-center gap-2 hover:text-sky transition-colors text-right">${esc(next.name)} ${ARROW}</button>
+            </div>
+          </div>
+        </div>
+        ${formHTML(' y de «' + esc(p.name) + '»')}`;
+    }
+
+    function render() {
+      view.innerHTML = product ? detailHTML() : listHTML();
+      backLabel.textContent = product ? 'Volver al catálogo' : 'Volver a ' + cat().title;
+    }
+
+    function open(k) {
+      key = k; family = 'all'; product = null; listScroll = 0;
+      lastFocus = document.activeElement;
+      if (window.AQModal) window.AQModal.close(true);
+      render();
+      root.scrollTop = 0;
+      root.classList.add('open');
+      root.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('modal-open');
+      setTimeout(() => document.getElementById('cat-close').focus(), 60);
+    }
+    function closeAll() {
+      root.classList.remove('open');
+      root.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('modal-open');
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    function backToModal() {
+      root.classList.remove('open');
+      root.setAttribute('aria-hidden', 'true');
+      if (window.AQModal) window.AQModal.open('coleccion', window.AQModal.order.indexOf(key), lastFocus);
+      else closeAll();
+    }
+    function goBack() {
+      if (product) { swap(() => { product = null; render(); root.scrollTo({ top: listScroll }); }); }
+      else backToModal();
+    }
+    window.AQCatalog = { open };
+
+    document.getElementById('cat-back').addEventListener('click', goBack);
+    document.getElementById('cat-close').addEventListener('click', closeAll);
+
+    view.addEventListener('click', (e) => {
+      const f = e.target.closest('[data-family]');
+      if (f) { family = f.dataset.family; swap(() => render()); return; }
+      const pr = e.target.closest('[data-product]');
+      if (pr) {
+        if (!product) listScroll = root.scrollTop;
+        const found = cat().products.find((x) => x.id === pr.dataset.product);
+        if (found) swap(() => { product = found; render(); });
+        return;
+      }
+      const t = e.target.closest('[data-thumb]');
+      if (t) {
+        const main = document.getElementById('cat-main');
+        const src = sized(cat().photos[product.photos[+t.dataset.thumb]], 1400);
+        main.style.opacity = 0;
+        setTimeout(() => { main.src = src; main.style.opacity = 1; }, 200);
+        view.querySelectorAll('.cat-thumb').forEach((x) => x.classList.toggle('on', x === t));
+        return;
+      }
+      if (e.target.closest('[data-act="list"]')) { product = null; swap(() => { render(); root.scrollTo({ top: listScroll }); }); }
+    });
+
+    view.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const nombre = form.nombre.value.trim(), tel = form.tel.value.trim(), ciudad = form.ciudad.value.trim();
+      form.nombre.classList.toggle('err', !nombre);
+      form.tel.classList.toggle('err', tel.replace(/\D/g, '').length < 7);
+      if (!nombre || tel.replace(/\D/g, '').length < 7) { (!nombre ? form.nombre : form.tel).focus(); return; }
+      const about = product ? `«${product.name}» (${cat().title})` : `el catálogo de ${cat().title}`;
+      window.open(waLink(`Hola, soy ${nombre}${ciudad ? ' de ' + ciudad : ''}. Mi teléfono es ${tel}. Me interesa ${about}.`), '_blank', 'noopener');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!root.classList.contains('open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); goBack(); }
+      else if (e.key === 'Tab') {
+        const f = [...root.querySelectorAll('button, a[href], input')].filter((x) => x.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
   })();
 
