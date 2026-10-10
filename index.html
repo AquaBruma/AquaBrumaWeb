@@ -272,6 +272,9 @@
   /* Botón de idioma sobre el hero en tema claro */
   html[data-theme="light"] #site-header.bg-transparent .lang-btn { color: rgb(6 20 33); font-weight: 700; border-color: rgb(6 20 33 / .65); }
 
+  /* WhatsApp siempre visible: también por encima del catálogo */
+  html.catalog-open .whatsapp-fab { z-index: 86; }
+
   /* ============ MARCAS ============ */
   .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
   @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
@@ -1250,7 +1253,7 @@
     </div>
   </div>
   <div id="cat-view" class="max-w-[1400px] mx-auto px-6 lg:px-12 pb-20"></div>
-  <div id="cat-cmpbar" class="sticky bottom-4 z-20 px-4 pointer-events-none"></div>
+  <div id="cat-cmpbar" class="sticky bottom-24 lg:bottom-4 z-20 px-4 pointer-events-none"></div>
 </div>
 
 <script src="i18n-en.js"></script>
@@ -2096,18 +2099,21 @@
       warmUp(k);
       root.scrollTop = 0;
       root.classList.add('open');
+      document.documentElement.classList.add('catalog-open');
       root.setAttribute('aria-hidden', 'false');
       document.documentElement.classList.add('modal-open');
       setTimeout(() => document.getElementById('cat-close').focus(), 60);
     }
     function closeAll() {
       root.classList.remove('open');
+      document.documentElement.classList.remove('catalog-open');
       root.setAttribute('aria-hidden', 'true');
       document.documentElement.classList.remove('modal-open');
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
     function backToModal() {
       root.classList.remove('open');
+      document.documentElement.classList.remove('catalog-open');
       root.setAttribute('aria-hidden', 'true');
       if (window.AQModal) window.AQModal.open('coleccion', window.AQModal.order.indexOf(key), lastFocus);
       else closeAll();
