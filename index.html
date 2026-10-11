@@ -1803,7 +1803,7 @@
             <h3 class="text-xl md:text-2xl font-light tracking-tight">${esc(i.featuresTitle)}</h3>
             <div class="flex gap-3 flex-shrink-0">${arrow('prev', 'Anterior', 'M15 5H1M6 1L2 5l4 4')}${arrow('next', 'Siguiente', 'M1 5h14M10 1l4 4-4 4')}</div>
           </div>
-          <ul class="cat-car flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-1 px-1" style="scrollbar-width:thin;scroll-behavior:smooth">${cards}</ul>
+          <ul class="cat-car colecciones-scroll flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-1 px-1" style="scroll-behavior:smooth">${cards}</ul>
           ${i.note ? `<p class="text-cream/50 text-xs font-light mt-3">${esc(i.note)}</p>` : ''}
         </section>`;
     }
