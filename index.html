@@ -2060,10 +2060,10 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
     function fitBanner(box) {
       const f = box.querySelector('iframe'); if (!f) return;
       const w = box.clientWidth, h = box.clientHeight;
-      // el video se agranda y se sube para que queden fuera del recuadro el título y el canal que YouTube dibuja arriba
-      const H = Math.max(w * 9 / 16, h + 200), W = H * 16 / 9;
+      // el reproductor se agranda y se centra: sobran ~150 px arriba (título y canal) y ~150 px abajo (barra y marca de YouTube)
+      const H = Math.max(w * 9 / 16, h + 300), W = H * 16 / 9;
       f.style.width = W + 'px'; f.style.height = H + 'px';
-      f.style.left = (w - W) / 2 + 'px'; f.style.top = (h - H) / 2 - 70 + 'px';
+      f.style.left = (w - W) / 2 + 'px'; f.style.top = (h - H) / 2 + 'px';
     }
     function mountBanner(box) {
       const media = box.querySelector('.spa-banner-media');
