@@ -1790,7 +1790,7 @@
           <div class="relative aspect-[4/3] overflow-hidden bg-ink2"><img src="${esc(f.img)}" alt="${esc(f.title)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover"></div>
           <div class="p-6"><h4 class="text-lg font-normal mb-2 leading-snug">${esc(f.title)}</h4><p class="text-cream/70 text-sm font-light leading-relaxed">${esc(f.text)}</p></div>
         </li>`).join('');
-      return `<div class="relative rounded-3xl overflow-hidden bg-ink2 border border-white/5 mb-12 md:mb-16 grid md:grid-cols-2 min-h-[340px]">
+      return `<div class="relative rounded-3xl overflow-hidden bg-ink2 border border-white/5 mb-6 md:mb-8 grid md:grid-cols-2 min-h-[340px]">
           <div class="relative z-10 flex flex-col justify-center p-8 md:p-14 order-2 md:order-1">
             <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Spas Jacuzzi&reg;</p>
             <h2 id="cat-title" class="text-4xl md:text-6xl font-light tracking-tight leading-tight mb-4">${esc(i.title)}</h2>
@@ -1798,8 +1798,8 @@
           </div>
           <div class="relative order-1 md:order-2 h-[240px] md:h-auto"><img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 hidden md:block" style="background:linear-gradient(to right, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 38%)"></div></div>
         </div>
-        <section class="mb-14 md:mb-20" aria-label="Características de la colección">
-          <div class="flex items-end justify-between gap-6 mb-6">
+        <section class="mb-10 md:mb-14" aria-label="Características de la colección">
+          <div class="flex items-end justify-between gap-6 mb-4">
             <h3 class="text-xl md:text-2xl font-light tracking-tight">${esc(i.featuresTitle)}</h3>
             <div class="flex gap-3 flex-shrink-0">${arrow('prev', 'Anterior', 'M15 5H1M6 1L2 5l4 4')}${arrow('next', 'Siguiente', 'M1 5h14M10 1l4 4-4 4')}</div>
           </div>
