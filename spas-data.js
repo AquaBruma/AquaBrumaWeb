@@ -54,6 +54,7 @@ window.AQ_SPAS = [
 window.AQ_SPA_COLLECTION_INFO = {
   'J5': {
     banner: 'img/j5/ambiente.webp',
+    video: 'HJV5D7RL4FI', videoHalf: true,   // video en la mitad derecha del banner (con el velo); sin videoHalf cubre todo el banner
     title: 'Colección J5',
     tagline: 'Más bienestar, más tecnología y más formas de relajarte, en un solo spa.',
     featuresTitle: 'Qué hace especial a la J5',
