@@ -13,10 +13,8 @@
 window.AQ_SPA_COLLECTIONS = [
   { key: 'J5',    name: 'Colección J5' },
   { key: 'J-4',   name: 'Colección J-4' },
-  { key: 'J-400', name: 'Colección J-400' },
   { key: 'J-300', name: 'Colección J-300' },
   { key: 'J-200', name: 'Colección J-200' },
-  { key: 'Play',  name: 'Colección Play' }
 ];
 window.AQ_SPA_SPEC_LABELS = [
   ['capacidad', 'Capacidad'],
@@ -31,12 +29,6 @@ window.AQ_SPAS = [
   { c: 'J-4', name: 'J408',  year: 2024, id: 'DFLsGRfe1J77d6muLhpM', img: 'j408' },
   { c: 'J-4', name: 'J408L', year: 2024, id: 'FdG1ZEIiGONMt5SRz1I4', img: 'j408l' },
   { c: 'J-4', name: 'J404L', year: 2025, id: 'gKc1G2mVsRLI1bpx8Xc7', img: 'j404l' },
-  { c: 'J-400', name: 'J-425', year: 2022, id: '8u6MrQTxnAfQnEMA6ZMm', img: 'j425' },
-  { c: 'J-400', name: 'J-435', year: 2024, id: 'nTWDn0N3TAlhUwgCF66i', img: 'j435' },
-  { c: 'J-400', name: 'J-445', year: 2024, id: 'MfisjX4LHxknkjybnBc7', img: 'j445' },
-  { c: 'J-400', name: 'J-475', year: 2024, id: 'o3cF9Yv7uvsSICEM7NS8', img: 'j475' },
-  { c: 'J-400', name: 'J-485', year: 2024, id: 'lRKF7DnCG54CQPFvUDU7', img: 'j485' },
-  { c: 'J-400', name: 'J-495', year: 2024, id: 'sW2yfSoeuskw0xISCIv0', img: 'j495' },
   { c: 'J-300', name: 'J-315', year: 2025, id: 'evjOLkip4x8b7PAQNE0r', img: 'j315' },
   { c: 'J-300', name: 'J-325', year: 2025, id: 'uFTRRTWGs6NEGAco8Bfe', img: 'j325' },
   { c: 'J-300', name: 'J-335', year: 2025, id: 'hGwO7Y2zYFFRiTYyY7hT', img: 'j335' },
@@ -51,9 +43,6 @@ window.AQ_SPAS = [
   { c: 'J-200', name: 'J-245', year: 2026, id: 'dT64PW5EKVDIGIHeBBS1', img: 'j245' },
   { c: 'J-200', name: 'J-275', year: 2026, id: 't7x3BCq5y5mAexiHL99m', img: 'j275' },
   { c: 'J-200', name: 'J-285', year: 2026, id: 'NC39zP5hQNf02MXr3e05', img: 'j285' },
-  { c: 'Play', name: 'Echo', year: 2024, id: 'DrmNLJavxS2BzgjNdTGp', img: 'echo' },
-  { c: 'Play', name: 'Mood', year: 2024, id: 'gX4jywpz9ZqDgPqimYHG', img: 'mood' },
-  { c: 'Play', name: 'Soul', year: 2024, id: 'ramYD8u3V1PZYOvh2zto', img: 'soul' }
 ];
 
 /*
