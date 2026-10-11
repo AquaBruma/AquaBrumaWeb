@@ -96,5 +96,22 @@ window.AQ_SPA_COLLECTION_INFO = {
       { img: 'img/j4/cascada.webp', title: 'Cascada de agua', text: 'Una cascada en el borde que suma el sonido del agua y un toque de calma al ambiente.' }
     ],
     note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
+  },
+  'J-300': {
+    banner: 'img/j3/exterior.webp',
+    title: 'Colección J-300',
+    tagline: 'Un spa para tu jardín o terraza: buen hidromasaje, luz y control sencillo para disfrutarlo todos los días.',
+    featuresTitle: 'Qué hace especial a la J-300',
+    features: [
+      { img: 'img/j3/exterior.webp', title: 'Hecho para tu espacio', text: 'Un diseño sobrio que se integra al jardín o a la terraza, con un gabinete oscuro y una cubierta clara.' },
+      { img: 'img/j3/luz.webp', title: 'Hidromasaje con luz', text: 'Chorros y burbujas acompañados de luces de colores dentro del agua para una experiencia más envolvente.' },
+      { img: 'img/j3/pantalla.webp', title: 'Pantalla táctil', text: 'Un panel táctil en el borde del spa para ajustar la temperatura, las luces y los chorros con un toque.' },
+      { img: 'img/j3/cabezal.webp', title: 'Cabezales con luz', text: 'Cabezales cómodos para apoyar el cuello, con una luz suave que se refleja en el agua.' },
+      { img: 'img/j3/burbujas.webp', title: 'Masaje con burbujas', text: 'Chorros distribuidos para que el agua y las burbujas trabajen la espalda, las piernas y los pies.' },
+      { img: 'img/j3/celular.webp', title: 'Control desde el celular', text: 'Consulta y ajusta la temperatura del spa desde el celular, sin salir del agua.' },
+      { img: 'img/j3/agua.webp', title: 'Cuidado del agua', text: 'Un sistema de manejo del agua, el Clear Ray®, pensado para ayudar a mantenerla limpia y lista para usar.' },
+      { img: 'img/j3/cascada.webp', title: 'Cascada iluminada', text: 'Una cascada con luz de color que suma el sonido del agua y un ambiente de calma por las noches.' }
+    ],
+    note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
   }
 };
