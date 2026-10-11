@@ -1790,19 +1790,27 @@
           <div class="relative aspect-[4/3] overflow-hidden bg-ink2"><img src="${esc(f.img)}" alt="${esc(f.title)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover"></div>
           <div class="p-6"><h4 class="text-lg font-normal mb-2 leading-snug">${esc(f.title)}</h4><p class="text-cream/70 text-sm font-light leading-relaxed">${esc(f.text)}</p></div>
         </li>`).join('');
-      return `<div class="relative rounded-3xl overflow-hidden bg-ink2 border border-white/5 mb-6 md:mb-8 grid md:grid-cols-2 min-h-[340px]">
+      const hero = i.video
+        ? `<div class="spa-banner relative rounded-3xl overflow-hidden bg-ink2 mb-6 md:mb-8 h-[340px] sm:h-[420px] md:h-[500px]" data-yt="${esc(i.video)}">
+          <img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover">
+          <div class="spa-banner-media absolute inset-0 overflow-hidden" aria-hidden="true"></div>
+          <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to right, rgba(6,20,33,.72) 0%, rgba(6,20,33,.38) 55%, rgba(6,20,33,.12) 100%)"></div>
+          <div class="relative h-full flex flex-col justify-end p-7 sm:p-10 md:p-14 max-w-2xl pointer-events-none" style="color:#fff">
+            <p class="text-[11px] tracking-widest2 uppercase mb-3" style="color:#dcebff">Spas Jacuzzi&reg;</p>
+            <h2 id="cat-title" class="text-4xl md:text-6xl font-light tracking-tight leading-tight mb-4" style="text-shadow:0 2px 18px rgba(4,16,28,.5)">${esc(i.title)}</h2>
+            <p class="text-base md:text-lg font-light leading-relaxed" style="color:rgba(255,255,255,.9)">${esc(i.tagline)}</p>
+          </div>
+          <div class="spa-banner-consent absolute top-5 right-5 sm:top-7 sm:right-7 flex flex-col items-end" style="color:#fff"><button type="button" class="spa-banner-allow rounded-full text-[11px] tracking-widest2 uppercase px-5 py-3 font-medium" style="background:rgba(255,255,255,.92);color:#0f2a3d">Permitir y ver el video</button></div>
+        </div>`
+        : `<div class="relative rounded-3xl overflow-hidden bg-ink2 border border-white/5 mb-6 md:mb-8 grid md:grid-cols-2 min-h-[340px]">
           <div class="relative z-10 flex flex-col justify-center p-8 md:p-14 order-2 md:order-1">
             <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Spas Jacuzzi&reg;</p>
             <h2 id="cat-title" class="text-4xl md:text-6xl font-light tracking-tight leading-tight mb-4">${esc(i.title)}</h2>
             <p class="text-cream/75 text-base md:text-lg font-light leading-relaxed max-w-md">${esc(i.tagline)}</p>
           </div>
-          <div class="${i.video ? 'spa-banner ' : ''}relative order-1 md:order-2 h-[240px] md:h-auto overflow-hidden"${i.video ? ` data-yt="${esc(i.video)}"` : ''}>
-            <img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover">
-            ${i.video ? '<div class="spa-banner-media absolute inset-0 overflow-hidden" aria-hidden="true"></div>' : ''}
-            <div class="absolute inset-0 hidden md:block pointer-events-none" style="background:linear-gradient(to right, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 38%)"></div>
-            ${i.video ? `<div class="spa-banner-consent absolute top-4 right-4 flex flex-col items-end" style="color:#fff"><button type="button" class="spa-banner-allow rounded-full text-[10px] tracking-widest2 uppercase px-4 py-2.5 font-medium" style="background:rgba(255,255,255,.92);color:#0f2a3d">Permitir y ver el video</button></div>` : ''}
-          </div>
-        </div>
+          <div class="relative order-1 md:order-2 h-[240px] md:h-auto"><img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 hidden md:block" style="background:linear-gradient(to right, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 38%)"></div></div>
+        </div>`;
+      return hero + `
         <section class="mb-10 md:mb-14" aria-label="Características de la colección">
           <div class="flex items-end justify-between gap-6 mb-4">
             <h3 class="text-xl md:text-2xl font-light tracking-tight">${esc(i.featuresTitle)}</h3>
