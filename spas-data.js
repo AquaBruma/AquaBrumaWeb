@@ -79,5 +79,22 @@ window.AQ_SPA_COLLECTION_INFO = {
       { img: 'img/j5/detalles.webp', title: 'Detalles que se disfrutan', text: 'Una cascada iluminada y una repisa para tu bebida: pequeños detalles para quedarte más tiempo.' }
     ],
     note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
+  },
+  'J-4': {
+    banner: 'img/j4/asientos.webp',
+    title: 'Colección J-4',
+    tagline: 'Un spa pensado para compartir: asientos cómodos, buen hidromasaje y el control al alcance de tu mano.',
+    featuresTitle: 'Qué hace especial a la J-4',
+    features: [
+      { img: 'img/j4/luz.webp', title: 'Hidromasaje con luz', text: 'Chorros y burbujas que se combinan con luz de colores dentro del agua para una experiencia más envolvente.' },
+      { img: 'img/j4/relax.webp', title: 'Un momento solo para ti', text: 'Agua cálida y tranquila para soltar la tensión del día y recuperar la calma.' },
+      { img: 'img/j4/cabezal.webp', title: 'Comodidad en cada asiento', text: 'Cabezales y asientos moldeados para apoyarte y quedarte más tiempo, con una luz suave que acompaña el atardecer.' },
+      { img: 'img/j4/celular.webp', title: 'Control desde el celular', text: 'Ajusta la temperatura y las funciones del spa desde el celular, sin salir del agua.' },
+      { img: 'img/j4/chorro.webp', title: 'Chorros de hidroterapia', text: 'Chorros de buen caudal que se dirigen al cuerpo para un masaje que alivia la espalda y los hombros.' },
+      { img: 'img/j4/pantalla.webp', title: 'Pantalla táctil', text: 'Un panel táctil en el borde del spa para elegir las funciones con un solo toque.' },
+      { img: 'img/j4/asientos.webp', title: 'Asientos y chorros para todos', text: 'Una distribución de asientos y chorros pensada para que cada persona encuentre su lugar y su masaje.' },
+      { img: 'img/j4/cascada.webp', title: 'Cascada de agua', text: 'Una cascada en el borde que suma el sonido del agua y un toque de calma al ambiente.' }
+    ],
+    note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
   }
 };
