@@ -568,6 +568,7 @@ window.AQ_EN = {
  "Spas": "Spas",
  "Spas Jacuzzi": "Jacuzzi Spas",
  "Spas Jacuzzi®": "Jacuzzi® Spas",
+ "Spas portables y construidos": "Portable and built-in spas",
  "Suministro e instalación": "Supply and installation",
  "Superficie": "Surface",
  "Superficie lisa y uniforme en una gama de colores que va del celeste al azul profundo.": "Smooth, uniform surface in a range of colors from sky blue to deep blue.",
