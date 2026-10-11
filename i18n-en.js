@@ -290,6 +290,7 @@ window.AQ_EN = {
  "Hidroterapia para descansar y desconectar sin salir de casa, con la temperatura y los chorros que más te gusten.": "Hydrotherapy to rest and unwind without leaving home, with the temperature and jets you like best.",
  "Hidroterapia para descansar y desconectar sin salir de casa.": "Hydrotherapy to rest and unwind without leaving home.",
  "Hidroterapia para descansar y desconectar sin salir de casa: spas Jacuzzi® que puedes ver en 3D y en tu propio espacio, jacuzzis empotrados y tinas de inmersión.": "Hydrotherapy to rest and unwind without leaving home: Jacuzzi® spas you can see in 3D and in your own space, built-in jacuzzis and soaking tubs.",
+ "Hidroterapia para descansar y desconectar sin salir de casa: spas Jacuzzi® que puedes ver en 3D y en tu propio espacio.": "Hydrotherapy to rest and unwind without leaving home: Jacuzzi® spas you can see in 3D and in your own space.",
  "Hola, quisiera información sobre AquaBruma.": "Hi, I'd like some information about AquaBruma.",
  "Hoteles, clubes y conjuntos": "Hotels, clubs and residential complexes",
  "Iluminación LED subacuática": "Underwater LED lighting",

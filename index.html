@@ -1829,7 +1829,7 @@
           <h2 id="cat-title" class="text-balance text-4xl md:text-5xl font-light tracking-tight mb-5">${esc(c.title)}</h2>
           <p class="text-cream/70 font-light leading-relaxed">${esc(c.intro)}</p>
         </header>
-        <div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>
+        ${c.families.length > 1 ? `<div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>` : '<div class="mb-8"></div>'}
         ${overview
           ? `<div class="spa-banner relative rounded-3xl overflow-hidden mb-8 md:mb-10 h-[220px] sm:h-[280px] md:h-[340px] bg-ink2">
           <video class="absolute inset-0 w-full h-full object-cover" src="banner-spas.mp4" poster="banner-spas-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>

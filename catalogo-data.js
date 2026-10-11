@@ -51,10 +51,10 @@
 
     spas: {
       title: 'Spas portables y construidos',
-      intro: 'Hidroterapia para descansar y desconectar sin salir de casa: spas Jacuzzi® que puedes ver en 3D y en tu propio espacio, jacuzzis empotrados y tinas de inmersión.',
+      intro: 'Hidroterapia para descansar y desconectar sin salir de casa: spas Jacuzzi® que puedes ver en 3D y en tu propio espacio.',
       photos: ['jacuzzi-dia.jpg', 'jacuzzi-noche.jpg', U('1613487700221-38271bedcb52'), U('1777197255393-bade85462eb9'),
                U('1766603636584-38baba9fcfd4'), U('1781455495098-3643ccc923a0'), U('1672865362635-2111835dd0bf'), U('1743440164715-c99801efbb0e')],
-      families: ['Spas Jacuzzi', 'Empotrados', 'Tinas'],
+      families: ['Spas Jacuzzi'],
       subs: { 'Spas Jacuzzi': (window.AQ_SPA_COLLECTIONS || []).map((c) => c.name) },
       products: [
         // Spas Jacuzzi: salen de spas-data.js (cada uno abre su experiencia 3D / realidad aumentada oficial)
@@ -67,19 +67,7 @@
             specs: [['Modelo', String(s.year)], ['Experiencia', '3D y realidad aumentada'], ['Marca', 'Jacuzzi®'], ['Colección', col]],
             features: ['Visor 3D con opciones de gabinete y carcasa', 'Realidad aumentada desde el celular («Ver en tu espacio»)', 'Asesoría de instalación e hidráulica con AquaBruma', 'Cotización personalizada por WhatsApp']
           };
-        }),
-        { id: 's-terraza', family: 'Empotrados', name: 'Jacuzzi Terraza', tagline: 'Integrado al deck',
-          text: 'Jacuzzi empotrado en madera o piedra, diseñado a la medida de tu terraza, con acabados que resisten el sol y la humedad.',
-          specs: [['Capacidad', '2 a 6 adultos'], ['Medidas', 'A la medida'], ['Acabado', 'Madera, piedra o porcelanato'], ['Calefacción', 'Control de temperatura']],
-          features: ['Diseño a la medida', 'Iluminación subacuática', 'Cuarto técnico discreto', 'Cubierta motorizada opcional'], photos: [0, 1, 2] },
-        { id: 's-azotea', family: 'Empotrados', name: 'Jacuzzi Azotea', tagline: 'Con vista a la ciudad',
-          text: 'Un rincón para el atardecer sobre la ciudad. Estructura liviana y chorros de hidromasaje.',
-          specs: [['Capacidad', '2 a 4 adultos'], ['Medidas', 'Desde 2 × 2 m'], ['Estructura', 'Ligera, calculada'], ['Calefacción', 'Eléctrica o a gas']],
-          features: ['Instalación sobre azotea', 'Baranda de cristal', 'Hidromasaje', 'Iluminación nocturna'], photos: [3, 4, 0] },
-        { id: 's-calma', family: 'Tinas', name: 'Tina Calma', tagline: 'Inmersión y silencio',
-          text: 'Una tina de inmersión profunda para el baño lento: agua caliente, silencio y nada más.',
-          specs: [['Capacidad', '1 a 2 adultos'], ['Medidas', 'Desde 180 × 90 cm'], ['Material', 'Piedra, resina o acrílico'], ['Uso', 'Interior o exterior']],
-          features: ['Diseño escultórico', 'Desagüe oculto', 'Opción con calentador', 'Acabados mate'], photos: [2, 7, 4] }
+        })
       ]
     },
 
