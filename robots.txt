@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aquabruma.com/sitemap.xml
+Sitemap: https://aquabruma.com.co/sitemap.xml

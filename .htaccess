@@ -1,6 +1,6 @@
 # AquaBruma — configuración para Hostinger (LiteSpeed/Apache)
 
-# 1) Siempre HTTPS y sin "www" (https://aquabruma.com)
+# 1) Siempre HTTPS y sin "www" (https://aquabruma.com.co)
 RewriteEngine On
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]

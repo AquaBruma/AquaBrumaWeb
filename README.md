@@ -81,7 +81,7 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 ## Pendientes / por confirmar
 
 - **Datos de contacto**: el número de WhatsApp (+57 300 000 0000), correo y dirección son de ejemplo — reemplazar por los datos reales de AquaBruma.
-- **Dominio**: `robots.txt`, `sitemap.xml` y las etiquetas Open Graph usan `https://www.aquabruma.com` como marcador de posición.
+- **Dominio**: `robots.txt`, `sitemap.xml` y las etiquetas Open Graph usan `https://aquabruma.com.co` como marcador de posición.
 - **Contenido de testimonios y proyectos**: son de ejemplo, pendientes de contenido real del negocio.
 - **Tono de los textos**: están redactados en "tú" (cercano). Si el gerente prefiere "usted", es un ajuste rápido de textos.
 - **Fotografía**: el manual pide detalles, texturas y tonos verde-azulados suaves (nada de piscinas azul saturado, flotadores ni imágenes de IA). Las fotos de stock actuales siguen esa línea, pero deben cambiarse por fotos propias de AquaBruma.
@@ -104,7 +104,7 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 Al ser un sitio 100% estático, se puede desplegar directamente en Netlify, Vercel, GitHub Pages o cualquier hosting estático, sin pasos de build.
 
 ## Publicación en Hostinger (por Git)
-- Dominio: `https://aquabruma.com` (sin www; el `.htaccess` redirige `www` y `http` a esa dirección). Plan: hosting web (Premium) con la función **Git** de hPanel.
+- Dominio: `https://aquabruma.com.co` (sin www; el `.htaccess` redirige `www` y `http` a esa dirección). Plan: hosting web (Premium) con la función **Git** de hPanel.
 - En hPanel: Sitios web → (sitio) → **Avanzado → Git** → conectar GitHub (autorizar la extensión de Hostinger en el repositorio `AquaBruma/AquaBrumaWeb`), rama `main`, directorio `public_html`, activar **Auto-deployment**. Cada `git push` a `main` actualiza el sitio.
 - `.htaccess`: fuerza HTTPS y dominio sin www, oculta archivos de desarrollo (`.git`, `src`, `README.md`, `tailwind.config.js`), comprime y define la caché (imágenes y videos 30 días, código 1 día, HTML 5 minutos).
 - Activar el **SSL gratuito** en hPanel (Seguridad → SSL) antes de forzar HTTPS.
