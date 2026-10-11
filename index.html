@@ -2067,15 +2067,23 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       const id = box.dataset.yt;
       const f = document.createElement('iframe');
       f.title = 'Video de la colección Jacuzzi';
-      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&cc_load_policy=0&disablekb=1&fs=0&enablejsapi=1';
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&cc_load_policy=0&cc_lang_pref=xx&hl=es&disablekb=1&fs=0&enablejsapi=1';
       f.allow = 'autoplay; encrypted-media; picture-in-picture';
       f.referrerPolicy = 'strict-origin-when-cross-origin';
       f.style.cssText = 'position:absolute;border:0;pointer-events:none';
       f.setAttribute('tabindex', '-1');
       // si el navegador no arrancó solo el video, se le pide que empiece (silenciado)
       f.addEventListener('load', () => {
-        const cmd = (func, args) => { try { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: args || '' }), '*'); } catch (e) {} };
-        [400, 1500, 3500].forEach((t) => setTimeout(() => { cmd('mute'); cmd('playVideo'); cmd('unloadModule', ['captions']); cmd('unloadModule', ['cc']); }, t));
+        const send = (o) => { try { f.contentWindow.postMessage(JSON.stringify(o), '*'); } catch (e) {} };
+        const cmd = (func, args) => send({ event: 'command', func, args: args || '' });
+        const quiet = () => {
+          send({ event: 'listening', id: 1, channel: 'widget' });   // activa los comandos del reproductor
+          cmd('mute'); cmd('playVideo');
+          cmd('unloadModule', ['captions']); cmd('unloadModule', ['cc']);
+          cmd('setOption', ['captions', 'track', {}]);              // sin pista de subtítulos
+          cmd('setOption', ['cc', 'track', {}]);
+        };
+        [300, 1200, 2500, 4500, 8000].forEach((t) => setTimeout(quiet, t));
       });
       media.appendChild(f); fitBanner(box);
     }
