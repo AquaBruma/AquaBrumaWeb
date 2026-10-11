@@ -50,7 +50,7 @@
     },
 
     spas: {
-      title: 'Jacuzzis & Spas',
+      title: 'Spas',
       intro: 'Hidroterapia para descansar y desconectar sin salir de casa: spas Jacuzzi® que puedes ver en 3D y en tu propio espacio, jacuzzis empotrados y tinas de inmersión.',
       photos: ['jacuzzi-dia.jpg', 'jacuzzi-noche.jpg', U('1613487700221-38271bedcb52'), U('1777197255393-bade85462eb9'),
                U('1766603636584-38baba9fcfd4'), U('1781455495098-3643ccc923a0'), U('1672865362635-2111835dd0bf'), U('1743440164715-c99801efbb0e')],

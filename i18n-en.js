@@ -565,6 +565,7 @@ window.AQ_EN = {
  "Solo si lo permites, el visor 3D de Jacuzzi® (Brand3D / p3d.in) y el mapa de Google Maps pueden usar cookies y herramientas de analítica propias, y recibir datos técnicos como tu dirección IP y tu navegador. Su tratamiento se rige por las políticas de esas empresas.": "Only if you allow it, the Jacuzzi® 3D viewer (Brand3D / p3d.in) and the Google Maps map may use their own cookies and analytics tools, and receive technical data such as your IP address and browser. Their handling is governed by those companies' policies.",
  "Sonido ambiental": "Ambient sound",
  "Soporte ante emergencias": "Emergency support",
+ "Spas": "Spas",
  "Spas Jacuzzi": "Jacuzzi Spas",
  "Spas Jacuzzi®": "Jacuzzi® Spas",
  "Suministro e instalación": "Supply and installation",

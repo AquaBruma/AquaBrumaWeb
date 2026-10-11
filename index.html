@@ -289,6 +289,16 @@
   .cat-grid > * { width: 100%; }
   @media (min-width: 640px) { .cat-grid > * { width: calc(50% - .75rem); } }
 
+  /* Compatibilidad con navegadores antiguos (Safari anterior a 15): sin aspect-ratio las cajas de las fotos se colapsaban */
+  @supports not (aspect-ratio: 1 / 1) {
+    .aspect-\[4\/3\] { height: 0; padding-bottom: 75%; }
+    .aspect-\[4\/5\] { height: 0; padding-bottom: 125%; }
+    @media (min-width: 640px) { .sm\:aspect-\[16\/10\] { height: 0; padding-bottom: 62.5%; } }
+    .cat-cmp-media:not([data-on]) { height: 0; padding-bottom: 75%; }
+  }
+  /* Alto del visor 3D (con respaldo para navegadores sin la unidad dvh) */
+  .viewer-box { height: max(660px, min(86vh, 780px)); height: max(660px, min(86dvh, 780px)); }
+
   /* ============ MARCAS ============ */
   .brand-item { display: flex; align-items: center; justify-content: center; height: 4.5rem; padding: 0 1rem; }
   @media (min-width: 640px) { .brand-item { height: 5.5rem; } }
@@ -1925,7 +1935,7 @@
       }
       media.dataset.on = '1';
       media.dataset.photo = media.innerHTML;
-      media.style.aspectRatio = 'auto'; media.style.height = 'max(660px, min(86dvh, 780px))';
+      media.style.aspectRatio = 'auto'; media.style.paddingBottom = '0'; media.classList.add('viewer-box');
       media.innerHTML = `<iframe title="Experiencia 3D de ${esc(p.name)}" src="${esc(embedUrl(p.embed))}" allow="clipboard-read; clipboard-write; fullscreen; xr-spatial-tracking; accelerometer; gyroscope" allowfullscreen class="absolute inset-0 w-full h-full border-0"></iframe>
         <div class="cat-cmp-wait absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-ink transition-opacity duration-700">
           <img src="${esc(p.img)}" alt="" class="w-[min(78%,420px)] h-auto">
@@ -1942,7 +1952,7 @@
       const btn = view.querySelector(`[data-cmp3d="${id}"]`);
       if (!media || !media.dataset.on) return;
       media.innerHTML = media.dataset.photo;
-      media.style.aspectRatio = '4/3'; media.style.height = ''; media.style.minHeight = '';
+      media.style.aspectRatio = '4/3'; media.style.paddingBottom = ''; media.classList.remove('viewer-box'); media.style.minHeight = '';
       delete media.dataset.on;
       if (btn) btn.textContent = 'Personalizar en 3D';
     }
@@ -2041,7 +2051,7 @@
             <button type="button" data-compare="${p.id}" aria-pressed="false" class="cat-cmp inline-flex items-center gap-3 rounded-full border border-white/25 hover:border-sky hover:text-sky text-[11px] tracking-widest2 uppercase px-6 py-3.5"><span class="cat-cmp-t">+ Comparar</span></button>
           </div>
         </div>
-        <div class="relative rounded-3xl overflow-hidden bg-ink border border-white/10 shadow-2xl shadow-black/30 w-full mx-auto h-[max(660px,min(86dvh,780px))]">
+        <div class="relative rounded-3xl overflow-hidden bg-ink border border-white/10 shadow-2xl shadow-black/30 w-full mx-auto viewer-box">
           <div class="cat-3d-poster absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-ink transition-opacity duration-700">
             <img src="${esc(p.img)}" alt="${esc(p.name)}" class="w-[min(78%,560px)] h-auto">
             <div class="cat-3d-status items-center gap-3 text-sm" style="color:rgb(var(--c-cream) / .7);display:${third() ? 'flex' : 'none'}"><span class="cat-3d-dot"></span>Preparando el modelo 3D…</div>
