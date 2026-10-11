@@ -1831,7 +1831,15 @@
         </header>
         <div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>
         ${overview
-          ? `<h3 class="text-xl md:text-2xl font-light tracking-tight uppercase mb-6">Colecciones Jacuzzi®</h3>
+          ? `<div class="spa-banner relative rounded-3xl overflow-hidden mb-8 md:mb-10 h-[220px] sm:h-[280px] md:h-[340px] bg-ink2">
+          <video class="absolute inset-0 w-full h-full object-cover" src="banner-spas.mp4" poster="banner-spas-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+          <div class="absolute inset-0" style="background:linear-gradient(to right, rgba(6,20,33,.72) 0%, rgba(6,20,33,.38) 55%, rgba(6,20,33,.12) 100%)"></div>
+          <div class="relative h-full flex flex-col justify-end p-6 sm:p-9 md:p-12 max-w-xl" style="color:#fff">
+            <p class="text-[11px] tracking-widest2 uppercase mb-3" style="color:#dcebff">Spas Jacuzzi&reg;</p>
+            <h3 class="text-3xl md:text-5xl font-light tracking-tight leading-tight mb-3" style="text-shadow:0 2px 18px rgba(4,16,28,.5)">Colecciones Jacuzzi&reg;</h3>
+            <p class="text-sm md:text-base font-light leading-relaxed" style="color:rgba(255,255,255,.88)">Elige tu colección, míralos en 3D y encuentra el spa ideal para tu espacio.</p>
+          </div>
+        </div>
         <div class="cat-grid">${collections}</div>`
           : `<div class="cat-grid">${cards}</div>`}
         ${formHTML('')}`;
@@ -2131,6 +2139,11 @@
       const frame = view.querySelector('iframe');
       if (frame) stopWarm();
       if (frame) setup3D(frame);
+      view.querySelectorAll('.spa-banner video').forEach((v) => {
+        v.muted = true;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); }
+        else { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); }
+      });
       refreshCompare();
       backLabel.textContent = product ? (comparing ? 'Volver a comparar' : 'Volver al catálogo') : comparing ? 'Volver al catálogo' : sub !== 'all' ? 'Volver a las colecciones' : 'Volver a ' + cat().title;
     }

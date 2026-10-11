@@ -224,6 +224,7 @@ window.AQ_EN = {
  "Elegir otros": "Choose others",
  "Elige con quién quieres hablar. Le llegará tu mensaje, con lo que estás viendo, para que te asesore mejor.": "Choose who you'd like to talk to. They'll receive your message, with what you're viewing, so they can advise you better.",
  "Elige otro spa": "Choose another spa",
+ "Elige tu colección, míralos en 3D y encuentra el spa ideal para tu espacio.": "Choose your collection, view them in 3D and find the ideal spa for your space.",
  "Eléctrica o a gas": "Electric or gas",
  "Eléctrico o de leña": "Electric or wood-fired",
  "Eléctrico, 3 a 9 kW": "Electric, 3 to 9 kW",
