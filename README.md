@@ -102,3 +102,11 @@ y abrir `http://localhost:4173/index.html`. (Abrirlo directamente como archivo `
 ## Despliegue
 
 Al ser un sitio 100% estático, se puede desplegar directamente en Netlify, Vercel, GitHub Pages o cualquier hosting estático, sin pasos de build.
+
+## Publicación en Hostinger (por Git)
+- Dominio: `https://aquabruma.com` (sin www; el `.htaccess` redirige `www` y `http` a esa dirección). Plan: hosting web (Premium) con la función **Git** de hPanel.
+- En hPanel: Sitios web → (sitio) → **Avanzado → Git** → conectar GitHub (autorizar la extensión de Hostinger en el repositorio `AquaBruma/AquaBrumaWeb`), rama `main`, directorio `public_html`, activar **Auto-deployment**. Cada `git push` a `main` actualiza el sitio.
+- `.htaccess`: fuerza HTTPS y dominio sin www, oculta archivos de desarrollo (`.git`, `src`, `README.md`, `tailwind.config.js`), comprime y define la caché (imágenes y videos 30 días, código 1 día, HTML 5 minutos).
+- Activar el **SSL gratuito** en hPanel (Seguridad → SSL) antes de forzar HTTPS.
+- Los archivos `banner-colecciones*.mp4` están en `.gitignore` y no se publican.
+- Después de publicar: probar inicio, videos, catálogo, visor 3D, mapa y cookies en una ventana privada; si algo no se actualiza, vaciar la caché del sitio en hPanel y recargar con Ctrl+F5.

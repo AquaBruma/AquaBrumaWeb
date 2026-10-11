@@ -6,3 +6,7 @@ desktop.ini
 # Editor/tooling
 .vscode/
 *.log
+
+# Archivos locales que no se publican
+banner-colecciones*.mp4
+banner-colecciones-poster.jpg
