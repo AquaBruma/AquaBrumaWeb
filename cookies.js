@@ -48,7 +48,7 @@
     banner.className = 'fixed z-[95] left-3 right-3 bottom-3 sm:left-auto sm:right-6 sm:bottom-24 sm:max-w-md rounded-3xl bg-ink border border-cream/20 shadow-2xl shadow-black/50 p-6 transition-all duration-500 opacity-0 translate-y-4';
     banner.innerHTML = `
       <h2 id="cookie-banner-title" class="text-lg font-normal mb-2">Tu privacidad y las cookies</h2>
-      <p class="text-cream/75 text-sm font-light leading-relaxed mb-5">Solo guardamos en tu navegador lo necesario para recordar tus preferencias (tema, idioma y esta elección). El visor 3D de Jacuzzi® y el mapa de Google Maps cargan contenido de terceros que puede usar cookies y analítica: tú decides si lo permites.</p>
+      <p class="text-cream/75 text-sm font-light leading-relaxed mb-5">Solo guardamos en tu navegador lo necesario para recordar tus preferencias (tema, idioma y esta elección). El visor 3D de Jacuzzi®, el video de YouTube y el mapa de Google Maps cargan contenido de terceros que puede usar cookies y analítica: tú decides si lo permites.</p>
       <div class="flex flex-wrap items-center gap-3">
         <button type="button" data-cookie="all" class="${btnMain}">Aceptar todas</button>
         <button type="button" data-cookie="necessary" class="${btnLine}">Solo necesarias</button>
@@ -97,7 +97,7 @@
           <div class="rounded-2xl border border-cream/15 p-5 flex items-start justify-between gap-5">
             <div>
               <h3 class="text-base font-normal mb-1">Contenido de terceros</h3>
-              <p class="text-cream/70 text-sm font-light leading-relaxed">Visor 3D y de realidad aumentada de Jacuzzi® (Brand3D y p3d.in) y mapa de ubicación de Google Maps. Al cargarlos, esos servicios pueden guardar cookies y medir su uso (por ejemplo, con Google Analytics) según sus propias políticas. Si no lo permites, verás la foto del producto y un botón para abrir el visor o el mapa en otra pestaña cuando quieras.</p>
+              <p class="text-cream/70 text-sm font-light leading-relaxed">Visor 3D y de realidad aumentada de Jacuzzi® (Brand3D y p3d.in), video de YouTube y mapa de ubicación de Google Maps. Al cargarlos, esos servicios pueden guardar cookies y medir su uso (por ejemplo, con Google Analytics) según sus propias políticas. Si no lo permites, verás la foto del producto y un botón para abrir el visor, el video o el mapa en otra pestaña cuando quieras.</p>
             </div>
             ${toggle('cookie-third', !!(state && state.third), false)}
           </div>
@@ -113,7 +113,7 @@
           <h3 class="text-lg font-normal mb-3">Política de cookies y privacidad</h3>
           <div class="space-y-3 text-cream/70 text-sm font-light leading-relaxed">
             <p><span class="text-cream">Qué guardamos nosotros.</span> Tres datos en el almacenamiento local de tu navegador, hasta que los borres: <em>aq-theme</em> (tema), <em>aq-lang</em> (idioma) y <em>aq-consent</em> (tu elección sobre cookies). No usamos cookies de publicidad ni de seguimiento propias.</p>
-            <p><span class="text-cream">Qué cargan terceros.</span> Solo si lo permites, el visor 3D de Jacuzzi® (Brand3D / p3d.in) y el mapa de Google Maps pueden usar cookies y herramientas de analítica propias, y recibir datos técnicos como tu dirección IP y tu navegador. Su tratamiento se rige por las políticas de esas empresas.</p>
+            <p><span class="text-cream">Qué cargan terceros.</span> Solo si lo permites, el visor 3D de Jacuzzi® (Brand3D / p3d.in), el video de YouTube y el mapa de Google Maps pueden usar cookies y herramientas de analítica propias, y recibir datos técnicos como tu dirección IP y tu navegador. Su tratamiento se rige por las políticas de esas empresas.</p>
             <p><span class="text-cream">Enlaces externos.</span> Al escribirnos por WhatsApp o visitar los sitios de nuestras marcas aliadas sales de este sitio y aplican sus propias políticas.</p>
             <p><span class="text-cream">Tus datos de contacto.</span> Los formularios de este sitio no guardan tus datos: abren WhatsApp con un mensaje listo para que lo envíes tú.</p>
             <p><span class="text-cream">Cómo cambiar tu decisión.</span> Usa «Configurar cookies» en el pie de página, o borra los datos del sitio desde tu navegador. Dudas: gerencia@aquabruma.com.</p>

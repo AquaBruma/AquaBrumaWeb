@@ -1834,16 +1834,19 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? `<header class="text-cen
         </header>`}
         ${c.families.length > 1 ? `<div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>` : ''}
         ${overview
-          ? `<div class="spa-banner relative rounded-3xl overflow-hidden mb-8 md:mb-12 h-[340px] sm:h-[440px] md:h-[540px] lg:h-[600px] bg-ink2">
-          <video class="absolute inset-0 w-full h-full object-cover" src="banner-spas.mp4" poster="banner-spas-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
-          <div class="absolute inset-0" style="background:linear-gradient(to right, rgba(6,20,33,.72) 0%, rgba(6,20,33,.38) 55%, rgba(6,20,33,.12) 100%)"></div>
-          <div class="relative h-full flex flex-col justify-end p-7 sm:p-10 md:p-14 max-w-2xl" style="color:#fff">
+          ? `<div class="spa-banner relative rounded-3xl overflow-hidden mb-8 md:mb-12 h-[340px] sm:h-[440px] md:h-[540px] lg:h-[600px] bg-ink2" data-yt="HJV5D7RL4FI">
+          <div class="spa-banner-media absolute inset-0 overflow-hidden" aria-hidden="true"></div>
+          <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to right, rgba(6,20,33,.72) 0%, rgba(6,20,33,.38) 55%, rgba(6,20,33,.12) 100%)"></div>
+          <div class="relative h-full flex flex-col justify-end p-7 sm:p-10 md:p-14 max-w-2xl pointer-events-none" style="color:#fff">
             <p class="text-[11px] tracking-widest2 uppercase mb-3" style="color:#dcebff">Spas Jacuzzi&reg;</p>
             <h2 id="cat-title" class="text-4xl md:text-6xl font-light tracking-tight leading-tight mb-4" style="text-shadow:0 2px 18px rgba(4,16,28,.5)">Colecciones Jacuzzi&reg;</h2>
             <p class="text-base md:text-lg font-light leading-relaxed" style="color:rgba(255,255,255,.9)">Elige tu colección, míralos en 3D y encuentra el spa ideal para tu espacio.</p>
           </div>
-        </div>
-        <div class="cat-grid">${collections}</div>`
+          <div class="spa-banner-consent absolute top-5 right-5 sm:top-7 sm:right-7 flex flex-col items-end gap-2 max-w-[260px] text-right" style="color:#fff">
+            <button type="button" class="spa-banner-allow rounded-full text-[11px] tracking-widest2 uppercase px-5 py-3 font-medium" style="background:rgba(255,255,255,.92);color:#0f2a3d">Permitir y ver el video</button>
+          </div>
+          <a href="https://www.youtube.com/watch?v=HJV5D7RL4FI" target="_blank" rel="noopener" class="absolute bottom-4 right-5 sm:bottom-6 sm:right-7 text-[10px] tracking-widest2 uppercase underline underline-offset-4" style="color:rgba(255,255,255,.85)">Video: Jacuzzi&reg; Official · Ver en YouTube</a>
+        </div>`
           : `<div class="cat-grid">${cards}</div>`}
         ${formHTML('')}`;
     }
@@ -2008,6 +2011,44 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? `<header class="text-cen
       else refreshCompare();
     }
 
+    // Banner de video: reproductor oficial de YouTube (contenido de terceros: solo con permiso de cookies)
+    function fitBanner(box) {
+      const f = box.querySelector('iframe'); if (!f) return;
+      const w = box.clientWidth, h = box.clientHeight;
+      const W = Math.max(w, h * 16 / 9) * 1.12, H = W * 9 / 16;
+      f.style.width = W + 'px'; f.style.height = H + 'px';
+      f.style.left = (w - W) / 2 + 'px'; f.style.top = (h - H) / 2 + 'px';
+    }
+    function mountBanner(box) {
+      const media = box.querySelector('.spa-banner-media');
+      const consent = box.querySelector('.spa-banner-consent');
+      const ok = !window.AQConsent || window.AQConsent.third();
+      if (!ok) { consent.style.display = 'flex'; return; }
+      consent.style.display = 'none';
+      if (media.querySelector('iframe')) { fitBanner(box); return; }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const id = box.dataset.yt;
+      const f = document.createElement('iframe');
+      f.title = 'Video de la colección Jacuzzi';
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture';
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      f.style.cssText = 'position:absolute;border:0;pointer-events:none';
+      f.setAttribute('tabindex', '-1');
+      // si el navegador no arrancó solo el video, se le pide que empiece (silenciado)
+      f.addEventListener('load', () => {
+        const cmd = (func, args) => { try { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: args || '' }), '*'); } catch (e) {} };
+        [400, 1500, 3500].forEach((t) => setTimeout(() => { cmd('mute'); cmd('playVideo'); }, t));
+      });
+      media.appendChild(f); fitBanner(box);
+    }
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('.spa-banner-allow');
+      if (b && window.AQConsent) window.AQConsent.grantThird();
+    });
+    document.addEventListener('aq:consent', () => document.querySelectorAll('.spa-banner').forEach(mountBanner));
+    window.addEventListener('resize', () => document.querySelectorAll('.spa-banner').forEach(fitBanner));
+
     // Visor 3D: la foto del spa es la vista por defecto; el modelo carga detrás y se abre con un botón
     function setup3D(frame) {
       const poster = view.querySelector('.cat-3d-poster');
@@ -2142,11 +2183,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? `<header class="text-cen
       const frame = view.querySelector('iframe');
       if (frame) stopWarm();
       if (frame) setup3D(frame);
-      view.querySelectorAll('.spa-banner video').forEach((v) => {
-        v.muted = true;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); }
-        else { const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); }
-      });
+      view.querySelectorAll('.spa-banner').forEach(mountBanner);
       refreshCompare();
       backLabel.textContent = product ? (comparing ? 'Volver a comparar' : 'Volver al catálogo') : comparing ? 'Volver al catálogo' : sub !== 'all' ? 'Volver a las colecciones' : 'Volver a ' + cat().title;
     }
