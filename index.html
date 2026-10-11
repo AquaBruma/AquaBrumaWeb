@@ -1796,7 +1796,13 @@
             <h2 id="cat-title" class="text-4xl md:text-6xl font-light tracking-tight leading-tight mb-4">${esc(i.title)}</h2>
             <p class="text-cream/75 text-base md:text-lg font-light leading-relaxed max-w-md">${esc(i.tagline)}</p>
           </div>
-          <div class="relative order-1 md:order-2 h-[240px] md:h-auto"><img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 hidden md:block" style="background:linear-gradient(to right, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 38%)"></div></div>
+          <div class="${i.video ? 'spa-banner ' : ''}relative order-1 md:order-2 h-[240px] md:h-auto overflow-hidden"${i.video ? ` data-yt="${esc(i.video)}"` : ''}>
+            <img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover">
+            ${i.video ? '<div class="spa-banner-media absolute inset-0 overflow-hidden" aria-hidden="true"></div>' : ''}
+            <div class="absolute inset-0 hidden md:block pointer-events-none" style="background:linear-gradient(to right, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 38%)"></div>
+            ${i.video ? `<div class="spa-banner-consent absolute top-4 right-4 flex flex-col items-end" style="color:#fff"><button type="button" class="spa-banner-allow rounded-full text-[10px] tracking-widest2 uppercase px-4 py-2.5 font-medium" style="background:rgba(255,255,255,.92);color:#0f2a3d">Permitir y ver el video</button></div>
+            <a href="https://www.youtube.com/watch?v=${esc(i.video)}" target="_blank" rel="noopener" class="absolute bottom-3 right-4 text-[10px] tracking-widest2 uppercase underline underline-offset-4" style="color:rgba(255,255,255,.85)">Video: Jacuzzi&reg; Official · Ver en YouTube</a>` : ''}
+          </div>
         </div>
         <section class="mb-10 md:mb-14" aria-label="Características de la colección">
           <div class="flex items-end justify-between gap-6 mb-4">

@@ -71,6 +71,7 @@ window.AQ_SPA_COLLECTION_INFO = {
   },
   'J-4': {
     banner: 'img/j4/asientos.webp',
+    video: 'f4zBFiIDVRc',   // YouTube (reproductor oficial, solo con permiso de cookies); si falta, solo se ve la foto
     title: 'Colección J-4',
     tagline: 'Un spa pensado para compartir: asientos cómodos, buen hidromasaje y el control al alcance de tu mano.',
     featuresTitle: 'Qué hace especial a la J-4',
