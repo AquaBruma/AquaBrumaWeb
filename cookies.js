@@ -116,7 +116,7 @@
             <p><span class="text-cream">Qué cargan terceros.</span> Solo si lo permites, el visor 3D de Jacuzzi® (Brand3D / p3d.in), el video de YouTube y el mapa de Google Maps pueden usar cookies y herramientas de analítica propias, y recibir datos técnicos como tu dirección IP y tu navegador. Su tratamiento se rige por las políticas de esas empresas.</p>
             <p><span class="text-cream">Enlaces externos.</span> Al escribirnos por WhatsApp o visitar los sitios de nuestras marcas aliadas sales de este sitio y aplican sus propias políticas.</p>
             <p><span class="text-cream">Tus datos de contacto.</span> Los formularios de este sitio no guardan tus datos: abren WhatsApp con un mensaje listo para que lo envíes tú.</p>
-            <p><span class="text-cream">Cómo cambiar tu decisión.</span> Usa «Configurar cookies» en el pie de página, o borra los datos del sitio desde tu navegador. Dudas: gerencia@aquabruma.com.</p>
+            <p><span class="text-cream">Cómo cambiar tu decisión.</span> Usa «Configurar cookies» en el pie de página, o borra los datos del sitio desde tu navegador. Dudas: gerencia@aquabrumapools.com.</p>
           </div>
         </div>
       </div>`;

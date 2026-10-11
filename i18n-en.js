@@ -682,7 +682,7 @@ window.AQ_EN = {
  "Una temperatura que transforma la experiencia": "A temperature that transforms the experience",
  "Una tina de inmersión profunda para el baño lento: agua caliente, silencio y nada más.": "A deep soaking tub for a slow bath: hot water, silence and nothing more.",
  "Una visita al mes": "One visit a month",
- "Usa «Configurar cookies» en el pie de página, o borra los datos del sitio desde tu navegador. Dudas: gerencia@aquabruma.com.": "Use “Cookie settings” in the footer, or clear the site data from your browser. Questions: gerencia@aquabruma.com.",
+ "Usa «Configurar cookies» en el pie de página, o borra los datos del sitio desde tu navegador. Dudas: gerencia@aquabrumapools.com.": "Use “Cookie settings” in the footer, or clear the site data from your browser. Questions: gerencia@aquabrumapools.com.",
  "Uso": "Use",
  "Uso frecuente": "Frequent use",
  "Uso personal, familiar o comercial": "Personal, family or commercial use",
