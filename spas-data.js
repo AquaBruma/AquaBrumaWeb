@@ -55,3 +55,29 @@ window.AQ_SPAS = [
   { c: 'Play', name: 'Mood', year: 2024, id: 'gX4jywpz9ZqDgPqimYHG', img: 'mood' },
   { c: 'Play', name: 'Soul', year: 2024, id: 'ramYD8u3V1PZYOvh2zto', img: 'soul' }
 ];
+
+/*
+  FICHA DE COLECCIÓN (banner + carrusel de características)
+  Si una colección está aquí, al entrar se muestra su banner y un carrusel con estas características.
+    key → clave de AQ_SPA_COLLECTIONS (J5, J-4, ...)   banner → imagen del banner   features → tarjetas del carrusel
+  Los textos son descripciones propias de AquaBruma; las fotos son material de Jacuzzi® entregado por el cliente.
+*/
+window.AQ_SPA_COLLECTION_INFO = {
+  'J5': {
+    banner: 'img/j5/ambiente.webp',
+    title: 'Colección J5',
+    tagline: 'Más bienestar, más tecnología y más formas de relajarte, en un solo spa.',
+    featuresTitle: 'Qué hace especial a la J5',
+    features: [
+      { img: 'img/j5/infrarrojo.webp', title: 'Terapia infrarroja y luz roja', text: 'Un asiento de terapia con paneles de luz integrados que acompañan el hidromasaje con calor y luz roja para la espalda.' },
+      { img: 'img/j5/agua.webp', title: 'Agua True Water® con nanoburbujas', text: 'Una tecnología de burbujas ultrafinas pensada para que el agua se vea más clara, se sienta más suave y dure agradable por más tiempo.' },
+      { img: 'img/j5/app.webp', title: 'Tu bienestar en una app', text: 'Sigue tus terapias, elige modos de experiencia y paisajes sonoros desde el celular.' },
+      { img: 'img/j5/ambiente.webp', title: 'Atmósfera de luz', text: 'Iluminación de colores en el spa y en su base para crear el ambiente de cada momento, de día o de noche.' },
+      { img: 'img/j5/celular.webp', title: 'Control en tu mano', text: 'Consulta y ajusta la temperatura y las funciones del spa desde el celular, estés donde estés en casa.' },
+      { img: 'img/j5/chorros.webp', title: 'Hidromasaje envolvente', text: 'Chorros de hidroterapia de diseño cuidado para un masaje que acompaña todo el cuerpo.' },
+      { img: 'img/j5/pantalla.webp', title: 'Pantalla táctil', text: 'Un panel táctil en el borde del spa para elegir terapias y programas con un solo toque.' },
+      { img: 'img/j5/detalles.webp', title: 'Detalles que se disfrutan', text: 'Una cascada iluminada y una repisa para tu bebida: pequeños detalles para quedarte más tiempo.' }
+    ],
+    note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
+  }
+};

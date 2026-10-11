@@ -1776,6 +1776,38 @@
       setTimeout(() => { fn(); root.scrollTo({ top: 0 }); view.classList.remove('swap'); }, 220);
     }
 
+    // Banner + carrusel de características de una colección (datos en spas-data.js)
+    function collectionInfo() {
+      const info = window.AQ_SPA_COLLECTION_INFO || {};
+      const col = (window.AQ_SPA_COLLECTIONS || []).find((x) => x.name === sub);
+      return col ? info[col.key] : null;
+    }
+    function collectionIntro() {
+      const i = collectionInfo();
+      if (!i) return '';
+      const arrow = (dir, label, d) => `<button type="button" data-car="${dir}" aria-label="${label}" class="w-11 h-11 rounded-full border border-cream/30 hover:bg-sky hover:text-ink hover:border-sky transition-colors duration-300 flex items-center justify-center"><svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="${d}"/></svg></button>`;
+      const cards = i.features.map((f) => `<li class="snap-start flex-shrink-0 w-[78%] sm:w-[340px] md:w-[360px] rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 flex flex-col">
+          <div class="relative aspect-[4/3] overflow-hidden bg-ink2"><img src="${esc(f.img)}" alt="${esc(f.title)}" loading="lazy" class="absolute inset-0 w-full h-full object-cover"></div>
+          <div class="p-6"><h4 class="text-lg font-normal mb-2 leading-snug">${esc(f.title)}</h4><p class="text-cream/70 text-sm font-light leading-relaxed">${esc(f.text)}</p></div>
+        </li>`).join('');
+      return `<div class="relative rounded-3xl overflow-hidden bg-ink2 border border-white/5 mb-12 md:mb-16 grid md:grid-cols-2 min-h-[340px]">
+          <div class="relative z-10 flex flex-col justify-center p-8 md:p-14 order-2 md:order-1">
+            <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Spas Jacuzzi&reg;</p>
+            <h2 id="cat-title" class="text-4xl md:text-6xl font-light tracking-tight leading-tight mb-4">${esc(i.title)}</h2>
+            <p class="text-cream/75 text-base md:text-lg font-light leading-relaxed max-w-md">${esc(i.tagline)}</p>
+          </div>
+          <div class="relative order-1 md:order-2 h-[240px] md:h-auto"><img src="${esc(i.banner)}" alt="${esc(i.title)}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 hidden md:block" style="background:linear-gradient(to right, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 38%)"></div></div>
+        </div>
+        <section class="mb-14 md:mb-20" aria-label="Características de la colección">
+          <div class="flex items-end justify-between gap-6 mb-6">
+            <h3 class="text-xl md:text-2xl font-light tracking-tight">${esc(i.featuresTitle)}</h3>
+            <div class="flex gap-3 flex-shrink-0">${arrow('prev', 'Anterior', 'M15 5H1M6 1L2 5l4 4')}${arrow('next', 'Siguiente', 'M1 5h14M10 1l4 4-4 4')}</div>
+          </div>
+          <ul class="cat-car flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-1 px-1" style="scrollbar-width:thin;scroll-behavior:smooth">${cards}</ul>
+          ${i.note ? `<p class="text-cream/50 text-xs font-light mt-3">${esc(i.note)}</p>` : ''}
+        </section>`;
+    }
+
     function listHTML() {
       const c = cat();
       const prods = c.products.filter((p) => (family === 'all' || p.family === family) && (sub === 'all' || p.sub === sub));
@@ -1824,10 +1856,10 @@
       }).join('');
       const input = 'cat-input';
       return `
-${overview ? '<div class="pt-4"></div>' : subs.length ? `<header class="text-center max-w-3xl mx-auto pt-12 pb-10">
+${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<header class="text-center max-w-3xl mx-auto pt-12 pb-10">
           <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Spas Jacuzzi&reg;</p>
           <h2 id="cat-title" class="text-balance text-4xl md:text-5xl font-light tracking-tight">${esc(sub.replace('Colección ', 'Jacuzzi '))}</h2>
-        </header>` : `        <header class="text-center max-w-3xl mx-auto pt-12 pb-10">
+        </header>`) : `        <header class="text-center max-w-3xl mx-auto pt-12 pb-10">
           <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Catálogo</p>
           <h2 id="cat-title" class="text-balance text-4xl md:text-5xl font-light tracking-tight mb-5">${esc(c.title)}</h2>
           <p class="text-cream/70 font-light leading-relaxed">${esc(c.intro)}</p>
@@ -1848,7 +1880,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? `<header class="text-cen
           <a href="https://www.youtube.com/watch?v=HJV5D7RL4FI" target="_blank" rel="noopener" class="absolute bottom-4 right-5 sm:bottom-6 sm:right-7 text-[10px] tracking-widest2 uppercase underline underline-offset-4" style="color:rgba(255,255,255,.85)">Video: Jacuzzi&reg; Official · Ver en YouTube</a>
         </div>
         <div class="cat-grid">${collections}</div>`
-          : `<div class="cat-grid">${cards}</div>`}
+          : `${subs.length && sub !== 'all' && collectionInfo() ? '<h3 class="text-xl md:text-2xl font-light tracking-tight uppercase mb-6">Modelos de la colección</h3>' : ''}<div class="cat-grid">${cards}</div>`}
         ${formHTML('')}`;
     }
 
@@ -2284,6 +2316,8 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? `<header class="text-cen
       const c3 = e.target.closest('[data-cmp3d]');
       if (c3) { const id = c3.dataset.cmp3d; const m = view.querySelector(`.cat-cmp-media[data-id="${id}"]`); if (m && m.dataset.on) hide3D(id); else { stopWarm(); show3D(id); } return; }
       if (e.target.closest('[data-cmp3d-both]')) { stopWarm(); show3D(cmp[0]); setTimeout(() => { if (comparing) show3D(cmp[1]); }, 5000); return; }
+      const car = e.target.closest('[data-car]');
+      if (car) { const tr = view.querySelector('.cat-car'); const w = (tr.firstElementChild ? tr.firstElementChild.getBoundingClientRect().width : 320) + 20; tr.scrollBy({ left: car.dataset.car === 'next' ? w : -w, behavior: 'smooth' }); return; }
       const cb = e.target.closest('[data-compare]');
       if (cb) { toggleCompare(cb.dataset.compare); return; }
       const rm = e.target.closest('[data-cmp-rm]');
