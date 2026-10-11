@@ -2063,7 +2063,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       const id = box.dataset.yt;
       const f = document.createElement('iframe');
       f.title = 'Video de la colección Jacuzzi';
-      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1';
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&cc_load_policy=0&disablekb=1&fs=0&enablejsapi=1';
       f.allow = 'autoplay; encrypted-media; picture-in-picture';
       f.referrerPolicy = 'strict-origin-when-cross-origin';
       f.style.cssText = 'position:absolute;border:0;pointer-events:none';
@@ -2071,7 +2071,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       // si el navegador no arrancó solo el video, se le pide que empiece (silenciado)
       f.addEventListener('load', () => {
         const cmd = (func, args) => { try { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: args || '' }), '*'); } catch (e) {} };
-        [400, 1500, 3500].forEach((t) => setTimeout(() => { cmd('mute'); cmd('playVideo'); }, t));
+        [400, 1500, 3500].forEach((t) => setTimeout(() => { cmd('mute'); cmd('playVideo'); cmd('unloadModule', ['captions']); cmd('unloadModule', ['cc']); }, t));
       });
       media.appendChild(f); fitBanner(box);
     }

@@ -102,5 +102,19 @@ window.AQ_SPA_COLLECTION_INFO = {
       { img: 'img/j3/cascada.webp', title: 'Cascada iluminada', text: 'Una cascada con luz de color que suma el sonido del agua y un ambiente de calma por las noches.' }
     ],
     note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
+  },
+  'J-200': {
+    banner: 'img/j2/exterior.webp',
+    title: 'Colección J-200',
+    tagline: 'Un spa sencillo y bien pensado para empezar a disfrutar del hidromasaje en casa.',
+    featuresTitle: 'Qué hace especial a la J-200',
+    features: [
+      { img: 'img/j2/exterior.webp', title: 'Hecho para tu jardín', text: 'Un spa de líneas limpias y gabinete oscuro que se integra a la terraza o al jardín.' },
+      { img: 'img/j2/chorros.webp', title: 'Chorros de hidromasaje', text: 'Chorros distribuidos para que el agua y las burbujas acompañen la espalda y las piernas.' },
+      { img: 'img/j2/acabado.webp', title: 'Acabados cuidados', text: 'Un gabinete con textura de madera oscura y detalles que se ven bien y se mantienen fácil.' },
+      { img: 'img/j2/cabezal.webp', title: 'Cabezales con luz', text: 'Cabezales cómodos para apoyar el cuello, con una luz suave que acompaña el atardecer.' },
+      { img: 'img/j2/agua.webp', title: 'Cuidado del agua', text: 'Un sistema de manejo del agua, el Clear Ray®, pensado para ayudar a mantenerla limpia y lista para usar.' }
+    ],
+    note: 'Las funciones pueden variar según el modelo. Consulta con un asesor cuál se ajusta a tu espacio.'
   }
 };
