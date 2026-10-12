@@ -610,6 +610,8 @@ window.AQ_EN = {
  "Soldadura termofusionada": "Heat-fused welding",
  "Solo guardamos en tu navegador lo necesario para recordar tus preferencias (tema, idioma y esta elección). El visor 3D de Jacuzzi®, el video de YouTube y el mapa de Google Maps cargan contenido de terceros que puede usar cookies y analítica: tú decides si lo permites.": "We only store in your browser what's needed to remember your preferences (theme, language and this choice). The Jacuzzi® 3D viewer, the YouTube video and the Google Maps map load third-party content that may use cookies and analytics: you decide whether to allow it.",
  "Solo necesarias": "Necessary only",
+ "Solo puedes comparar dos spas": "You can only compare two spas",
+ "Solo puedes comparar dos spas. Quita uno para elegir otro.": "You can only compare two spas. Remove one to choose another.",
  "Solo si lo permites, el visor 3D de Jacuzzi® (Brand3D / p3d.in), el video de YouTube y el mapa de Google Maps pueden usar cookies y herramientas de analítica propias, y recibir datos técnicos como tu dirección IP y tu navegador. Su tratamiento se rige por las políticas de esas empresas.": "Only if you allow it, the Jacuzzi® 3D viewer (Brand3D / p3d.in), the YouTube video and the Google Maps map may use their own cookies and analytics tools, and receive technical data such as your IP address and browser. Their handling is governed by those companies' policies.",
  "Sonido ambiental": "Ambient sound",
  "Soporte ante emergencias": "Emergency support",

@@ -2046,13 +2046,34 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
         b.setAttribute('aria-pressed', on);
         const t = b.querySelector('.cat-cmp-t');
         if (t) t.textContent = on ? '✓ Comparando' : '+ Comparar';
+        const blocked = !on && cmp.length >= 2;
+        b.classList.toggle('opacity-40', blocked);
+        b.classList.toggle('cursor-not-allowed', blocked);
+        b.setAttribute('aria-disabled', blocked ? 'true' : 'false');
+        if (blocked) b.setAttribute('title', 'Solo puedes comparar dos spas'); else b.removeAttribute('title');
       });
       renderBar();
+    }
+    // Solo se pueden comparar dos spas: con dos elegidos, los demás botones quedan bloqueados y se avisa
+    let fullTimer = null;
+    function compareFull() {
+      const bar = document.getElementById('cat-cmpbar');
+      let n = bar && bar.querySelector('.cmp-full');
+      if (bar && !n) {
+        n = document.createElement('p');
+        n.className = 'cmp-full pointer-events-auto max-w-3xl mx-auto mb-2 rounded-2xl bg-sky text-ink text-xs px-4 py-2.5 text-center font-medium';
+        n.setAttribute('role', 'status');
+        n.textContent = 'Solo puedes comparar dos spas. Quita uno para elegir otro.';
+        bar.prepend(n);
+      }
+      clearTimeout(fullTimer);
+      fullTimer = setTimeout(() => { const x = document.querySelector('#cat-cmpbar .cmp-full'); if (x) x.remove(); }, 3500);
     }
     function toggleCompare(id) {
       const i = cmp.indexOf(id);
       if (i >= 0) cmp.splice(i, 1);
-      else { cmp.push(id); if (cmp.length > 2) cmp.shift(); }
+      else if (cmp.length >= 2) { compareFull(); return; }
+      else cmp.push(id);
       refreshCompare();
     }
     function removeCompare(id) {
