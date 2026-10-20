@@ -169,3 +169,21 @@ html.cfg-open .whatsapp-fab, html.cfg-open #theme-fab { display: none !important
 .cfg-sub .cfg-s { margin-top: 18px; }
 .cfg .cfg-matbtn { width: 100%; margin-top: 16px; justify-content: space-between; }
 .cfg-sw i.p-stripes { background-image: linear-gradient(90deg, rgba(255,255,255,.35) 0 25%, rgba(0,20,60,.35) 25% 50%, rgba(255,255,255,.35) 50% 75%, rgba(0,20,60,.35) 75% 100%); }
+
+/* Vista amplia: el 3D ocupa todo y las opciones flotan encima */
+.cfg-ico[data-act="panel"] { display: none; }
+.cfg-ico.on:not([data-act="theme"]) { background: rgb(var(--c-sky)); color: rgb(var(--c-ink)); border-color: rgb(var(--c-sky)); }
+.cfg.wide { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.cfg.wide .cfg-ico[data-act="panel"] { display: inline-flex; }
+.cfg.wide .cfg-panel { position: absolute; z-index: 6; right: 16px; top: 72px; bottom: 16px; width: 392px; border: 1px solid rgb(var(--c-cream) / .2); border-radius: 22px; background: rgb(var(--c-ink) / .88); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 24px 70px rgba(0, 0, 0, .45); overflow: hidden; transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .3s, visibility .3s; }
+.cfg.wide.no-panel .cfg-panel { transform: translateX(calc(100% + 28px)); opacity: 0; visibility: hidden; pointer-events: none; }
+.cfg.wide:not(.no-panel) .cfg-tools { left: calc(50% - 204px); }
+.cfg.wide:not(.no-panel) .cfg-hint { left: calc(50% - 204px); }
+@media (max-width: 899px) {
+  .cfg.wide { grid-template-rows: 1fr; }
+  .cfg.wide .cfg-panel { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; height: 50dvh; border-radius: 20px; }
+  .cfg.wide:not(.no-panel) .cfg-tools { left: 50%; bottom: calc(50dvh + 16px); }
+  .cfg.wide:not(.no-panel) .cfg-hint { left: 50%; }
+  .cfg-top-r { gap: 6px; }
+  .cfg .cfg-ico { width: 38px; min-width: 38px; height: 38px; }
+}

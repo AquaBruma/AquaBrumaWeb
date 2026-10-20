@@ -18,6 +18,10 @@ const I = {
   wa: '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.13-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>',
   arrow: '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5h14M10 1l4 4-4 4"/></svg>',
   back: '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 5H1M6 1L2 5l4 4"/></svg>',
+  expand: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>',
+  shrink: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg>',
+  full: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+  panel: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M14.5 4.5v15"/></svg>',
   reset: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>'
 };
 const SHAPE_ICON = {
@@ -45,7 +49,7 @@ const STEPS = [
 
 export class Configurator {
   constructor() {
-    this.state = DEFAULTS(); this.target = 'all'; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false;
+    this.state = DEFAULTS(); this.target = 'all'; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false; this.wide = false; this.noPanel = false;
     this.build();
   }
 
@@ -60,7 +64,7 @@ export class Configurator {
         <div class="cfg-top">
           <button type="button" class="cfg-btn cfg-back" data-act="close">${I.back}<span data-lbl="close">Volver</span></button>
           <p class="cfg-title"><span data-lbl="title">Diseña tu piscina</span></p>
-          <div class="cfg-top-r"><button type="button" class="cfg-ico" data-act="theme" aria-label="Fondo claro / oscuro" title="Fondo claro / oscuro">${I.bulb}</button><button type="button" class="cfg-ico" data-act="close" aria-label="Cerrar">${I.close}</button></div>
+          <div class="cfg-top-r"><button type="button" class="cfg-ico" data-act="panel" data-lbl-t="panel">${I.panel}</button><button type="button" class="cfg-ico" data-act="wide" data-lbl-t="wide"></button><button type="button" class="cfg-ico" data-act="full" data-lbl-t="full">${I.full}</button><button type="button" class="cfg-ico" data-act="theme" aria-label="Fondo claro / oscuro" title="Fondo claro / oscuro">${I.bulb}</button><button type="button" class="cfg-ico" data-act="close" aria-label="Cerrar">${I.close}</button></div>
         </div>
         <div class="cfg-tools" data-tools role="toolbar"></div>
         <div class="cfg-stats" data-stats aria-live="polite"></div>
@@ -77,6 +81,10 @@ export class Configurator {
     r.addEventListener('click', (e) => this.onClick(e));
     r.addEventListener('input', (e) => this.onInput(e));
     document.addEventListener('keydown', (e) => { if (this.openState && e.key === 'Escape' && !document.querySelector('#advisor-modal[aria-hidden="false"]') && !document.querySelector('#cookie-modal[aria-hidden="false"]')) { e.stopImmediatePropagation(); this.close(); } }, true);
+    const fsOk = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    if (!fsOk) r.querySelector('[data-act="full"]').hidden = true;
+    const onFs = () => { this.syncWide(); };
+    document.addEventListener('fullscreenchange', onFs); document.addEventListener('webkitfullscreenchange', onFs);
     document.addEventListener('aq:lang', () => { if (this.openState) this.renderAll(); });
     document.addEventListener('visibilitychange', () => { if (!this.scene) return; if (document.hidden) this.scene.stop(); else if (this.openState) this.scene.start(); });
   }
@@ -87,6 +95,7 @@ export class Configurator {
     this.lastFocus = document.activeElement;
     this.rootEl.classList.add('open'); this.rootEl.setAttribute('aria-hidden', 'false'); this.openState = true;
     document.documentElement.classList.add('modal-open', 'cfg-open');
+    this.wide = false; this.noPanel = false; this.syncWide();
     this.renderAll();
     const done = () => { this.q('[data-loading]').classList.add('off'); this.showHint(); };
     if (!this.scene) {
@@ -104,11 +113,30 @@ export class Configurator {
     setTimeout(() => { const c = this.q('.cfg-ico[data-act="close"]'); if (c) c.focus(); }, 80);
   }
   close() {
+    this.exitFull();
     this.openState = false; this.rootEl.classList.remove('open'); this.rootEl.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('cfg-open');
     if (!document.querySelector('#catalog.open, #modal.open, #cookie-modal[aria-hidden="false"]')) document.documentElement.classList.remove('modal-open');
     if (this.scene) this.scene.stop();
     if (this.lastFocus && this.lastFocus.focus) this.lastFocus.focus({ preventScroll: true });
+  }
+  isFull() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  exitFull() { if (this.isFull()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {} } }
+  syncWide() {
+    const full = this.isFull(), wide = this.wide || full;
+    this.rootEl.classList.toggle('wide', wide); this.rootEl.classList.toggle('no-panel', wide && this.noPanel);
+    const set = (k, label, icon) => { const b = this.rootEl.querySelector(`[data-lbl-t="${k}"]`); if (!b) return; b.setAttribute('aria-label', label); b.title = label; if (icon !== undefined) b.innerHTML = icon; b.classList.toggle('on', k === 'wide' ? wide : k === 'full' ? full : wide && !this.noPanel); };
+    set('wide', wide ? tr('Vista normal', 'Normal view') : tr('Ampliar la vista 3D', 'Enlarge the 3D view'), wide ? I.shrink : I.expand);
+    set('full', full ? tr('Salir de pantalla completa', 'Exit full screen') : tr('Pantalla completa', 'Full screen'));
+    set('panel', this.noPanel ? tr('Mostrar opciones', 'Show options') : tr('Ocultar opciones', 'Hide options'));
+    if (this.scene) setTimeout(() => this.scene.resize(), 380);
+  }
+  toggleFull() {
+    if (this.isFull()) { this.exitFull(); return; }
+    this.wide = true; this.noPanel = false;
+    const el = this.rootEl, f = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (f) { try { const r = f.call(el); if (r && r.catch) r.catch(() => {}); } catch (e) {} }
+    this.syncWide();
   }
   showFallback() {
     const f = this.q('[data-fallback]'); this.q('[data-loading]').classList.add('off');
@@ -140,6 +168,9 @@ export class Configurator {
     const a = el.dataset.act, v = el.dataset.val, s = this.state;
     switch (a) {
       case 'close': this.close(); break;
+      case 'wide': if (this.isFull()) this.exitFull(); this.wide = !this.wide; if (!this.wide) this.noPanel = false; this.syncWide(); break;
+      case 'full': this.toggleFull(); break;
+      case 'panel': this.noPanel = !this.noPanel; this.syncWide(); break;
       case 'theme': { const b = document.getElementById('theme-toggle'); if (b) b.click(); break; }
       case 'step': this.step = +v; this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
       case 'next': this.step = Math.min(STEPS.length - 1, this.step + 1); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
@@ -196,7 +227,7 @@ export class Configurator {
   // ---------- render ----------
   renderAll() { this.renderLabels(); this.renderSteps(); this.renderBody(); this.renderTools(); this.updateStats(); }
   renderLabels() {
-    this.q('[data-lbl="close"]').textContent = tr('Volver', 'Back'); this.q('[data-lbl="title"]').textContent = tr('Diseña tu piscina', 'Design your pool');
+    this.syncWide(); this.q('[data-lbl="close"]').textContent = tr('Volver', 'Back'); this.q('[data-lbl="title"]').textContent = tr('Diseña tu piscina', 'Design your pool');
     const l = this.q('[data-loading] [data-i]'); if (l) l.textContent = tr('Preparando tu piscina…', 'Preparing your pool…');
   }
   renderSteps() {
