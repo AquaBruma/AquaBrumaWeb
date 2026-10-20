@@ -64,10 +64,9 @@ export class Configurator {
         <div class="cfg-top">
           <button type="button" class="cfg-btn cfg-back" data-act="close">${I.back}<span data-lbl="close">Volver</span></button>
           <p class="cfg-title"><span data-lbl="title">Diseña tu piscina</span></p>
-          <div class="cfg-top-r"><button type="button" class="cfg-ico" data-act="panel" data-lbl-t="panel">${I.panel}</button><button type="button" class="cfg-ico" data-act="wide" data-lbl-t="wide"></button><button type="button" class="cfg-ico" data-act="full" data-lbl-t="full">${I.full}</button><button type="button" class="cfg-ico" data-act="theme" aria-label="Fondo claro / oscuro" title="Fondo claro / oscuro">${I.bulb}</button><button type="button" class="cfg-ico" data-act="close" aria-label="Cerrar">${I.close}</button></div>
+          <div class="cfg-top-r"><button type="button" class="cfg-ico" data-act="full" data-lbl-t="full">${I.full}</button><button type="button" class="cfg-ico" data-act="theme" aria-label="Fondo claro / oscuro" title="Fondo claro / oscuro">${I.bulb}</button><button type="button" class="cfg-ico" data-act="close" aria-label="Cerrar">${I.close}</button></div>
         </div>
         <div class="cfg-tools" data-tools role="toolbar"></div>
-        <div class="cfg-stats" data-stats aria-live="polite"></div>
         <p class="cfg-hint" data-hint></p>
         <div class="cfg-fallback" data-fallback hidden></div>
       </div>
@@ -123,7 +122,7 @@ export class Configurator {
   isFull() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
   exitFull() { if (this.isFull()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {} } }
   syncWide() {
-    const full = this.isFull(), wide = this.wide || full;
+    const full = this.isFull(), wide = false;
     this.rootEl.classList.toggle('wide', wide); this.rootEl.classList.toggle('no-panel', wide && this.noPanel);
     const set = (k, label, icon) => { const b = this.rootEl.querySelector(`[data-lbl-t="${k}"]`); if (!b) return; b.setAttribute('aria-label', label); b.title = label; if (icon !== undefined) b.innerHTML = icon; b.classList.toggle('on', k === 'wide' ? wide : k === 'full' ? full : wide && !this.noPanel); };
     set('wide', wide ? tr('Vista normal', 'Normal view') : tr('Ampliar la vista 3D', 'Enlarge the 3D view'), wide ? I.shrink : I.expand);
@@ -133,7 +132,6 @@ export class Configurator {
   }
   toggleFull() {
     if (this.isFull()) { this.exitFull(); return; }
-    this.wide = true; this.noPanel = false;
     const el = this.rootEl, f = el.requestFullscreen || el.webkitRequestFullscreen;
     if (f) { try { const r = f.call(el); if (r && r.catch) r.catch(() => {}); } catch (e) {} }
     this.syncWide();
@@ -168,9 +166,7 @@ export class Configurator {
     const a = el.dataset.act, v = el.dataset.val, s = this.state;
     switch (a) {
       case 'close': this.close(); break;
-      case 'wide': if (this.isFull()) this.exitFull(); this.wide = !this.wide; if (!this.wide) this.noPanel = false; this.syncWide(); break;
       case 'full': this.toggleFull(); break;
-      case 'panel': this.noPanel = !this.noPanel; this.syncWide(); break;
       case 'theme': { const b = document.getElementById('theme-toggle'); if (b) b.click(); break; }
       case 'step': this.step = +v; this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
       case 'next': this.step = Math.min(STEPS.length - 1, this.step + 1); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
@@ -246,6 +242,7 @@ export class Configurator {
   }
   markView(id) { this.rootEl.querySelectorAll('[data-v]').forEach((b) => b.classList.toggle('on', b.dataset.v === id)); }
   updateStats() {
+    if (!this.q('[data-stats]')) return;
     const m = this.metrics(), s = this.state;
     this.q('[data-stats]').innerHTML = `<div><b>${nf(m.area, 1)}</b><span>m²</span></div><div><b>${nf(m.vol * 1000, 0)}</b><span>${tr('litros', 'liters')}</span></div><div><b>${nf(s.depth, 1)}</b><span>${tr('m prof.', 'm deep')}</span></div>`;
   }
@@ -280,7 +277,7 @@ export class Configurator {
       h = head(tr('Forma y medidas', 'Shape and size'), tr('Mueve los controles y mira cómo cambia el agua en tiempo real.', 'Move the controls and watch the water change in real time.')) +
         `<div class="cfg-shapes">${SHAPES.map((x) => `<button type="button" class="cfg-shape${s.shape === x.id ? ' on' : ''}" data-act="shape" data-val="${x.id}" aria-pressed="${s.shape === x.id}">${SHAPE_ICON[x.id]}<span>${esc(T(x))}</span></button>`).join('')}</div>` +
         this.range('length', tr('Largo', 'Length')) + this.range('width', tr('Ancho', 'Width')) + this.range('depth', tr('Profundidad', 'Depth')) +
-        `<p class="cfg-note">${tr('Medidas de ejemplo. Un asesor ajusta el diseño a tu terreno.', 'Sample sizes. An advisor adapts the design to your site.')}</p>`;
+        `<p class="cfg-note">${tr('Superficie', 'Surface')} ≈ ${nf(this.metrics().area, 1)} m² · ${tr('Volumen', 'Volume')} ≈ ${nf(this.metrics().vol * 1000, 0)} ${tr('litros', 'liters')}. ${tr('Medidas de ejemplo; un asesor ajusta el diseño a tu terreno.', 'Sample sizes; an advisor adapts the design to your site.')}</p>`;
     } else if (id === 'acabado') {
       const pair = this.finishOf(this.target), type = FINISH_TYPES.find((t) => t.id === pair[0]) || FINISH_TYPES[0], color = type.colors.find((c) => c.id === pair[1]) || type.colors[0];
       const parts = [{ id: 'all', es: 'Todo', en: 'All' }, { id: 'floor', es: 'Piso', en: 'Floor' }, { id: 'walls', es: 'Paredes', en: 'Walls' }, { id: 'stairs', es: 'Escalera', en: 'Steps' }];

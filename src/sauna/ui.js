@@ -58,10 +58,9 @@ export class SaunaConfigurator {
         <div class="cfg-top">
           <button type="button" class="cfg-btn cfg-back" data-act="close">${I.back}<span data-lbl="close">Volver</span></button>
           <p class="cfg-title"><span data-lbl="title">Diseña tu sauna</span></p>
-          <div class="cfg-top-r"><button type="button" class="cfg-ico" data-act="panel" data-lbl-t="panel">${I.panel}</button><button type="button" class="cfg-ico" data-act="wide" data-lbl-t="wide"></button><button type="button" class="cfg-ico" data-act="full" data-lbl-t="full">${I.full}</button><button type="button" class="cfg-ico" data-act="theme" aria-label="Fondo claro / oscuro" title="Fondo claro / oscuro">${I.bulb}</button><button type="button" class="cfg-ico" data-act="close" aria-label="Cerrar">${I.close}</button></div>
+          <div class="cfg-top-r"><button type="button" class="cfg-ico" data-act="full" data-lbl-t="full">${I.full}</button><button type="button" class="cfg-ico" data-act="theme" aria-label="Fondo claro / oscuro" title="Fondo claro / oscuro">${I.bulb}</button><button type="button" class="cfg-ico" data-act="close" aria-label="Cerrar">${I.close}</button></div>
         </div>
         <div class="cfg-tools" data-tools role="toolbar"></div>
-        <div class="cfg-stats" data-stats aria-live="polite"></div>
         <p class="cfg-hint" data-hint></p>
         <div class="cfg-fallback" data-fallback hidden></div>
       </div>
@@ -116,7 +115,7 @@ export class SaunaConfigurator {
   isFull() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
   exitFull() { if (this.isFull()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {} } }
   syncWide() {
-    const full = this.isFull(), wide = this.wide || full;
+    const full = this.isFull(), wide = false;
     this.rootEl.classList.toggle('wide', wide); this.rootEl.classList.toggle('no-panel', wide && this.noPanel);
     const set = (k, label, icon) => { const b = this.rootEl.querySelector(`[data-lbl-t="${k}"]`); if (!b) return; b.setAttribute('aria-label', label); b.title = label; if (icon !== undefined) b.innerHTML = icon; b.classList.toggle('on', k === 'wide' ? wide : k === 'full' ? full : wide && !this.noPanel); };
     set('wide', wide ? tr('Vista normal', 'Normal view') : tr('Ampliar la vista 3D', 'Enlarge the 3D view'), wide ? I.shrink : I.expand);
@@ -126,7 +125,6 @@ export class SaunaConfigurator {
   }
   toggleFull() {
     if (this.isFull()) { this.exitFull(); return; }
-    this.wide = true; this.noPanel = false;
     const el = this.rootEl, f = el.requestFullscreen || el.webkitRequestFullscreen;
     if (f) { try { const r = f.call(el); if (r && r.catch) r.catch(() => {}); } catch (e) {} }
     this.syncWide();
@@ -155,9 +153,7 @@ export class SaunaConfigurator {
     const a = el.dataset.act, v = el.dataset.val, s = this.state;
     switch (a) {
       case 'close': this.close(); break;
-      case 'wide': if (this.isFull()) this.exitFull(); this.wide = !this.wide; if (!this.wide) this.noPanel = false; this.syncWide(); break;
       case 'full': this.toggleFull(); break;
-      case 'panel': this.noPanel = !this.noPanel; this.syncWide(); break;
       case 'theme': { const b = document.getElementById('theme-toggle'); if (b) b.click(); break; }
       case 'step': this.step = +v; this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
       case 'next': this.step = Math.min(STEPS.length - 1, this.step + 1); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
@@ -217,6 +213,7 @@ export class SaunaConfigurator {
   }
   markView(id) { this.rootEl.querySelectorAll('[data-v]').forEach((b) => b.classList.toggle('on', b.dataset.v === id)); }
   updateStats() {
+    if (!this.q('[data-stats]')) return;
     const L = this.L(), s = this.state;
     this.q('[data-stats]').innerHTML = `<div><b>${nf(s.width, 2)} × ${nf(s.depth, 2)}</b><span>m ${tr('exterior', 'outside')}</span></div><div><b>${L.people}</b><span>${tr('personas', 'people')}</span></div><div><b>${nf(L.kw, 1)}</b><span>kW ${tr('sugeridos', 'suggested')}</span></div>`;
   }
