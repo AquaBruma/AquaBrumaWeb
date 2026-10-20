@@ -164,3 +164,8 @@ html.cfg-open .whatsapp-fab, html.cfg-open #theme-fab { display: none !important
 
 /* sección de entrada en la página */
 .cfg-promo-btn { display: inline-flex; align-items: center; gap: 12px; }
+
+.cfg-sub { margin-top: 6px; padding: 4px 0 4px 14px; border-left: 2px solid rgb(var(--c-sky) / .45); }
+.cfg-sub .cfg-s { margin-top: 18px; }
+.cfg .cfg-matbtn { width: 100%; margin-top: 16px; justify-content: space-between; }
+.cfg-sw i.p-stripes { background-image: linear-gradient(90deg, rgba(255,255,255,.35) 0 25%, rgba(0,20,60,.35) 25% 50%, rgba(255,255,255,.35) 50% 75%, rgba(0,20,60,.35) 75% 100%); }

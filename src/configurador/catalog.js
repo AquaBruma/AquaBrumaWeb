@@ -25,7 +25,9 @@ export const FINISH_TYPES = [
       { id: 'mosaico-azul', es: 'Mosaico azul', en: 'Blue mosaic', c: '#2a76b3', pattern: 'mosaic' },
       { id: 'mosaico-arena', es: 'Mosaico arena', en: 'Sand mosaic', c: '#cdbb95', pattern: 'mosaic' },
       { id: 'mosaico-gris', es: 'Mosaico gris', en: 'Grey mosaic', c: '#7d8a92', pattern: 'mosaic' },
-      { id: 'piedra', es: 'Efecto piedra', en: 'Stone effect', c: '#a39a8a', pattern: 'stone' }
+      { id: 'piedra', es: 'Efecto piedra', en: 'Stone effect', c: '#a39a8a', pattern: 'stone' },
+      { id: 'franjas-azul', es: 'Franjas azules', en: 'Blue stripes', c: '#1f6ea8', pattern: 'stripes' },
+      { id: 'franjas-gris', es: 'Franjas grises', en: 'Grey stripes', c: '#59707d', pattern: 'stripes' }
     ] },
   { id: 'mosaico', es: 'Mosaico vítreo', en: 'Glass mosaic', note: { es: 'Vidrio en piezas pequeñas, con brillo y profundidad.', en: 'Small glass pieces with shine and depth.' },
     colors: [
@@ -63,6 +65,7 @@ export const DECKS = [
   { id: 'madera-clara', es: 'Madera clara', en: 'Light wood', c: '#b48b5c', pattern: 'wood' },
   { id: 'madera-oscura', es: 'Madera oscura', en: 'Dark wood', c: '#5d4533', pattern: 'wood' },
   { id: 'travertino', es: 'Travertino', en: 'Travertine', c: '#dccdb3', pattern: 'tiles' },
+  { id: 'travertino-claro', es: 'Travertino blanco', en: 'White travertine', c: '#d8d0bc', pattern: 'tiles' },
   { id: 'porcelanato', es: 'Porcelanato gris', en: 'Grey porcelain', c: '#8e9091', pattern: 'tiles' },
   { id: 'concreto', es: 'Concreto pulido', en: 'Polished concrete', c: '#a6a6a2', pattern: 'concrete' }
 ];
@@ -81,36 +84,55 @@ export const LIGHTS = [
   { id: 'color', es: 'Color cambiante', en: 'Color shift', c: 'conic-gradient(#ff5d73,#ffd24a,#4ade80,#4aa8ff,#a78bfa,#ff5d73)', rgb: null }
 ];
 
-export const STAIRS = [
-  { id: 'none', es: 'Sin escalera', en: 'No steps' },
-  { id: 'corner', es: 'De esquina', en: 'Corner steps' },
-  { id: 'full', es: 'Ancha', en: 'Wide steps' }
+export const STAIR_ENDS = [
+  { id: 'left', es: 'Extremo izquierdo', en: 'Left end' },
+  { id: 'right', es: 'Extremo derecho', en: 'Right end' }
+];
+export const STAIR_POS = [
+  { id: 'start', es: 'Esquina', en: 'Corner' },
+  { id: 'center', es: 'Centro', en: 'Center' },
+  { id: 'end', es: 'Esquina opuesta', en: 'Far corner' }
 ];
 
 // Estilos de partida: un clic y todo el diseño cambia
 export const PRESETS = [
+  { id: 'espejo', es: 'Espejo', en: 'Mirror', d: { es: 'Agua a ras de la terraza, travertino blanco y franjas azules.', en: 'Water flush with the deck, white travertine and blue stripes.' },
+    sw: ['#1f6ea8', '#e4dcc8', '#27c0b2'],
+    s: { shape: 'rect', length: 10, width: 4.5, depth: 1.5, finish: ['impresa', 'franjas-azul'], coping: 'ninguno', deck: 'travertino-claro', water: 'cristalina', lights: 'calida', stairs: true, stairsSteps: 3, stairsWidth: 2.0, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: true } },
   { id: 'moderna', es: 'Moderna', en: 'Modern', d: { es: 'Líneas rectas, tonos grises y luz cálida.', en: 'Straight lines, grey tones and warm light.' },
     sw: ['#8c8e8e', '#33c4b8', '#5d4533'],
-    s: { shape: 'rect', length: 9, width: 4, depth: 1.5, finish: ['porcelanato', 'cemento'], coping: 'gris', deck: 'madera-oscura', water: 'turquesa', lights: 'calida', stairs: 'full', spa: false, loungers: true } },
+    s: { shape: 'rect', length: 9, width: 4, depth: 1.5, finish: ['porcelanato', 'cemento'], coping: 'gris', deck: 'madera-oscura', water: 'turquesa', lights: 'calida', stairs: true, stairsSteps: 3, stairsWidth: 4, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } },
   { id: 'mediterranea', es: 'Mediterránea', en: 'Mediterranean', d: { es: 'Azul profundo, piedra clara y madera natural.', en: 'Deep blue, light stone and natural wood.' },
     sw: ['#1d5f94', '#ecebe6', '#b48b5c'],
-    s: { shape: 'rounded', length: 8, width: 4, depth: 1.5, finish: ['mosaico', 'azul-profundo'], coping: 'blanco', deck: 'travertino', water: 'profunda', lights: 'calida', stairs: 'none', spa: false, loungers: true } },
+    s: { shape: 'rounded', length: 8, width: 4, depth: 1.5, finish: ['mosaico', 'azul-profundo'], coping: 'blanco', deck: 'travertino', water: 'profunda', lights: 'calida', stairs: false, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } },
   { id: 'resort', es: 'Resort', en: 'Resort', d: { es: 'Piscina en L con spa adosado y luz azul.', en: 'L-shaped pool with attached spa and blue light.' },
     sw: ['#25a8b8', '#d8c9a8', '#b48b5c'],
-    s: { shape: 'L', length: 10, width: 5, depth: 1.4, finish: ['mosaico', 'turquesa'], coping: 'arena', deck: 'madera-clara', water: 'cristalina', lights: 'azul', stairs: 'corner', spa: true, loungers: true } },
+    s: { shape: 'L', length: 10, width: 5, depth: 1.4, finish: ['mosaico', 'turquesa'], coping: 'arena', deck: 'madera-clara', water: 'cristalina', lights: 'azul', stairs: true, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: true, loungers: true, mirror: false } },
   { id: 'natural', es: 'Natural', en: 'Natural', d: { es: 'Forma libre, piedra y verdes suaves.', en: 'Free form, stone and soft greens.' },
     sw: ['#8e8f86', '#3aa886', '#a49d90'],
-    s: { shape: 'organic', length: 8, width: 5, depth: 1.4, finish: ['piedra', 'bali'], coping: 'piedra', deck: 'concreto', water: 'esmeralda', lights: 'calida', stairs: 'none', spa: false, loungers: true } }
+    s: { shape: 'organic', length: 8, width: 5, depth: 1.4, finish: ['piedra', 'bali'], coping: 'piedra', deck: 'concreto', water: 'esmeralda', lights: 'calida', stairs: false, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } }
 ];
 
 export const DEFAULTS = () => {
   const p = PRESETS[0].s;
-  return { preset: 'moderna', night: false, ...p, finish: [...p.finish] };
+  return { preset: PRESETS[0].id, night: false, ...p, finish: [...p.finish], finishWalls: [...p.finish], finishStairs: [...p.finish] };
 };
 
-export function findFinish(state) {
-  const type = FINISH_TYPES.find((t) => t.id === state.finish[0]) || FINISH_TYPES[0];
-  const color = type.colors.find((c) => c.id === state.finish[1]) || type.colors[0];
+// Normaliza un estado (por ejemplo, de un enlace antiguo) para que tenga todos los campos
+export function normalize(st) {
+  const d = DEFAULTS(), o = { ...d, ...(st || {}) };
+  o.finish = [...(o.finish || d.finish)];
+  o.finishWalls = [...(o.finishWalls || o.finish)];
+  o.finishStairs = [...(o.finishStairs || o.finish)];
+  if (typeof o.stairs === 'string') { const full = o.stairs === 'full'; o.stairs = o.stairs !== 'none'; if (full) o.stairsWidth = o.width; }
+  return o;
+}
+
+export function findFinish(state, part = 'floor') {
+  const pair = part === 'walls' ? state.finishWalls : part === 'stairs' ? state.finishStairs : state.finish;
+  const f = pair || state.finish;
+  const type = FINISH_TYPES.find((t) => t.id === f[0]) || FINISH_TYPES[0];
+  const color = type.colors.find((c) => c.id === f[1]) || type.colors[0];
   return { type, color };
 }
 export const byId = (list, id) => list.find((x) => x.id === id) || list[0];

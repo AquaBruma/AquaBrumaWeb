@@ -23,8 +23,9 @@ function finish(cv, bump, maxAniso) {
 }
 
 // Cuadrícula de piezas (mosaico, porcelanato...). n = piezas por lado de la textura (que cubre 1 m)
-function tilesTexture({ base, n, gap, vari, seed, shine = 0, big = false, vein = 0 }, aniso) {
-  const S = 512, cv = canvas(S), g = cv.getContext('2d'), bv = canvas(S), b = bv.getContext('2d');
+function tilesTexture({ base, n, gap, vari, seed, shine = 0, big = false, vein = 0, S = 1024 }, aniso) {
+  gap = gap * (S / 512);
+  const cv = canvas(S), g = cv.getContext('2d'), bv = canvas(S), b = bv.getContext('2d');
   const R = rng(seed), bc = hex(base), grout = mix(bc, [235, 235, 232], 0.55);
   g.fillStyle = css(mix(bc, [200, 205, 205], 0.35), 0.82); g.fillRect(0, 0, S, S);
   b.fillStyle = '#000'; b.fillRect(0, 0, S, S);
@@ -44,17 +45,25 @@ function tilesTexture({ base, n, gap, vari, seed, shine = 0, big = false, vein =
   return finish(cv, bv, aniso);
 }
 
+// Franjas anchas (como las de las piscinas espejo): bandas claras y oscuras
+function stripesTexture({ base, seed }, aniso) {
+  const S = 512, cv = canvas(S), g = cv.getContext('2d'), R = rng(seed), bc = hex(base);
+  for (let i = 0; i < 4; i++) { const dark = i % 2 === 1; g.fillStyle = css(mix(bc, dark ? [10, 30, 70] : [150, 205, 235], dark ? 0.15 : 0.42), dark ? 0.85 : 1); g.fillRect(i * S / 4, 0, S / 4, S); }
+  for (let i = 0; i < 4000; i++) { const a = (R() - 0.5) * 0.07; g.fillStyle = a > 0 ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${-a})`; g.fillRect(R() * S, R() * S, 2 + R() * 3, 2 + R() * 3); }
+  return finish(cv, null, aniso);
+}
+
 function plainTexture({ base, seed, noise = 0.06 }, aniso) {
-  const S = 256, cv = canvas(S), g = cv.getContext('2d'), R = rng(seed), bc = hex(base);
+  const S = 512, cv = canvas(S), g = cv.getContext('2d'), R = rng(seed), bc = hex(base);
   g.fillStyle = css(bc); g.fillRect(0, 0, S, S);
-  for (let i = 0; i < 3500; i++) { const a = (R() - 0.5) * noise * 2; g.fillStyle = a > 0 ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${-a})`; g.fillRect(R() * S, R() * S, 2 + R() * 3, 2 + R() * 3); }
+  for (let i = 0; i < 9000; i++) { const a = (R() - 0.5) * noise * 2; g.fillStyle = a > 0 ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${-a})`; g.fillRect(R() * S, R() * S, 2 + R() * 3, 2 + R() * 3); }
   return finish(cv, null, aniso);
 }
 
 function stoneTexture({ base, seed }, aniso) {
-  const S = 512, cv = canvas(S), g = cv.getContext('2d'), bv = canvas(S), b = bv.getContext('2d'), R = rng(seed), bc = hex(base);
+  const S = 768, cv = canvas(S), g = cv.getContext('2d'), bv = canvas(S), b = bv.getContext('2d'), R = rng(seed), bc = hex(base);
   g.fillStyle = css(bc, 0.55); g.fillRect(0, 0, S, S); b.fillStyle = '#000'; b.fillRect(0, 0, S, S);
-  const pts = []; for (let i = 0; i < 70; i++) pts.push([R() * S, R() * S, R()]);
+  const pts = []; for (let i = 0; i < 56; i++) pts.push([R() * S, R() * S, R()]);
   const img = g.getImageData(0, 0, S, S), bi = b.getImageData(0, 0, S, S);
   for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
     let d1 = 1e9, d2 = 1e9, id = 0;
@@ -76,8 +85,8 @@ function stoneTexture({ base, seed }, aniso) {
 }
 
 function woodTexture({ base, seed }, aniso) {
-  const S = 512, cv = canvas(S), g = cv.getContext('2d'), bv = canvas(S), b = bv.getContext('2d'), R = rng(seed), bc = hex(base);
-  const rows = 7, h = S / rows;
+  const S = 1024, cv = canvas(S), g = cv.getContext('2d'), bv = canvas(S), b = bv.getContext('2d'), R = rng(seed), bc = hex(base);
+  const rows = 8, h = S / rows;
   b.fillStyle = '#000'; b.fillRect(0, 0, S, S);
   for (let r = 0; r < rows; r++) {
     const tone = 0.86 + R() * 0.28; g.fillStyle = css(bc, tone); g.fillRect(0, r * h, S, h);
@@ -103,6 +112,7 @@ export function makeTexture(spec, aniso = 4) {
   const key = spec.kind;
   if (key === 'tiles') return tilesTexture(spec, aniso);
   if (key === 'plain') return plainTexture(spec, aniso);
+  if (key === 'stripes') return stripesTexture(spec, aniso);
   if (key === 'stone') return stoneTexture(spec, aniso);
   if (key === 'wood') return woodTexture(spec, aniso);
   if (key === 'concrete') return concreteTexture(spec, aniso);
@@ -117,9 +127,10 @@ export function finishTexture(typeId, color, aniso) {
   switch (typeId) {
     case 'membrana': return { ...makeTexture({ kind: 'plain', base, seed: 11, noise: 0.045 }, aniso), scale: 1, rough: 0.55, metal: 0.0 };
     case 'impresa':
+      if (color.pattern === 'stripes') return { ...makeTexture({ kind: 'stripes', base, seed: 37 }, aniso), scale: 4, rough: 0.35, metal: 0 };
       if (color.pattern === 'stone') return { ...makeTexture({ kind: 'stone', base, seed: 23 }, aniso), scale: 1.2, rough: 0.7, metal: 0 };
       return { ...makeTexture({ kind: 'tiles', base, n: 20, gap: 1.6, vari: 0.07, seed: 31 }, aniso), scale: 1, rough: 0.6, metal: 0 };
-    case 'mosaico': return { ...makeTexture({ kind: 'tiles', base, n: 40, gap: 1.1, vari: 0.14, seed: 41, shine: 0.28 }, aniso), scale: 1, rough: 0.16, metal: 0.05 };
+    case 'mosaico': return { ...makeTexture({ kind: 'tiles', base, n: 40, gap: 1.1, vari: 0.14, seed: 41, shine: 0.28, S: 2048 }, aniso), scale: 1, rough: 0.16, metal: 0.05 };
     case 'porcelanato': return { ...makeTexture({ kind: 'tiles', base, n: 4, gap: 2.4, vari: 0.05, seed: 53, vein: 0.07 }, aniso), scale: 2, rough: 0.35, metal: 0 };
     case 'piedra': return { ...makeTexture({ kind: 'stone', base, seed: 61 }, aniso), scale: 1.4, rough: 0.78, metal: 0 };
     default: return { ...makeTexture({ kind: 'plain', base, seed: 11 }, aniso), scale: 1, rough: 0.5, metal: 0 };

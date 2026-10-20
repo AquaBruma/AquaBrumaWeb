@@ -78,6 +78,16 @@ export function flatGeometry(contour, holes, y, up = true) {
   return g;
 }
 
+// Igual que flatGeometry, pero en el plano XY local (x, -z, 0): se gira -90 grados en X para quedar horizontal (lo usa el espejo de agua)
+export function flatXY(contour) {
+  const c = ccw(contour).map(([x, z]) => new THREE.Vector2(x, z));
+  const faces = THREE.ShapeUtils.triangulateShape(c, []);
+  const pos = [], uv = [], idx = [];
+  c.forEach((v) => { pos.push(v.x, -v.y, 0); uv.push(v.x, v.y); });
+  faces.forEach((f) => idx.push(f[0], f[1], f[2]));
+  return geo(pos, uv, idx);
+}
+
 // Muros: franja vertical alrededor del contorno
 export function wallsGeometry(p, yTop, yBottom) {
   const pos = [], uv = [], idx = [];

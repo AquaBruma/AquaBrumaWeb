@@ -1,6 +1,6 @@
 import { PoolScene } from './scene.js';
 import { outline, polyArea, polyPerimeter } from './geometry.js';
-import { SHAPES, FINISH_TYPES, COPINGS, DECKS, WATERS, LIGHTS, STAIRS, PRESETS, DEFAULTS, T, byId, findFinish } from './catalog.js';
+import { SHAPES, FINISH_TYPES, COPINGS, DECKS, WATERS, LIGHTS, STAIR_ENDS, STAIR_POS, PRESETS, DEFAULTS, normalize, T, byId, findFinish } from './catalog.js';
 
 const lang = () => (window.AQ_LANG === 'en' ? 'en' : 'es');
 const tr = (es, en) => (lang() === 'en' ? en : es);
@@ -45,7 +45,7 @@ const STEPS = [
 
 export class Configurator {
   constructor() {
-    this.state = DEFAULTS(); this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false;
+    this.state = DEFAULTS(); this.target = 'all'; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false;
     this.build();
   }
 
@@ -83,7 +83,7 @@ export class Configurator {
 
   // ---------- abrir / cerrar ----------
   open(opts = {}) {
-    if (opts.state) this.state = { ...DEFAULTS(), ...opts.state, finish: [...(opts.state.finish || DEFAULTS().finish)] };
+    if (opts.state) this.state = normalize(opts.state);
     this.lastFocus = document.activeElement;
     this.rootEl.classList.add('open'); this.rootEl.setAttribute('aria-hidden', 'false'); this.openState = true;
     document.documentElement.classList.add('modal-open', 'cfg-open');
@@ -120,7 +120,7 @@ export class Configurator {
   set(patch, { rebuild = true, panel = true } = {}) {
     this.state = { ...this.state, ...patch };
     if (patch.preset === undefined && !patch._keepPreset) this.state.preset = null;
-    if (this.state.stairs !== 'none' && !(this.state.shape === 'rect' || this.state.shape === 'L')) this.state.stairs = 'none';
+    const st = this.state; st.stairsWidth = Math.min(st.stairsWidth, Math.max(0.8, st.width - 0.1));
     if (rebuild && this.scene) { if (!this.pending) { this.pending = true; requestAnimationFrame(() => { this.pending = false; this.scene.update(this.state); }); } }
     this.updateStats();
     if (panel) this.renderBody();
@@ -144,23 +144,26 @@ export class Configurator {
       case 'step': this.step = +v; this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
       case 'next': this.step = Math.min(STEPS.length - 1, this.step + 1); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
       case 'prev': this.step = Math.max(0, this.step - 1); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
-      case 'preset': { const p = PRESETS.find((x) => x.id === v); if (p) { this.set({ ...p.s, finish: [...p.s.finish], preset: p.id }, { panel: true }); } break; }
+      case 'preset': { const p = PRESETS.find((x) => x.id === v); if (p) { this.target = 'all'; this.set({ ...p.s, finish: [...p.s.finish], finishWalls: [...p.s.finish], finishStairs: [...p.s.finish], preset: p.id }, { panel: true }); } break; }
       case 'shape': this.set({ shape: v }); break;
-      case 'ftype': { const t = FINISH_TYPES.find((x) => x.id === v); this.set({ finish: [t.id, t.colors[0].id] }); break; }
-      case 'fcolor': this.set({ finish: [s.finish[0], v] }); break;
+      case 'ftype': { const t = FINISH_TYPES.find((x) => x.id === v); this.set(this.finishPatch([t.id, t.colors[0].id])); break; }
+      case 'fcolor': this.set(this.finishPatch([this.finishOf(this.target)[0], v])); break;
+      case 'target': this.target = v; this.renderBody(); break;
+      case 'stairsmat': this.target = 'stairs'; this.step = STEPS.findIndex((x) => x.id === 'acabado'); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
+      case 'sEnd': this.set({ stairsEnd: v }); break;
+      case 'sPos': this.set({ stairsPos: v }); break;
       case 'coping': this.set({ coping: v }); break;
       case 'deck': this.set({ deck: v }); break;
       case 'water': this.set({ water: v }); break;
       case 'lights': this.set({ lights: v }); break;
-      case 'stairs': this.set({ stairs: v }); break;
       case 'toggle': this.set({ [v]: !s[v] }); break;
-      case 'dec': case 'inc': { const k = el.dataset.k, def = RANGES[k]; const nv = Math.min(def.max, Math.max(def.min, +(s[k] + (a === 'inc' ? def.step : -def.step)).toFixed(2))); this.set({ [k]: nv }, { panel: false }); this.syncRange(k); break; }
+      case 'dec': case 'inc': { const k = el.dataset.k, def = this.rangeDef(k); const nv = Math.min(def.max, Math.max(def.min, +(s[k] + (a === 'inc' ? def.step : -def.step)).toFixed(2))); this.set({ [k]: nv }, { panel: false }); this.syncRange(k); break; }
       case 'view': this.scene && this.scene.setView(v); this.markView(v); break;
       case 'night': this.set({ night: !s.night }, { rebuild: false, panel: false }); this.scene && this.scene.setNight(this.state.night); this.renderTools(); break;
       case 'rotate': this.autoRotate = !this.autoRotate; if (this.scene) this.scene.controls.autoRotate = this.autoRotate; this.renderTools(); break;
       case 'shot': this.capture(); break;
       case 'copy': this.copyLink(el); break;
-      case 'reset': this.state = DEFAULTS(); this.scene && this.scene.setNight(false, true); this.scene && (this.scene.userMoved = false); this.step = 0; this.renderAll(); this.scene && this.scene.update(this.state); this.updateStats(); break;
+      case 'reset': this.state = DEFAULTS(); this.target = 'all'; this.scene && this.scene.setNight(false, true); this.scene && (this.scene.userMoved = false); this.step = 0; this.renderAll(); this.scene && this.scene.update(this.state); this.updateStats(); break;
       case 'quote': this.quote(); break;
       case 'advisor': if (window.AQAdvisors) window.AQAdvisors.open({ text: tr('Hola, quisiera diseñar una piscina con AquaBruma.', 'Hi, I would like to design a pool with AquaBruma.') }); break;
     }
@@ -169,10 +172,25 @@ export class Configurator {
     const el = e.target.closest('input[type=range][data-k]'); if (!el) return;
     const k = el.dataset.k; this.set({ [k]: +el.value }, { panel: false }); this.syncRange(k, true);
   }
+  rangeDef(k) {
+    const d = RANGES[k];
+    if (k === 'stairsWidth') return { ...d, max: Math.max(d.min + 0.1, Math.min(d.max, this.state.width - 0.1)) };
+    return d;
+  }
+  fmt(k, v) { return k === 'stairsSteps' ? `${v} ${v === 1 ? tr('peldaño', 'step') : tr('peldaños', 'steps')}` : `${nf(v, 1)} m`; }
   syncRange(k, fromInput) {
-    const out = this.rootEl.querySelector(`[data-out="${k}"]`); if (out) out.textContent = `${nf(this.state[k], 1)} m`;
-    const inp = this.rootEl.querySelector(`input[data-k="${k}"]`); if (inp && !fromInput) inp.value = this.state[k];
-    if (inp) inp.style.setProperty('--p', `${((this.state[k] - RANGES[k].min) / (RANGES[k].max - RANGES[k].min)) * 100}%`);
+    const d = this.rangeDef(k), v = this.state[k];
+    const out = this.rootEl.querySelector(`[data-out="${k}"]`); if (out) out.textContent = this.fmt(k, v);
+    const inp = this.rootEl.querySelector(`input[data-k="${k}"]`); if (inp) { if (!fromInput) inp.value = v; inp.max = d.max; inp.style.setProperty('--p', `${((v - d.min) / (d.max - d.min)) * 100}%`); }
+    if (k === 'width') this.syncRange('stairsWidth', false);
+  }
+  finishOf(target) { return target === 'walls' ? this.state.finishWalls : target === 'stairs' ? this.state.finishStairs : this.state.finish; }
+  finishPatch(pair) {
+    const t = this.target, p = {};
+    if (t === 'all' || t === 'floor') p.finish = [...pair];
+    if (t === 'all' || t === 'walls') p.finishWalls = [...pair];
+    if (t === 'all' || t === 'stairs') p.finishStairs = [...pair];
+    return p;
   }
 
   // ---------- render ----------
@@ -210,9 +228,12 @@ export class Configurator {
     }).join('')}</div>`;
   }
   range(k, label) {
-    const d = RANGES[k], v = this.state[k], p = ((v - d.min) / (d.max - d.min)) * 100;
-    return `<div class="cfg-row"><div class="cfg-rl"><label for="r-${k}">${esc(label)}</label><output data-out="${k}">${nf(v, 1)} m</output></div>
+    const d = this.rangeDef(k), v = this.state[k], p = ((v - d.min) / (d.max - d.min)) * 100;
+    return `<div class="cfg-row"><div class="cfg-rl"><label for="r-${k}">${esc(label)}</label><output data-out="${k}">${this.fmt(k, v)}</output></div>
       <div class="cfg-rr"><button type="button" class="cfg-pm" data-act="dec" data-k="${k}" aria-label="${tr('Menos', 'Less')}">−</button><input id="r-${k}" type="range" min="${d.min}" max="${d.max}" step="${d.step}" value="${v}" data-k="${k}" style="--p:${p}%"><button type="button" class="cfg-pm" data-act="inc" data-k="${k}" aria-label="${tr('Más', 'More')}">+</button></div></div>`;
+  }
+  seg(act, items, selected, disabled) {
+    return `<div class="cfg-seg">${items.map((x) => `<button type="button" class="${selected === x.id ? 'on' : ''}" data-act="${act}" data-val="${x.id}" aria-pressed="${selected === x.id}" ${disabled ? 'disabled' : ''}>${esc(T(x))}</button>`).join('')}</div>`;
   }
   switchRow(key, label, hint, on, disabled) {
     return `<button type="button" class="cfg-switch${on ? ' on' : ''}" data-act="toggle" data-val="${key}" role="switch" aria-checked="${on}" ${disabled ? 'disabled' : ''}><span><b>${esc(label)}</b><em>${esc(hint)}</em></span><i></i></button>`;
@@ -230,13 +251,18 @@ export class Configurator {
         this.range('length', tr('Largo', 'Length')) + this.range('width', tr('Ancho', 'Width')) + this.range('depth', tr('Profundidad', 'Depth')) +
         `<p class="cfg-note">${tr('Medidas de ejemplo. Un asesor ajusta el diseño a tu terreno.', 'Sample sizes. An advisor adapts the design to your site.')}</p>`;
     } else if (id === 'acabado') {
-      const { type, color } = findFinish(s);
-      h = head(tr('Revestimiento interior', 'Interior finish'), tr('El material del piso y de los muros de la piscina.', 'The material of the pool floor and walls.')) +
+      const pair = this.finishOf(this.target), type = FINISH_TYPES.find((t) => t.id === pair[0]) || FINISH_TYPES[0], color = type.colors.find((c) => c.id === pair[1]) || type.colors[0];
+      const parts = [{ id: 'all', es: 'Todo', en: 'All' }, { id: 'floor', es: 'Piso', en: 'Floor' }, { id: 'walls', es: 'Paredes', en: 'Walls' }, { id: 'stairs', es: 'Escalera', en: 'Steps' }];
+      const label = (pt) => { const f = findFinish(s, pt); return `${T(f.type)} · ${T(f.color)}`; };
+      h = head(tr('Revestimiento interior', 'Interior finish'), tr('Combina materiales: elige a qué parte se aplica y cambia el porcelanato, mosaico o membrana.', 'Mix materials: pick which part it applies to and change the porcelain, mosaic or membrane.')) +
+        `<h3 class="cfg-s">${tr('Aplicar a', 'Apply to')}</h3>` + this.seg('target', parts, this.target) +
+        (this.target === 'all' ? '' : `<p class="cfg-note">${esc(T(parts.find((x) => x.id === this.target)))}: ${esc(label(this.target === 'floor' ? 'floor' : this.target))}${this.target === 'stairs' && !s.stairs ? ' · ' + tr('activa la escalera en Extras para verla', 'turn on the steps in Extras to see it') : ''}</p>`) +
         `<div class="cfg-tabs" role="tablist">${FINISH_TYPES.map((t) => `<button type="button" role="tab" class="cfg-tab${type.id === t.id ? ' on' : ''}" aria-selected="${type.id === t.id}" data-act="ftype" data-val="${t.id}">${esc(T(t))}</button>`).join('')}</div>` +
-        `<p class="cfg-note">${esc(T(type.note))}</p>` + this.sw('fcolor', type.colors.map((c) => ({ ...c, pattern: type.id === 'mosaico' || c.pattern === 'mosaic' ? 'mosaic' : type.id === 'porcelanato' ? 'tiles' : type.id === 'piedra' || c.pattern === 'stone' ? 'stone' : '' })), color.id);
+        `<p class="cfg-note">${esc(T(type.note))}</p>` + this.sw('fcolor', type.colors.map((c) => ({ ...c, pattern: type.id === 'mosaico' || c.pattern === 'mosaic' ? 'mosaic' : type.id === 'porcelanato' ? 'tiles' : type.id === 'piedra' || c.pattern === 'stone' ? 'stone' : c.pattern === 'stripes' ? 'stripes' : '' })), color.id);
     } else if (id === 'entorno') {
       h = head(tr('Borde y terraza', 'Coping and deck'), tr('Lo que rodea el agua: el borde de la piscina y el piso de la terraza.', 'What surrounds the water: the pool edge and the terrace floor.')) +
-        `<h3 class="cfg-s">${tr('Borde', 'Coping')}</h3>` + this.sw('coping', COPINGS, s.coping) + `<h3 class="cfg-s">${tr('Terraza', 'Deck')}</h3>` + this.sw('deck', DECKS, s.deck);
+        this.switchRow('mirror', tr('Borde espejo', 'Mirror edge'), tr('El agua llega al nivel de la terraza, sin borde visible.', 'Water reaches deck level with no visible edge.'), s.mirror) +
+        `<h3 class="cfg-s">${tr('Borde', 'Coping')}</h3>` + (s.mirror ? `<p class="cfg-note">${tr('Con el borde espejo no se usa borde de piscina.', 'With a mirror edge no pool coping is used.')}</p>` : this.sw('coping', COPINGS, s.coping)) + `<h3 class="cfg-s">${tr('Terraza', 'Deck')}</h3>` + this.sw('deck', DECKS, s.deck);
     } else if (id === 'agua') {
       h = head(tr('Agua y luz', 'Water and light'), tr('El color del agua y las luces de la piscina. Prueba la vista de noche.', 'The water color and the pool lights. Try the night view.')) +
         `<h3 class="cfg-s">${tr('Color del agua', 'Water color')}</h3>` + this.sw('water', WATERS, s.water) + `<h3 class="cfg-s">${tr('Luces subacuáticas', 'Underwater lights')}</h3>` + this.sw('lights', LIGHTS, s.lights) +
@@ -244,22 +270,25 @@ export class Configurator {
     } else if (id === 'extras') {
       const canStairs = s.shape === 'rect' || s.shape === 'L';
       h = head(tr('Extras', 'Extras'), tr('Detalles que cambian la forma de usar tu piscina.', 'Details that change how you use your pool.')) +
-        `<h3 class="cfg-s">${tr('Escalera', 'Steps')}</h3>` + `<div class="cfg-seg">${STAIRS.map((x) => `<button type="button" class="${s.stairs === x.id ? 'on' : ''}" data-act="stairs" data-val="${x.id}" aria-pressed="${s.stairs === x.id}" ${!canStairs && x.id !== 'none' ? 'disabled' : ''}>${esc(T(x))}</button>`).join('')}</div>` +
-        (canStairs ? '' : `<p class="cfg-note">${tr('La escalera está disponible en formas rectangular y en L.', 'Steps are available on rectangular and L shapes.')}</p>`) +
+        this.switchRow('stairs', tr('Escalera de acceso', 'Entry steps'), canStairs ? tr('Con medidas y material propios.', 'With its own size and material.') : tr('Disponible en formas rectangular y en L.', 'Available on rectangular and L shapes.'), s.stairs && canStairs, !canStairs) +
+        (s.stairs && canStairs ? `<div class="cfg-sub">${this.range('stairsWidth', tr('Ancho de la escalera', 'Steps width'))}${this.range('stairsSteps', tr('Peldaños', 'Number of steps'))}` +
+          (s.shape === 'rect' ? `<h3 class="cfg-s">${tr('Extremo', 'End')}</h3>${this.seg('sEnd', STAIR_ENDS, s.stairsEnd)}` : '') +
+          `<h3 class="cfg-s">${tr('Posición a lo ancho', 'Position along the width')}</h3>${this.seg('sPos', STAIR_POS, s.stairsPos)}` +
+          `<button type="button" class="cfg-btn cfg-ghost cfg-matbtn" data-act="stairsmat"><span>${tr('Elegir el material de la escalera', 'Choose the steps material')} · ${esc(T(findFinish(s, 'stairs').type))}</span>${I.arrow}</button></div>` : '') +
         this.switchRow('spa', tr('Spa adosado', 'Attached spa'), tr('Un spa elevado junto a la piscina.', 'A raised spa next to the pool.'), s.spa) +
         this.switchRow('loungers', tr('Tumbonas y sombrilla', 'Loungers and parasol'), tr('Para ver cómo se vive el espacio.', 'To see how the space feels.'), s.loungers);
     } else {
-      const m = this.metrics(), { type, color } = findFinish(s);
+      const m = this.metrics(), { type, color } = findFinish(s), fw = findFinish(s, 'walls'), fs2 = findFinish(s, 'stairs');
       const row = (k, v) => `<div class="cfg-sum-r"><span>${esc(k)}</span><b>${esc(v)}</b></div>`;
       h = head(tr('Tu diseño', 'Your design'), tr('Esto es lo que armaste. Un asesor lo revisa contigo y te cotiza.', 'This is what you built. An advisor reviews it with you and quotes it.')) +
-        `<div class="cfg-sum">${row(tr('Forma', 'Shape'), T(byId(SHAPES, s.shape)))}${row(tr('Medidas', 'Size'), `${nf(s.length, 1)} × ${nf(s.width, 1)} m · ${nf(s.depth, 1)} m ${tr('prof.', 'deep')}`)}${row(tr('Superficie', 'Surface'), `≈ ${nf(m.area, 1)} m²`)}${row(tr('Volumen', 'Volume'), `≈ ${nf(m.vol * 1000, 0)} ${tr('litros', 'liters')}`)}${row(tr('Revestimiento', 'Finish'), `${T(type)} · ${T(color)}`)}${row(tr('Borde', 'Coping'), T(byId(COPINGS, s.coping)))}${row(tr('Terraza', 'Deck'), T(byId(DECKS, s.deck)))}${row(tr('Agua', 'Water'), T(byId(WATERS, s.water)))}${row(tr('Luces', 'Lights'), T(byId(LIGHTS, s.lights)))}${row(tr('Escalera', 'Steps'), T(byId(STAIRS, s.stairs)))}${row(tr('Spa adosado', 'Attached spa'), s.spa ? tr('Sí', 'Yes') : tr('No', 'No'))}</div>` +
+        `<div class="cfg-sum">${row(tr('Forma', 'Shape'), T(byId(SHAPES, s.shape)))}${row(tr('Medidas', 'Size'), `${nf(s.length, 1)} × ${nf(s.width, 1)} m · ${nf(s.depth, 1)} m ${tr('prof.', 'deep')}`)}${row(tr('Superficie', 'Surface'), `≈ ${nf(m.area, 1)} m²`)}${row(tr('Volumen', 'Volume'), `≈ ${nf(m.vol * 1000, 0)} ${tr('litros', 'liters')}`)}${row(tr('Piso', 'Floor'), `${T(type)} · ${T(color)}`)}${row(tr('Paredes', 'Walls'), `${T(fw.type)} · ${T(fw.color)}`)}${row(tr('Borde', 'Coping'), s.mirror ? tr('Borde espejo', 'Mirror edge') : T(byId(COPINGS, s.coping)))}${row(tr('Terraza', 'Deck'), T(byId(DECKS, s.deck)))}${row(tr('Agua', 'Water'), T(byId(WATERS, s.water)))}${row(tr('Luces', 'Lights'), T(byId(LIGHTS, s.lights)))}${row(tr('Escalera', 'Steps'), this.stairsText(true))}${s.stairs && (s.shape === 'rect' || s.shape === 'L') ? row(tr('Material escalera', 'Steps material'), `${T(fs2.type)} · ${T(fs2.color)}`) : ''}${row(tr('Spa adosado', 'Attached spa'), s.spa ? tr('Sí', 'Yes') : tr('No', 'No'))}</div>` +
         `<p class="cfg-note">${tr('Los valores son aproximados y de referencia; no incluyen precios. Es una simulación con materiales de ejemplo.', 'Values are approximate references and do not include prices. This is a simulation using sample materials.')}</p>` +
         `<div class="cfg-actions"><button type="button" class="cfg-btn cfg-primary" data-act="quote">${I.wa}<span>${tr('Pedir cotización de este diseño', 'Request a quote for this design')}</span></button>
           <div class="cfg-two"><button type="button" class="cfg-btn" data-act="shot">${I.cam}<span>${tr('Descargar imagen', 'Download image')}</span></button><button type="button" class="cfg-btn" data-act="copy">${I.link}<span>${tr('Copiar enlace', 'Copy link')}</span></button></div>
           <button type="button" class="cfg-btn cfg-ghost" data-act="reset">${I.reset}<span>${tr('Empezar de nuevo', 'Start over')}</span></button></div>`;
     }
     this.q('[data-body]').innerHTML = h;
-    ['length', 'width', 'depth'].forEach((k) => { const i = this.rootEl.querySelector(`input[data-k="${k}"]`); if (i) this.syncRange(k, true); });
+    ['length', 'width', 'depth', 'stairsWidth', 'stairsSteps'].forEach((k) => { const i = this.rootEl.querySelector(`input[data-k="${k}"]`); if (i) this.syncRange(k, true); });
     const last = this.step === STEPS.length - 1;
     this.q('[data-foot]').innerHTML = `<button type="button" class="cfg-btn cfg-ghost" data-act="prev" ${this.step === 0 ? 'disabled' : ''}>${I.back}<span>${tr('Atrás', 'Back')}</span></button>
       ${last ? `<button type="button" class="cfg-btn cfg-primary" data-act="quote">${I.wa}<span>${tr('Cotizar', 'Get a quote')}</span></button>` : `<button type="button" class="cfg-btn cfg-primary" data-act="next"><span>${tr('Siguiente', 'Next')}</span>${I.arrow}</button>`}`;
@@ -268,10 +297,17 @@ export class Configurator {
   // ---------- salidas ----------
   describe() {
     const s = this.state, m = this.metrics(), { type, color } = findFinish(s), en = lang() === 'en';
-    const stairs = s.stairs === 'none' ? '' : (en ? `, ${T(byId(STAIRS, s.stairs)).toLowerCase()}` : `, escalera ${T(byId(STAIRS, s.stairs)).toLowerCase().replace('escalera', '').trim() || ''}`);
+    const st = this.stairsText(false), stairs = st ? `, ${st}` : '', fw = findFinish(s, 'walls'), fs2 = findFinish(s, 'stairs');
+    const mix = (fw.color.id !== color.id || fw.type.id !== type.id) ? (en ? `, walls in ${T(fw.type).toLowerCase()} ${T(fw.color).toLowerCase()}` : `, paredes en ${T(fw.type).toLowerCase()} ${T(fw.color).toLowerCase()}`) : '';
+    const smix = (st && (fs2.color.id !== color.id || fs2.type.id !== type.id)) ? (en ? ` in ${T(fs2.type).toLowerCase()} ${T(fs2.color).toLowerCase()}` : ` en ${T(fs2.type).toLowerCase()} ${T(fs2.color).toLowerCase()}`) : '';
     const L = nf(s.length, 1), W = nf(s.width, 1), D = nf(s.depth, 1);
-    if (en) return `${T(byId(SHAPES, s.shape)).toLowerCase()} shape, ${L} × ${W} m, ${D} m deep (≈ ${nf(m.area, 1)} m², ≈ ${nf(m.vol * 1000, 0)} liters), ${T(type).toLowerCase()} finish in ${T(color).toLowerCase()}, ${s.coping === 'ninguno' ? 'no coping' : `${T(byId(COPINGS, s.coping)).toLowerCase()} coping`}, ${T(byId(DECKS, s.deck)).toLowerCase()} deck, ${T(byId(WATERS, s.water)).toLowerCase()} water, lights: ${T(byId(LIGHTS, s.lights)).toLowerCase()}${stairs}${s.spa ? ', attached spa' : ''}`;
-    return `forma ${T(byId(SHAPES, s.shape)).toLowerCase()}, ${L} × ${W} m y ${D} m de profundidad (≈ ${nf(m.area, 1)} m², ≈ ${nf(m.vol * 1000, 0)} litros), revestimiento ${T(type).toLowerCase()} ${T(color).toLowerCase()}, ${s.coping === 'ninguno' ? 'sin borde' : `borde ${T(byId(COPINGS, s.coping)).toLowerCase()}`}, terraza ${T(byId(DECKS, s.deck)).toLowerCase()}, agua ${T(byId(WATERS, s.water)).toLowerCase()}, luces: ${T(byId(LIGHTS, s.lights)).toLowerCase()}${stairs}${s.spa ? ', con spa adosado' : ''}`;
+    if (en) return `${T(byId(SHAPES, s.shape)).toLowerCase()} shape, ${L} × ${W} m, ${D} m deep (≈ ${nf(m.area, 1)} m², ≈ ${nf(m.vol * 1000, 0)} liters), ${T(type).toLowerCase()} finish in ${T(color).toLowerCase()}, ${s.mirror || s.coping === 'ninguno' ? 'no coping' : `${T(byId(COPINGS, s.coping)).toLowerCase()} coping`}, ${T(byId(DECKS, s.deck)).toLowerCase()} deck, ${T(byId(WATERS, s.water)).toLowerCase()} water, lights: ${T(byId(LIGHTS, s.lights)).toLowerCase()}${stairs}${smix}${mix}${s.mirror ? ', mirror edge' : ''}${s.spa ? ', attached spa' : ''}`;
+    return `forma ${T(byId(SHAPES, s.shape)).toLowerCase()}, ${L} × ${W} m y ${D} m de profundidad (≈ ${nf(m.area, 1)} m², ≈ ${nf(m.vol * 1000, 0)} litros), revestimiento ${T(type).toLowerCase()} ${T(color).toLowerCase()}, ${s.mirror || s.coping === 'ninguno' ? 'sin borde' : `borde ${T(byId(COPINGS, s.coping)).toLowerCase()}`}, terraza ${T(byId(DECKS, s.deck)).toLowerCase()}, agua ${T(byId(WATERS, s.water)).toLowerCase()}, luces: ${T(byId(LIGHTS, s.lights)).toLowerCase()}${stairs}${smix}${mix}${s.mirror ? ', borde espejo' : ''}${s.spa ? ', con spa adosado' : ''}`;
+  }
+  stairsText(short) {
+    const s = this.state; if (!s.stairs || !(s.shape === 'rect' || s.shape === 'L')) return short ? tr('Sin escalera', 'None') : '';
+    const w = nf(Math.min(s.stairsWidth, s.width - 0.1), 1);
+    return lang() === 'en' ? `${s.stairsSteps} steps, ${w} m wide` : `${s.stairsSteps} peldaños, ${w} m de ancho`;
   }
   quote() {
     const text = lang() === 'en'
@@ -296,4 +332,4 @@ export class Configurator {
   }
 }
 
-export const RANGES = { length: { min: 3, max: 16, step: 0.5 }, width: { min: 2, max: 8, step: 0.5 }, depth: { min: 0.9, max: 2.4, step: 0.1 } };
+export const RANGES = { length: { min: 3, max: 16, step: 0.5 }, width: { min: 2, max: 8, step: 0.5 }, depth: { min: 0.9, max: 2.4, step: 0.1 }, stairsWidth: { min: 0.8, max: 8, step: 0.1 }, stairsSteps: { min: 1, max: 5, step: 1 } };
