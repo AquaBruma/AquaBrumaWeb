@@ -1,10 +1,11 @@
 {
   "name": "aquabruma-web",
   "private": true,
-  "description": "Sitio estático de AquaBruma. Solo se usa npm para compilar el configurador 3D (three.js + esbuild) y el CSS (tailwind).",
+  "description": "Sitio est\u00c3\u00a1tico de AquaBruma. Solo se usa npm para compilar el configurador 3D (three.js + esbuild) y el CSS (tailwind).",
   "scripts": {
     "build:cfg": "esbuild src/configurador/main.js --bundle --minify --format=iife --target=es2019 --legal-comments=none --outfile=configurador.js",
-    "build:css": "tailwindcss@3.4.17 -c tailwind.config.js -i src/input.css -o tailwind.css --minify"
+    "build:css": "tailwindcss@3.4.17 -c tailwind.config.js -i src/input.css -o tailwind.css --minify",
+    "build:sauna": "esbuild src/sauna/main.js --bundle --minify --format=iife --target=es2019 --legal-comments=none --outfile=sauna.js"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",

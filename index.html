@@ -568,6 +568,7 @@
             <a href="#colecciones" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Catálogo</a>
             <a href="#colecciones" data-open-catalog="spas" class="nav-sub flex items-center gap-2.5 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas Jacuzzi</a>
             <a href="#configurador" data-open-configurator class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Diseña tu piscina</a>
+            <a href="#sauna" data-open-sauna class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Diseña tu sauna</a>
             <a href="#proyectos" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Proyectos</a>
             <a href="#nosotros" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Nosotros</a>
             <a href="#contacto" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Contacto</a>
@@ -606,6 +607,7 @@
       <a href="#colecciones" data-open-catalog="spas" class="mobile-link flex items-center gap-2.5 text-lg font-light text-sky"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas Jacuzzi</a>
     </div>
     <a href="#configurador" data-open-configurator class="mobile-link text-3xl font-light">Diseña tu piscina</a>
+    <a href="#sauna" data-open-sauna class="mobile-link text-3xl font-light">Diseña tu sauna</a>
     <a href="#proyectos" class="mobile-link text-3xl font-light">Proyectos</a>
     <a href="#nosotros" class="mobile-link text-3xl font-light">Nosotros</a>
     <a href="#contacto" class="mobile-link text-3xl font-light">Contacto</a>
@@ -895,6 +897,34 @@
         <span class="absolute inset-0 lg:hidden" style="background:linear-gradient(to top, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 40%)"></span>
         <span class="absolute right-6 bottom-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10px] tracking-widest2 uppercase" style="background:rgba(8,24,38,.62);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Interactivo</span>
       </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFIGURADOR DE SAUNAS ============ -->
+<section id="sauna" class="bg-ink pb-16 md:pb-24">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-ink2 grid lg:grid-cols-[1.15fr_1fr] items-stretch">
+      <button type="button" data-open-sauna aria-label="Abrir el configurador de saunas" class="relative block min-h-[260px] lg:min-h-[480px] overflow-hidden group text-left">
+        <img src="img/sauna-promo.jpg" alt="Sauna diseñada en el configurador 3D de AquaBruma" loading="lazy" width="1400" height="900" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105">
+        <span class="absolute inset-0 hidden lg:block" style="background:linear-gradient(to left, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 30%)"></span>
+        <span class="absolute inset-0 lg:hidden" style="background:linear-gradient(to top, rgb(var(--c-ink2)) 0%, rgb(var(--c-ink2) / 0) 40%)"></span>
+        <span class="absolute left-6 bottom-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10px] tracking-widest2 uppercase" style="background:rgba(8,24,38,.62);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Interactivo</span>
+      </button>
+      <div class="reveal relative z-10 p-8 md:p-14 flex flex-col justify-center">
+        <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">Configurador 3D</p>
+        <h2 class="text-balance text-cream font-light text-4xl md:text-5xl tracking-tight leading-tight mb-5">Diseña tu sauna <span class="text-sky font-normal">en 3D</span></h2>
+        <p class="text-cream/75 font-light leading-relaxed mb-8 max-w-md">Define las medidas, las bancas, la puerta y las maderas. Elige la estufa y la iluminación, míralas por dentro y por fuera, y pide tu cotización con el diseño listo.</p>
+        <ul class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-cream/80 font-light mb-9 max-w-md">
+          <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>Medidas a tu espacio</li>
+          <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>Bancas, puerta y vidrio</li>
+          <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>Maderas y estufas</li>
+          <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>Luces y capacidad</li>
+        </ul>
+        <div>
+          <button type="button" data-open-sauna class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-8 py-4 font-medium">Diseñar mi sauna <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5h14M10 1l4 4-4 4"/></svg></button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1348,6 +1378,29 @@
         .catch(() => { document.documentElement.classList.remove('cfg-loading-js'); if (window.AQAdvisors) window.AQAdvisors.open({ text: 'Hola, quisiera diseñar una piscina con AquaBruma.' }); });
     }
     window.AQConfigurator = { open: () => open(), preload: load };
+    // Configurador de saunas (mismo esquema, archivo aparte)
+    let ps = null;
+    function loadS() {
+      if (window.AQSauna) return Promise.resolve();
+      if (ps) return ps;
+      ps = new Promise((res, rej) => {
+        if (!document.querySelector('link[href="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css'; document.head.appendChild(l); }
+        const sc = document.createElement('script'); sc.src = 'sauna.js'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
+      });
+      return ps;
+    }
+    function openS(param) {
+      document.documentElement.classList.add('cfg-loading-js');
+      return loadS().then(() => { document.documentElement.classList.remove('cfg-loading-js'); if (param) window.AQSauna.fromParam(param); else window.AQSauna.open(); })
+        .catch(() => { document.documentElement.classList.remove('cfg-loading-js'); if (window.AQAdvisors) window.AQAdvisors.open({ text: 'Hola, quisiera diseñar una sauna con AquaBruma.' }); });
+    }
+    window.AQSaunaConfigurator = { open: () => openS(), preload: loadS };
+    document.addEventListener('click', (e) => { const a = e.target.closest('[data-open-sauna]'); if (!a) return; e.preventDefault(); openS(); });
+    document.addEventListener('pointerover', (e) => { if (e.target.closest && e.target.closest('[data-open-sauna]')) loadS().catch(() => {}); }, { once: true, passive: true });
+    try {
+      const q2 = new URLSearchParams(location.search).get('sauna');
+      if (q2) document.addEventListener('aq:intro-done', () => setTimeout(() => openS(q2), 400), { once: true });
+    } catch (err) {}
     document.addEventListener('click', (e) => {
       const a = e.target.closest('[data-open-configurator]'); if (!a) return;
       e.preventDefault(); open();
