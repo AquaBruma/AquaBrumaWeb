@@ -10,3 +10,6 @@ desktop.ini
 # Archivos locales que no se publican
 banner-colecciones*.mp4
 banner-colecciones-poster.jpg
+
+# Dependencias de compilación
+node_modules/

@@ -1,0 +1,116 @@
+// Opciones del configurador (colores y acabados de EJEMPLO, propios de AquaBruma).
+// Cuando haya productos reales de los proveedores, se reemplazan los colores por sus texturas.
+export const T = (o) => (typeof o === 'string' ? o : (window.AQ_LANG === 'en' ? o.en : o.es));
+
+export const SHAPES = [
+  { id: 'rect',    es: 'Rectangular',  en: 'Rectangular' },
+  { id: 'rounded', es: 'Esquinas suaves', en: 'Soft corners' },
+  { id: 'L',       es: 'En L',          en: 'L-shaped' },
+  { id: 'organic', es: 'Orgánica',      en: 'Organic' }
+];
+
+// Revestimiento interior. type define el patrón; colors son los tonos disponibles.
+export const FINISH_TYPES = [
+  { id: 'membrana', es: 'Membrana lisa', en: 'Smooth membrane', note: { es: 'Superficie lisa y uniforme, sin juntas.', en: 'Smooth, uniform surface with no joints.' },
+    colors: [
+      { id: 'celeste', es: 'Celeste', en: 'Sky blue', c: '#5fb4d8' },
+      { id: 'azul', es: 'Azul', en: 'Blue', c: '#2f6faa' },
+      { id: 'arena', es: 'Arena', en: 'Sand', c: '#d9ccb0' },
+      { id: 'gris', es: 'Gris', en: 'Grey', c: '#8d979d' },
+      { id: 'blanco', es: 'Blanco', en: 'White', c: '#eef2f3' },
+      { id: 'verde', es: 'Verde agua', en: 'Sea green', c: '#4d9c88' }
+    ] },
+  { id: 'impresa', es: 'Membrana con diseño', en: 'Patterned membrane', note: { es: 'Estampado que imita mosaico o piedra.', en: 'Print that imitates mosaic or stone.' },
+    colors: [
+      { id: 'mosaico-azul', es: 'Mosaico azul', en: 'Blue mosaic', c: '#2a76b3', pattern: 'mosaic' },
+      { id: 'mosaico-arena', es: 'Mosaico arena', en: 'Sand mosaic', c: '#cdbb95', pattern: 'mosaic' },
+      { id: 'mosaico-gris', es: 'Mosaico gris', en: 'Grey mosaic', c: '#7d8a92', pattern: 'mosaic' },
+      { id: 'piedra', es: 'Efecto piedra', en: 'Stone effect', c: '#a39a8a', pattern: 'stone' }
+    ] },
+  { id: 'mosaico', es: 'Mosaico vítreo', en: 'Glass mosaic', note: { es: 'Vidrio en piezas pequeñas, con brillo y profundidad.', en: 'Small glass pieces with shine and depth.' },
+    colors: [
+      { id: 'azul-profundo', es: 'Azul profundo', en: 'Deep blue', c: '#1d5f94' },
+      { id: 'turquesa', es: 'Turquesa', en: 'Turquoise', c: '#25a8b8' },
+      { id: 'verde-agua', es: 'Verde agua', en: 'Aqua green', c: '#46b6a0' },
+      { id: 'perla', es: 'Blanco perla', en: 'Pearl white', c: '#e6eef0' },
+      { id: 'humo', es: 'Gris humo', en: 'Smoke grey', c: '#76848d' },
+      { id: 'arena', es: 'Arena', en: 'Sand', c: '#d6c6a2' }
+    ] },
+  { id: 'porcelanato', es: 'Porcelanato', en: 'Porcelain tile', note: { es: 'Formato grande y juntas finas; fácil de limpiar.', en: 'Large format and fine joints; easy to clean.' },
+    colors: [
+      { id: 'cemento', es: 'Gris cemento', en: 'Cement grey', c: '#8c8e8e' },
+      { id: 'marmol', es: 'Blanco mármol', en: 'Marble white', c: '#e3e3df' },
+      { id: 'beige', es: 'Beige piedra', en: 'Stone beige', c: '#c9bba3' },
+      { id: 'antracita', es: 'Antracita', en: 'Anthracite', c: '#4a4e52' }
+    ] },
+  { id: 'piedra', es: 'Piedra natural', en: 'Natural stone', note: { es: 'Carácter natural, textura única en cada pieza.', en: 'Natural character, a unique texture in every piece.' },
+    colors: [
+      { id: 'bali', es: 'Piedra Bali', en: 'Bali stone', c: '#8e8f86' },
+      { id: 'lava', es: 'Lava stone', en: 'Lava stone', c: '#4a4a4b' },
+      { id: 'arenisca', es: 'Arenisca', en: 'Sandstone', c: '#c7a883' }
+    ] }
+];
+
+export const COPINGS = [
+  { id: 'blanco', es: 'Blanco', en: 'White', c: '#ecebe6' },
+  { id: 'arena', es: 'Arena', en: 'Sand', c: '#d8c9a8' },
+  { id: 'gris', es: 'Gris', en: 'Grey', c: '#8f9396' },
+  { id: 'piedra', es: 'Piedra', en: 'Stone', c: '#a49d90', pattern: 'stone' },
+  { id: 'ninguno', es: 'Sin borde', en: 'No coping', c: null }
+];
+
+export const DECKS = [
+  { id: 'madera-clara', es: 'Madera clara', en: 'Light wood', c: '#b48b5c', pattern: 'wood' },
+  { id: 'madera-oscura', es: 'Madera oscura', en: 'Dark wood', c: '#5d4533', pattern: 'wood' },
+  { id: 'travertino', es: 'Travertino', en: 'Travertine', c: '#dccdb3', pattern: 'tiles' },
+  { id: 'porcelanato', es: 'Porcelanato gris', en: 'Grey porcelain', c: '#8e9091', pattern: 'tiles' },
+  { id: 'concreto', es: 'Concreto pulido', en: 'Polished concrete', c: '#a6a6a2', pattern: 'concrete' }
+];
+
+export const WATERS = [
+  { id: 'cristalina', es: 'Cristalina', en: 'Crystal', shallow: '#86dcec', deep: '#1273a6', c: '#4fc3dc' },
+  { id: 'turquesa', es: 'Turquesa', en: 'Turquoise', shallow: '#62d8cc', deep: '#078a86', c: '#27c0b2' },
+  { id: 'profunda', es: 'Azul profundo', en: 'Deep blue', shallow: '#64aae6', deep: '#0a3d86', c: '#2a72ba' },
+  { id: 'esmeralda', es: 'Esmeralda', en: 'Emerald', shallow: '#78d2a2', deep: '#0c6c58', c: '#2fa57f' }
+];
+
+export const LIGHTS = [
+  { id: 'off', es: 'Apagadas', en: 'Off', c: '#7b8794' },
+  { id: 'calida', es: 'Blanco cálido', en: 'Warm white', c: '#ffd9a3', rgb: [1.0, 0.82, 0.58] },
+  { id: 'azul', es: 'Azul', en: 'Blue', c: '#4aa8ff', rgb: [0.25, 0.62, 1.0] },
+  { id: 'color', es: 'Color cambiante', en: 'Color shift', c: 'conic-gradient(#ff5d73,#ffd24a,#4ade80,#4aa8ff,#a78bfa,#ff5d73)', rgb: null }
+];
+
+export const STAIRS = [
+  { id: 'none', es: 'Sin escalera', en: 'No steps' },
+  { id: 'corner', es: 'De esquina', en: 'Corner steps' },
+  { id: 'full', es: 'Ancha', en: 'Wide steps' }
+];
+
+// Estilos de partida: un clic y todo el diseño cambia
+export const PRESETS = [
+  { id: 'moderna', es: 'Moderna', en: 'Modern', d: { es: 'Líneas rectas, tonos grises y luz cálida.', en: 'Straight lines, grey tones and warm light.' },
+    sw: ['#8c8e8e', '#33c4b8', '#5d4533'],
+    s: { shape: 'rect', length: 9, width: 4, depth: 1.5, finish: ['porcelanato', 'cemento'], coping: 'gris', deck: 'madera-oscura', water: 'turquesa', lights: 'calida', stairs: 'full', spa: false, loungers: true } },
+  { id: 'mediterranea', es: 'Mediterránea', en: 'Mediterranean', d: { es: 'Azul profundo, piedra clara y madera natural.', en: 'Deep blue, light stone and natural wood.' },
+    sw: ['#1d5f94', '#ecebe6', '#b48b5c'],
+    s: { shape: 'rounded', length: 8, width: 4, depth: 1.5, finish: ['mosaico', 'azul-profundo'], coping: 'blanco', deck: 'travertino', water: 'profunda', lights: 'calida', stairs: 'none', spa: false, loungers: true } },
+  { id: 'resort', es: 'Resort', en: 'Resort', d: { es: 'Piscina en L con spa adosado y luz azul.', en: 'L-shaped pool with attached spa and blue light.' },
+    sw: ['#25a8b8', '#d8c9a8', '#b48b5c'],
+    s: { shape: 'L', length: 10, width: 5, depth: 1.4, finish: ['mosaico', 'turquesa'], coping: 'arena', deck: 'madera-clara', water: 'cristalina', lights: 'azul', stairs: 'corner', spa: true, loungers: true } },
+  { id: 'natural', es: 'Natural', en: 'Natural', d: { es: 'Forma libre, piedra y verdes suaves.', en: 'Free form, stone and soft greens.' },
+    sw: ['#8e8f86', '#3aa886', '#a49d90'],
+    s: { shape: 'organic', length: 8, width: 5, depth: 1.4, finish: ['piedra', 'bali'], coping: 'piedra', deck: 'concreto', water: 'esmeralda', lights: 'calida', stairs: 'none', spa: false, loungers: true } }
+];
+
+export const DEFAULTS = () => {
+  const p = PRESETS[0].s;
+  return { preset: 'moderna', night: false, ...p, finish: [...p.finish] };
+};
+
+export function findFinish(state) {
+  const type = FINISH_TYPES.find((t) => t.id === state.finish[0]) || FINISH_TYPES[0];
+  const color = type.colors.find((c) => c.id === state.finish[1]) || type.colors[0];
+  return { type, color };
+}
+export const byId = (list, id) => list.find((x) => x.id === id) || list[0];
