@@ -114,3 +114,5 @@ Al ser un sitio 100% estático, se puede desplegar directamente en Netlify, Verc
 - Activar el **SSL gratuito** en hPanel (Seguridad → SSL) antes de forzar HTTPS.
 - Los archivos `banner-colecciones*.mp4` están en `.gitignore` y no se publican.
 - Después de publicar: probar inicio, videos, catálogo, visor 3D, mapa y cookies en una ventana privada; si algo no se actualiza, vaciar la caché del sitio en hPanel y recargar con Ctrl+F5.
+
+**Caché del navegador:** Hostinger guarda los archivos .js/.css hasta 7 días. Por eso `index.html` los llama con `?v=AAAAMMDDx` (por ejemplo `configurador.js?v=20261020c`). Cada vez que se cambie un .js o .css, hay que cambiar ese número en `index.html` (buscar `?v=`) para que los visitantes reciban la versión nueva.
