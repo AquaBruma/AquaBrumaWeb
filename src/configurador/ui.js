@@ -22,6 +22,8 @@ const I = {
   shrink: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg>',
   full: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
   panel: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M14.5 4.5v15"/></svg>',
+  drop: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>',
+  dropoff: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/><path d="M3.5 3.5l17 17"/></svg>',
   reset: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>'
 };
 const SHAPE_ICON = {
@@ -49,7 +51,7 @@ const STEPS = [
 
 export class Configurator {
   constructor() {
-    this.state = DEFAULTS(); this.target = 'all'; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false; this.wide = false; this.noPanel = false;
+    this.state = DEFAULTS(); this.target = 'all'; this.waterOn = true; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false; this.wide = false; this.noPanel = false;
     this.build();
   }
 
@@ -104,7 +106,7 @@ export class Configurator {
           this.scene.onInteract = () => this.hideHint();
           this.scene.setNight(this.state.night, true);
           this.scene.onFirst = () => setTimeout(done, 250);
-          this.scene.update(this.state); this.scene.start(); this.updateStats();
+          this.scene.update(this.state); this.scene.start(); this.updateStats(); this.renderLabels();
           setTimeout(done, 4000);
         } catch (err) { console.error(err); this.showFallback(); }
       }, 80);
@@ -187,10 +189,11 @@ export class Configurator {
       case 'dec': case 'inc': { const k = el.dataset.k, def = this.rangeDef(k); const nv = Math.min(def.max, Math.max(def.min, +(s[k] + (a === 'inc' ? def.step : -def.step)).toFixed(2))); this.set({ [k]: nv }, { panel: false }); this.syncRange(k); break; }
       case 'view': this.scene && this.scene.setView(v); this.markView(v); break;
       case 'night': this.set({ night: !s.night }, { rebuild: false, panel: false }); this.scene && this.scene.setNight(this.state.night); this.renderTools(); break;
+      case 'water-toggle': this.waterOn = !this.waterOn; if (this.scene) this.scene.setWater(this.waterOn); this.renderTools(); break;
       case 'rotate': this.autoRotate = !this.autoRotate; if (this.scene) this.scene.controls.autoRotate = this.autoRotate; this.renderTools(); break;
       case 'shot': this.capture(); break;
       case 'copy': this.copyLink(el); break;
-      case 'reset': this.state = DEFAULTS(); this.target = 'all'; this.scene && this.scene.setNight(false, true); this.scene && (this.scene.userMoved = false); this.step = 0; this.renderAll(); this.scene && this.scene.update(this.state); this.updateStats(); break;
+      case 'reset': this.state = DEFAULTS(); this.target = 'all'; this.waterOn = true; this.scene && this.scene.setWater(true); this.scene && this.scene.setNight(false, true); this.scene && (this.scene.userMoved = false); this.step = 0; this.renderAll(); this.scene && this.scene.update(this.state); this.updateStats(); break;
       case 'quote': this.quote(); break;
       case 'advisor': if (window.AQAdvisors) window.AQAdvisors.open({ text: tr('Hola, quisiera diseñar una piscina con AquaBruma.', 'Hi, I would like to design a pool with AquaBruma.') }); break;
     }
@@ -223,6 +226,12 @@ export class Configurator {
   // ---------- render ----------
   renderAll() { this.renderLabels(); this.renderSteps(); this.renderBody(); this.renderTools(); this.updateStats(); }
   renderLabels() {
+    this.rootEl.setAttribute('aria-label', tr('Configurador de piscinas', 'Pool configurator'));
+    const cv = this.rootEl.querySelector('canvas'); if (cv) cv.setAttribute('aria-label', tr('Vista 3D de la piscina. Arrastra para girar, usa la rueda para acercar.', '3D view of the pool. Drag to rotate, use the wheel to zoom.'));
+    const sn = this.q('[data-steps]'); if (sn) sn.setAttribute('aria-label', tr('Pasos', 'Steps'));
+    this.rootEl.querySelectorAll('.cfg-ico[data-act="close"]').forEach((b) => b.setAttribute('aria-label', tr('Cerrar', 'Close')));
+    const th = this.rootEl.querySelector('.cfg-ico[data-act="theme"]'); if (th) { th.setAttribute('aria-label', tr('Fondo claro / oscuro', 'Light / dark background')); th.title = th.getAttribute('aria-label'); }
+    const hn = this.q('[data-hint]'); if (hn && hn.classList.contains('on')) hn.textContent = tr('Arrastra para girar · rueda o pellizco para acercar', 'Drag to rotate · wheel or pinch to zoom');
     this.syncWide(); this.q('[data-lbl="close"]').textContent = tr('Volver', 'Back'); this.q('[data-lbl="title"]').textContent = tr('Diseña tu piscina', 'Design your pool');
     const l = this.q('[data-loading] [data-i]'); if (l) l.textContent = tr('Preparando tu piscina…', 'Preparing your pool…');
   }
@@ -235,6 +244,7 @@ export class Configurator {
     this.q('[data-tools]').innerHTML = `
       <div class="cfg-group">${VIEWS.map((v) => `<button type="button" class="cfg-tool${cur === v.id ? ' on' : ''}" data-act="view" data-val="${v.id}" data-v="${v.id}" aria-label="${esc(T(v))}" title="${esc(T(v))}">${v.ic}</button>`).join('')}</div>
       <div class="cfg-group">
+        <button type="button" class="cfg-tool${this.waterOn === false ? ' on' : ''}" data-act="water-toggle" aria-pressed="${this.waterOn === false}" aria-label="${this.waterOn === false ? tr('Poner el agua', 'Show water') : tr('Quitar el agua', 'Hide water')}" title="${this.waterOn === false ? tr('Poner el agua', 'Show water') : tr('Quitar el agua para ver el fondo y los contornos', 'Hide the water to see the floor and edges')}">${this.waterOn === false ? I.dropoff : I.drop}</button>
         <button type="button" class="cfg-tool${s.night ? ' on' : ''}" data-act="night" aria-pressed="${s.night}" aria-label="${tr('Día / noche', 'Day / night')}" title="${tr('Día / noche', 'Day / night')}">${s.night ? I.moon : I.sun}</button>
         <button type="button" class="cfg-tool${this.autoRotate ? ' on' : ''}" data-act="rotate" aria-pressed="${this.autoRotate}" aria-label="${tr('Girar solo', 'Auto-rotate')}" title="${tr('Girar solo', 'Auto-rotate')}">${I.rotate}</button>
         <button type="button" class="cfg-tool" data-act="shot" aria-label="${tr('Descargar imagen', 'Download image')}" title="${tr('Descargar imagen', 'Download image')}">${I.cam}</button>

@@ -98,7 +98,7 @@ export class PoolScene {
   constructor(host) {
     this.host = host;
     this.time = 0; this.night = 0; this.nightTarget = 0; this.running = false; this.disposed = false;
-    this.cache = new Map(); this.lightsOn = false; this.shift = false; this.waterY = -0.12;
+    this.cache = new Map(); this.waterOn = true; this.lightsOn = false; this.shift = false; this.waterY = -0.12;
     this.uni = { uTime: { value: 0 }, uCaus: { value: 0.7 }, uWY: { value: -0.12 } };
     this.mobile = Math.min(window.innerWidth, window.innerHeight) < 700;
 
@@ -340,7 +340,7 @@ diffuseColor.rgb *= mix(1.0, 0.88, below);`);
     if (mirror) g.add(new THREE.Mesh(ribbonGeometry(pts, 0, 0.0, 0.0, -0.06), new THREE.MeshStandardMaterial({ color: '#1b2a30', roughness: 0.9, side: THREE.DoubleSide })));
 
     // spa adosado
-    this.spaLight = null; this.spaMat = null;
+    this.spaLight = null; this.spaMat = null; this.spaWater = null;
     if (spa) {
       const cx = bb.maxX + 0.95 + spaR, cz = (bb.minZ + bb.maxZ) / 2, hgt = 0.5;
       const cpItem = cp.c ? cp : DECKS[2];
@@ -354,7 +354,7 @@ diffuseColor.rgb *= mix(1.0, 0.88, below);`);
         vertexShader: SIMPLE_VERT, fragmentShader: WATER_SIMPLE_FRAG, transparent: true, depthWrite: false, side: THREE.DoubleSide,
         uniforms: { uTime: this.uni.uTime, uNight: { value: this.night }, uLightAmt: { value: 0 }, uOpacity: { value: 0.9 }, uTint: { value: col(wt.shallow) }, uDeep: { value: col(wt.deep) }, uSkyTop: this.skyU.uTop, uSkyHor: this.skyU.uHor, uSunDir: this.skyU.uSunDir, uSunCol: this.skyU.uSunCol, uLight: { value: new THREE.Color(1, 0.82, 0.58) } }
       });
-      const sWater = new THREE.Mesh(new THREE.CircleGeometry(spaR - 0.2, 48), sm); sWater.rotation.x = -Math.PI / 2; sWater.position.set(cx, hgt - 0.1, cz); sWater.renderOrder = 6; g.add(sWater);
+      const sWater = new THREE.Mesh(new THREE.CircleGeometry(spaR - 0.2, 48), sm); sWater.rotation.x = -Math.PI / 2; sWater.position.set(cx, hgt - 0.1, cz); sWater.renderOrder = 6; g.add(sWater); this.spaWater = sWater;
       this.spaLight = new THREE.PointLight('#ffd9a3', 0, 6, 1.8); this.spaLight.position.set(cx, hgt - 0.3, cz); g.add(this.spaLight);
     }
 
@@ -375,8 +375,16 @@ diffuseColor.rgb *= mix(1.0, 0.88, below);`);
 
     this.layoutEnvironment();
     this.sun.shadow.camera.updateProjectionMatrix();
+    this.setWater(this.waterOn);
     this.fitInfo = { size: Math.max(L, W), L, W, D };
     if (!this.userMoved && !this.tween) this.setView('aerial', true);
+  }
+  // quitar o poner el agua (para ver el fondo, los muros y la escalera)
+  setWater(on) {
+    this.waterOn = on;
+    if (this.water) this.water.visible = on;
+    if (this.spaWater) this.spaWater.visible = on;
+    this.uni.uWY.value = on ? this.waterY : -100;
   }
   setLightColor(rgb) {
     const c = new THREE.Color(rgb[0], rgb[1], rgb[2]);

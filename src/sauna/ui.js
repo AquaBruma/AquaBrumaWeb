@@ -97,7 +97,7 @@ export class SaunaConfigurator {
           this.scene.onInteract = () => this.hideHint();
           this.scene.setNight(this.state.night, true);
           this.scene.onFirst = () => setTimeout(done, 250);
-          this.scene.update(this.state); this.scene.start(); this.updateStats();
+          this.scene.update(this.state); this.scene.start(); this.updateStats(); this.renderLabels();
           setTimeout(done, 4000);
         } catch (err) { console.error(err); this.showFallback(); }
       }, 80);
@@ -194,6 +194,12 @@ export class SaunaConfigurator {
   // ---------- render ----------
   renderAll() { this.renderLabels(); this.renderSteps(); this.renderBody(); this.renderTools(); this.updateStats(); }
   renderLabels() {
+    this.rootEl.setAttribute('aria-label', tr('Configurador de saunas', 'Sauna configurator'));
+    const cv = this.rootEl.querySelector('canvas'); if (cv) cv.setAttribute('aria-label', tr('Vista 3D de la sauna. Arrastra para girar, usa la rueda para acercar.', '3D view of the sauna. Drag to rotate, use the wheel to zoom.'));
+    const sn = this.q('[data-steps]'); if (sn) sn.setAttribute('aria-label', tr('Pasos', 'Steps'));
+    this.rootEl.querySelectorAll('.cfg-ico[data-act="close"]').forEach((b) => b.setAttribute('aria-label', tr('Cerrar', 'Close')));
+    const th = this.rootEl.querySelector('.cfg-ico[data-act="theme"]'); if (th) { th.setAttribute('aria-label', tr('Fondo claro / oscuro', 'Light / dark background')); th.title = th.getAttribute('aria-label'); }
+    const hn = this.q('[data-hint]'); if (hn && hn.classList.contains('on')) hn.textContent = tr('Arrastra para girar · rueda o pellizco para acercar', 'Drag to rotate · wheel or pinch to zoom');
     this.syncWide(); this.q('[data-lbl="close"]').textContent = tr('Volver', 'Back'); this.q('[data-lbl="title"]').textContent = tr('Diseña tu sauna', 'Design your sauna');
     const l = this.q('[data-loading] [data-i]'); if (l) l.textContent = tr('Preparando tu sauna…', 'Preparing your sauna…');
   }
