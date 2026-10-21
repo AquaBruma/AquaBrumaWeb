@@ -108,6 +108,17 @@ function grassTexture(aniso) {
   return finish(cv, null, aniso);
 }
 
+// Textura desde una foto (por ejemplo, los mosaicos reales del proveedor). Se ve primero con el color promedio y la foto
+// reemplaza ese color apenas termina de descargarse; así el 3D nunca se queda esperando.
+const loader = new THREE.TextureLoader();
+export function imageTexture(url, avg, aniso) {
+  const cv = canvas(4); const g = cv.getContext('2d'); g.fillStyle = avg || '#888'; g.fillRect(0, 0, 4, 4);
+  const map = new THREE.CanvasTexture(cv);
+  map.colorSpace = THREE.SRGBColorSpace; map.wrapS = map.wrapT = THREE.RepeatWrapping; map.anisotropy = aniso;
+  loader.load(url, (img) => { map.dispose(); map.image = img.image; map.generateMipmaps = true; map.needsUpdate = true; }, undefined, () => {});
+  return { map, bumpMap: null };
+}
+
 export function makeTexture(spec, aniso = 4) {
   const key = spec.kind;
   if (key === 'tiles') return tilesTexture(spec, aniso);
@@ -130,7 +141,9 @@ export function finishTexture(typeId, color, aniso) {
       if (color.pattern === 'stripes') return { ...makeTexture({ kind: 'stripes', base, seed: 37 }, aniso), scale: 4, rough: 0.35, metal: 0 };
       if (color.pattern === 'stone') return { ...makeTexture({ kind: 'stone', base, seed: 23 }, aniso), scale: 1.2, rough: 0.7, metal: 0 };
       return { ...makeTexture({ kind: 'tiles', base, n: 20, gap: 1.6, vari: 0.07, seed: 31 }, aniso), scale: 1, rough: 0.6, metal: 0 };
-    case 'mosaico': return { ...makeTexture({ kind: 'tiles', base, n: 40, gap: 1.1, vari: 0.14, seed: 41, shine: 0.28, S: 2048 }, aniso), scale: 1, rough: 0.16, metal: 0.05 };
+    case 'mosaico':
+      if (color.img) return { ...imageTexture(color.img, base, aniso), scale: color.size || 1, rough: 0.22, metal: 0.04 };
+      return { ...makeTexture({ kind: 'tiles', base, n: 40, gap: 1.1, vari: 0.14, seed: 41, shine: 0.28, S: 2048 }, aniso), scale: 1, rough: 0.16, metal: 0.05 };
     case 'porcelanato': return { ...makeTexture({ kind: 'tiles', base, n: 4, gap: 2.4, vari: 0.05, seed: 53, vein: 0.07 }, aniso), scale: 2, rough: 0.35, metal: 0 };
     case 'piedra': return { ...makeTexture({ kind: 'stone', base, seed: 61 }, aniso), scale: 1.4, rough: 0.78, metal: 0 };
     default: return { ...makeTexture({ kind: 'plain', base, seed: 11 }, aniso), scale: 1, rough: 0.5, metal: 0 };

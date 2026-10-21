@@ -10,6 +10,13 @@ export const SHAPES = [
 ];
 
 // Revestimiento interior. type define el patrón; colors son los tonos disponibles.
+import { REVIGLASS } from './reviglass.js';
+
+export const MOSAIC_FAMS = [
+  { id: 'Azul', es: 'Azul', en: 'Blue' }, { id: 'Verde', es: 'Verde', en: 'Green' }, { id: 'Blanco', es: 'Blanco', en: 'White' }, { id: 'Gris', es: 'Gris', en: 'Grey' },
+  { id: 'Negro', es: 'Negro', en: 'Black' }, { id: 'Marron', es: 'Marrón', en: 'Brown' }, { id: 'Rosa', es: 'Rosa', en: 'Pink' }
+];
+
 export const FINISH_TYPES = [
   { id: 'membrana', es: 'Membrana lisa', en: 'Smooth membrane', note: { es: 'Superficie lisa y uniforme, sin juntas.', en: 'Smooth, uniform surface with no joints.' },
     colors: [
@@ -29,15 +36,8 @@ export const FINISH_TYPES = [
       { id: 'franjas-azul', es: 'Franjas azules', en: 'Blue stripes', c: '#1f6ea8', pattern: 'stripes' },
       { id: 'franjas-gris', es: 'Franjas grises', en: 'Grey stripes', c: '#59707d', pattern: 'stripes' }
     ] },
-  { id: 'mosaico', es: 'Mosaico vítreo', en: 'Glass mosaic', note: { es: 'Vidrio en piezas pequeñas, con brillo y profundidad.', en: 'Small glass pieces with shine and depth.' },
-    colors: [
-      { id: 'azul-profundo', es: 'Azul profundo', en: 'Deep blue', c: '#1d5f94' },
-      { id: 'turquesa', es: 'Turquesa', en: 'Turquoise', c: '#25a8b8' },
-      { id: 'verde-agua', es: 'Verde agua', en: 'Aqua green', c: '#46b6a0' },
-      { id: 'perla', es: 'Blanco perla', en: 'Pearl white', c: '#e6eef0' },
-      { id: 'humo', es: 'Gris humo', en: 'Smoke grey', c: '#76848d' },
-      { id: 'arena', es: 'Arena', en: 'Sand', c: '#d6c6a2' }
-    ] },
+  { id: 'mosaico', es: 'Mosaico vítreo', en: 'Glass mosaic', note: { es: 'Mosaico vítreo Reviglass, en paños de 33,5 × 33,5 cm. Vidrio en piezas pequeñas, con brillo y profundidad.', en: 'Reviglass glass mosaic in 33.5 × 33.5 cm sheets. Small glass pieces with shine and depth.' },
+    colors: REVIGLASS.map((m) => ({ id: m.id, es: m.name, en: m.name, c: m.c, fam: m.fam, size: m.size, img: `img/texturas/reviglass/${m.id}.jpg`, thumb: `img/texturas/reviglass/${m.id}-t.jpg` })) },
   { id: 'porcelanato', es: 'Porcelanato', en: 'Porcelain tile', note: { es: 'Formato grande y juntas finas; fácil de limpiar.', en: 'Large format and fine joints; easy to clean.' },
     colors: [
       { id: 'cemento', es: 'Gris cemento', en: 'Cement grey', c: '#8c8e8e' },
@@ -104,10 +104,10 @@ export const PRESETS = [
     s: { shape: 'rect', length: 9, width: 4, depth: 1.5, finish: ['porcelanato', 'cemento'], coping: 'gris', deck: 'madera-oscura', water: 'turquesa', lights: 'calida', stairs: true, stairsSteps: 3, stairsWidth: 4, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } },
   { id: 'mediterranea', es: 'Mediterránea', en: 'Mediterranean', d: { es: 'Azul profundo, piedra clara y madera natural.', en: 'Deep blue, light stone and natural wood.' },
     sw: ['#1d5f94', '#ecebe6', '#b48b5c'],
-    s: { shape: 'rounded', length: 8, width: 4, depth: 1.5, finish: ['mosaico', 'azul-profundo'], coping: 'blanco', deck: 'travertino', water: 'profunda', lights: 'calida', stairs: false, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } },
+    s: { shape: 'rounded', length: 8, width: 4, depth: 1.5, finish: ['mosaico', 'ps-27-liso'], coping: 'blanco', deck: 'travertino', water: 'profunda', lights: 'calida', stairs: false, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } },
   { id: 'resort', es: 'Resort', en: 'Resort', d: { es: 'Piscina en L con spa adosado y luz azul.', en: 'L-shaped pool with attached spa and blue light.' },
     sw: ['#25a8b8', '#d8c9a8', '#b48b5c'],
-    s: { shape: 'L', length: 10, width: 5, depth: 1.4, finish: ['mosaico', 'turquesa'], coping: 'arena', deck: 'madera-clara', water: 'cristalina', lights: 'azul', stairs: true, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: true, loungers: true, mirror: false } },
+    s: { shape: 'L', length: 10, width: 5, depth: 1.4, finish: ['mosaico', 'ps-53-niebla'], coping: 'arena', deck: 'madera-clara', water: 'cristalina', lights: 'azul', stairs: true, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: true, loungers: true, mirror: false } },
   { id: 'natural', es: 'Natural', en: 'Natural', d: { es: 'Forma libre, piedra y verdes suaves.', en: 'Free form, stone and soft greens.' },
     sw: ['#8e8f86', '#3aa886', '#a49d90'],
     s: { shape: 'organic', length: 8, width: 5, depth: 1.4, finish: ['piedra', 'bali'], coping: 'piedra', deck: 'concreto', water: 'esmeralda', lights: 'calida', stairs: false, stairsSteps: 3, stairsWidth: 1.6, stairsEnd: 'left', stairsPos: 'start', spa: false, loungers: true, mirror: false } }

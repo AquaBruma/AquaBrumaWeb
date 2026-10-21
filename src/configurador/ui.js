@@ -1,6 +1,6 @@
 import { PoolScene } from './scene.js';
 import { outline, polyArea, polyPerimeter } from './geometry.js';
-import { SHAPES, FINISH_TYPES, COPINGS, DECKS, WATERS, LIGHTS, STAIR_ENDS, STAIR_POS, PRESETS, DEFAULTS, normalize, T, byId, findFinish } from './catalog.js';
+import { MOSAIC_FAMS, SHAPES, FINISH_TYPES, COPINGS, DECKS, WATERS, LIGHTS, STAIR_ENDS, STAIR_POS, PRESETS, DEFAULTS, normalize, T, byId, findFinish } from './catalog.js';
 
 const lang = () => (window.AQ_LANG === 'en' ? 'en' : 'es');
 const tr = (es, en) => (lang() === 'en' ? en : es);
@@ -51,7 +51,7 @@ const STEPS = [
 
 export class Configurator {
   constructor() {
-    this.state = DEFAULTS(); this.target = 'all'; this.waterOn = true; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false; this.wide = false; this.noPanel = false;
+    this.state = DEFAULTS(); this.target = 'all'; this.fam = 'all'; this.waterOn = true; this.step = 0; this.scene = null; this.rootEl = null; this.pending = false; this.openState = false; this.autoRotate = false; this.wide = false; this.noPanel = false;
     this.build();
   }
 
@@ -178,6 +178,7 @@ export class Configurator {
       case 'ftype': { const t = FINISH_TYPES.find((x) => x.id === v); this.set(this.finishPatch([t.id, t.colors[0].id])); break; }
       case 'fcolor': this.set(this.finishPatch([this.finishOf(this.target)[0], v])); break;
       case 'target': this.target = v; this.renderBody(); break;
+      case 'fam': this.fam = v; this.renderBody(); break;
       case 'stairsmat': this.target = 'stairs'; this.step = STEPS.findIndex((x) => x.id === 'acabado'); this.renderAll(); this.q('[data-body]').scrollTop = 0; break;
       case 'sEnd': this.set({ stairsEnd: v }); break;
       case 'sPos': this.set({ stairsPos: v }); break;
@@ -193,7 +194,7 @@ export class Configurator {
       case 'rotate': this.autoRotate = !this.autoRotate; if (this.scene) this.scene.controls.autoRotate = this.autoRotate; this.renderTools(); break;
       case 'shot': this.capture(); break;
       case 'copy': this.copyLink(el); break;
-      case 'reset': this.state = DEFAULTS(); this.target = 'all'; this.waterOn = true; this.scene && this.scene.setWater(true); this.scene && this.scene.setNight(false, true); this.scene && (this.scene.userMoved = false); this.step = 0; this.renderAll(); this.scene && this.scene.update(this.state); this.updateStats(); break;
+      case 'reset': this.state = DEFAULTS(); this.target = 'all'; this.fam = 'all'; this.waterOn = true; this.scene && this.scene.setWater(true); this.scene && this.scene.setNight(false, true); this.scene && (this.scene.userMoved = false); this.step = 0; this.renderAll(); this.scene && this.scene.update(this.state); this.updateStats(); break;
       case 'quote': this.quote(); break;
       case 'advisor': if (window.AQAdvisors) window.AQAdvisors.open({ text: tr('Hola, quisiera diseñar una piscina con AquaBruma.', 'Hi, I would like to design a pool with AquaBruma.') }); break;
     }
@@ -262,7 +263,7 @@ export class Configurator {
   sw(act, items, selected, cls = '') {
     return `<div class="cfg-sws ${cls}">${items.map((i) => {
       const bg = i.c ? (String(i.c).startsWith('conic') ? i.c : i.c) : 'transparent';
-      return `<button type="button" class="cfg-sw${selected === i.id ? ' on' : ''}${i.c ? '' : ' none'}" data-act="${act}" data-val="${i.id}" aria-pressed="${selected === i.id}" aria-label="${esc(T(i))}" title="${esc(T(i))}"><i class="p-${i.pattern || ''}" style="background-color:${i.c && !String(i.c).startsWith('conic') ? i.c : 'transparent'};${String(i.c || '').startsWith('conic') ? `background:${i.c}` : ''}"></i><span>${esc(T(i))}</span></button>`;
+      return `<button type="button" class="cfg-sw${selected === i.id ? ' on' : ''}${i.c ? '' : ' none'}" data-act="${act}" data-val="${i.id}" aria-pressed="${selected === i.id}" aria-label="${esc(T(i))}" title="${esc(T(i))}"><i class="p-${i.pattern || ''}" style="background-color:${i.c && !String(i.c).startsWith('conic') ? i.c : 'transparent'};${String(i.c || '').startsWith('conic') ? `background:${i.c}` : ''}${i.thumb ? `;background-image:url(${i.thumb});background-size:cover;background-position:center` : ''}"></i><span>${esc(T(i))}</span></button>`;
     }).join('')}</div>`;
   }
   range(k, label) {
@@ -296,7 +297,9 @@ export class Configurator {
         `<h3 class="cfg-s">${tr('Aplicar a', 'Apply to')}</h3>` + this.seg('target', parts, this.target) +
         (this.target === 'all' ? '' : `<p class="cfg-note">${esc(T(parts.find((x) => x.id === this.target)))}: ${esc(label(this.target === 'floor' ? 'floor' : this.target))}${this.target === 'stairs' && !s.stairs ? ' · ' + tr('activa la escalera en Extras para verla', 'turn on the steps in Extras to see it') : ''}</p>`) +
         `<div class="cfg-tabs" role="tablist">${FINISH_TYPES.map((t) => `<button type="button" role="tab" class="cfg-tab${type.id === t.id ? ' on' : ''}" aria-selected="${type.id === t.id}" data-act="ftype" data-val="${t.id}">${esc(T(t))}</button>`).join('')}</div>` +
-        `<p class="cfg-note">${esc(T(type.note))}</p>` + this.sw('fcolor', type.colors.map((c) => ({ ...c, pattern: type.id === 'mosaico' || c.pattern === 'mosaic' ? 'mosaic' : type.id === 'porcelanato' ? 'tiles' : type.id === 'piedra' || c.pattern === 'stone' ? 'stone' : c.pattern === 'stripes' ? 'stripes' : '' })), color.id);
+        `<p class="cfg-note">${esc(T(type.note))}</p>` +
+        (type.id === 'mosaico' ? `<div class="cfg-tabs cfg-fams" role="tablist" aria-label="${tr('Color', 'Color')}">${[{ id: 'all', es: 'Todos', en: 'All' }, ...MOSAIC_FAMS].map((f) => `<button type="button" class="cfg-tab${this.fam === f.id ? ' on' : ''}" data-act="fam" data-val="${f.id}" aria-pressed="${this.fam === f.id}">${esc(T(f))}</button>`).join('')}</div>` : '') +
+        this.sw('fcolor', type.colors.filter((c) => type.id !== 'mosaico' || this.fam === 'all' || c.fam === this.fam).map((c) => ({ ...c, pattern: c.img ? '' : type.id === 'mosaico' || c.pattern === 'mosaic' ? 'mosaic' : type.id === 'porcelanato' ? 'tiles' : type.id === 'piedra' || c.pattern === 'stone' ? 'stone' : c.pattern === 'stripes' ? 'stripes' : '' })), color.id);
     } else if (id === 'entorno') {
       h = head(tr('Borde y terraza', 'Coping and deck'), tr('Lo que rodea el agua: el borde de la piscina y el piso de la terraza.', 'What surrounds the water: the pool edge and the terrace floor.')) +
         this.switchRow('mirror', tr('Borde espejo', 'Mirror edge'), tr('El agua llega al nivel de la terraza, sin borde visible.', 'Water reaches deck level with no visible edge.'), s.mirror) +

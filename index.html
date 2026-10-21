@@ -40,7 +40,7 @@
 
 
 <link rel="stylesheet" href="fonts.css">
-<link rel="stylesheet" href="tailwind.css?v=20261020c">
+<link rel="stylesheet" href="tailwind.css?v=20261020d">
 
 <style>
   html { scroll-behavior: smooth; }
@@ -1367,8 +1367,8 @@
       if (window.AQCfg) return Promise.resolve();
       if (p) return p;
       p = new Promise((res, rej) => {
-        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261020c'; document.head.appendChild(l);
-        const s = document.createElement('script'); s.src = 'configurador.js?v=20261020c'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
+        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261020d'; document.head.appendChild(l);
+        const s = document.createElement('script'); s.src = 'configurador.js?v=20261020d'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
       });
       return p;
     }
@@ -1384,8 +1384,8 @@
       if (window.AQSauna) return Promise.resolve();
       if (ps) return ps;
       ps = new Promise((res, rej) => {
-        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261020c'; document.head.appendChild(l); }
-        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261020c'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
+        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261020d'; document.head.appendChild(l); }
+        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261020d'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
       });
       return ps;
     }
@@ -1413,12 +1413,12 @@
     } catch (err) {}
   })();
 </script>
-<script src="i18n-en.js?v=20261020c"></script>
-<script src="i18n.js?v=20261020c"></script>
-<script src="cookies.js?v=20261020c"></script>
-<script src="advisors.js?v=20261020c"></script>
-<script src="spas-data.js?v=20261020c"></script>
-<script src="catalogo-data.js?v=20261020c"></script>
+<script src="i18n-en.js?v=20261020d"></script>
+<script src="i18n.js?v=20261020d"></script>
+<script src="cookies.js?v=20261020d"></script>
+<script src="advisors.js?v=20261020d"></script>
+<script src="spas-data.js?v=20261020d"></script>
+<script src="catalogo-data.js?v=20261020d"></script>
 <script>
   // Inicio siempre arriba (también al volver con los botones atrás/adelante del navegador)
   window.scrollTo(0, 0);

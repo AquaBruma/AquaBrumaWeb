@@ -13,3 +13,6 @@ banner-colecciones-poster.jpg
 
 # Dependencias de compilación
 node_modules/
+
+# Texturas originales de los proveedores (pesadas); en el sitio se usan las versiones optimizadas de img/texturas/
+texturas-nuevas/
