@@ -60,6 +60,7 @@ window.AQ_EN = {
  "Antideslizante donde importa": "Non-slip where it matters",
  "Apartamento Sabaneta": "Sabaneta Apartment",
  "Apta para zonas húmedas": "Suitable for wet areas",
+ "AquaBruma diseña y suministra piscinas, spas Jacuzzi, saunas y espacios de bienestar en Colombia. Diseña tu piscina o tu sauna en 3D y pide tu cotización.": "AquaBruma designs and supplies pools, Jacuzzi spas, saunas and wellness spaces in Colombia. Design your pool or sauna in 3D and request your quote.",
  "AquaBruma diseña piscinas, jacuzzis, spas y espacios de bienestar alrededor del agua. Cercanos, precisos y sin complicaciones.": "AquaBruma designs pools, jacuzzis, spas and wellness spaces around water. Approachable, precise and hassle-free.",
  "AquaBruma nace en 2026 con una idea sencilla: que disfrutar del agua en casa sea una experiencia cercana, bien pensada y sin complicaciones.": "AquaBruma was born in 2026 with a simple idea: that enjoying water at home should be a close, well-thought-out experience without complications.",
  "AquaBruma — inicio": "AquaBruma — home",

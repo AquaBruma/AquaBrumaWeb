@@ -13,7 +13,7 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AquaBruma — Pool · Spa · Wellness</title>
-<meta name="description" content="AquaBruma diseña piscinas, jacuzzis, spas y espacios de bienestar alrededor del agua. Cercanos, precisos y sin complicaciones.">
+<meta name="description" content="AquaBruma diseña y suministra piscinas, spas Jacuzzi, saunas y espacios de bienestar en Colombia. Diseña tu piscina o tu sauna en 3D y pide tu cotización.">
 <meta name="theme-color" content="#0f2a3d">
 <link rel="canonical" href="https://aquabrumapools.com/">
 
@@ -37,10 +37,136 @@
 <meta name="twitter:title" content="AquaBruma — Pool · Spa · Wellness">
 <meta name="twitter:description" content="Piscinas, jacuzzis y espacios de bienestar diseñados alrededor del agua.">
 <meta name="twitter:image" content="https://aquabrumapools.com/hero-poster-1.jpg">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": [
+    "HomeAndConstructionBusiness",
+    "LocalBusiness"
+   ],
+   "@id": "https://aquabrumapools.com/#empresa",
+   "name": "AquaBruma",
+   "legalName": "AquaBruma SAS",
+   "url": "https://aquabrumapools.com/",
+   "description": "Diseño, construcción y suministro de piscinas, spas Jacuzzi, saunas, turcos y espacios de bienestar en Colombia.",
+   "logo": "https://aquabrumapools.com/aquabruma-logo.png",
+   "image": "https://aquabrumapools.com/hero-poster-1.jpg",
+   "email": "gerencia@aquabrumapools.com",
+   "telephone": "+57 319 482 2386",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Cra 42, Auto. Sur # 75-83",
+    "addressLocality": "Itagüí",
+    "addressRegion": "Antioquia",
+    "addressCountry": "CO"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Colombia"
+   },
+   "knowsAbout": [
+    "Piscinas",
+    "Spas",
+    "Jacuzzi",
+    "Saunas",
+    "Turcos",
+    "Mosaico vítreo",
+    "Membranas para piscinas"
+   ],
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "contactType": "ventas",
+     "name": "Juan Castañeda",
+     "telephone": "+57 319 482 2386",
+     "availableLanguage": [
+      "es",
+      "en"
+     ]
+    },
+    {
+     "@type": "ContactPoint",
+     "contactType": "ventas",
+     "name": "Mónica Henao",
+     "telephone": "+57 312 331 1627",
+     "availableLanguage": [
+      "es",
+      "en"
+     ]
+    }
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://aquabrumapools.com/#sitio",
+   "url": "https://aquabrumapools.com/",
+   "name": "AquaBruma",
+   "inLanguage": [
+    "es",
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://aquabrumapools.com/#empresa"
+   }
+  },
+  {
+   "@type": "ItemList",
+   "@id": "https://aquabrumapools.com/#secciones",
+   "name": "Secciones principales",
+   "itemListElement": [
+    {
+     "@type": "SiteNavigationElement",
+     "position": 1,
+     "name": "Catálogo de spas y piscinas",
+     "description": "Spas Jacuzzi, piscinas, saunas y acabados.",
+     "url": "https://aquabrumapools.com/#colecciones"
+    },
+    {
+     "@type": "SiteNavigationElement",
+     "position": 2,
+     "name": "Diseña tu piscina en 3D",
+     "description": "Configurador 3D de piscinas con mosaicos y membranas reales.",
+     "url": "https://aquabrumapools.com/#configurador"
+    },
+    {
+     "@type": "SiteNavigationElement",
+     "position": 3,
+     "name": "Diseña tu sauna en 3D",
+     "description": "Configurador 3D de saunas: medidas, bancas, maderas y estufa.",
+     "url": "https://aquabrumapools.com/#sauna"
+    },
+    {
+     "@type": "SiteNavigationElement",
+     "position": 4,
+     "name": "Proyectos",
+     "description": "Proyectos de piscinas y espacios de bienestar.",
+     "url": "https://aquabrumapools.com/#proyectos"
+    },
+    {
+     "@type": "SiteNavigationElement",
+     "position": 5,
+     "name": "Nosotros",
+     "description": "Quiénes somos y cómo trabajamos.",
+     "url": "https://aquabrumapools.com/#nosotros"
+    },
+    {
+     "@type": "SiteNavigationElement",
+     "position": 6,
+     "name": "Contacto",
+     "description": "Habla con un asesor de AquaBruma.",
+     "url": "https://aquabrumapools.com/#contacto"
+    }
+   ]
+  }
+ ]
+}
+</script>
 
 
 <link rel="stylesheet" href="fonts.css">
-<link rel="stylesheet" href="tailwind.css?v=20261020e">
+<link rel="stylesheet" href="tailwind.css?v=20261021a">
 
 <style>
   html { scroll-behavior: smooth; }
@@ -1367,8 +1493,8 @@
       if (window.AQCfg) return Promise.resolve();
       if (p) return p;
       p = new Promise((res, rej) => {
-        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261020e'; document.head.appendChild(l);
-        const s = document.createElement('script'); s.src = 'configurador.js?v=20261020e'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
+        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261021a'; document.head.appendChild(l);
+        const s = document.createElement('script'); s.src = 'configurador.js?v=20261021a'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
       });
       return p;
     }
@@ -1384,8 +1510,8 @@
       if (window.AQSauna) return Promise.resolve();
       if (ps) return ps;
       ps = new Promise((res, rej) => {
-        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261020e'; document.head.appendChild(l); }
-        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261020e'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
+        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261021a'; document.head.appendChild(l); }
+        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261021a'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
       });
       return ps;
     }
@@ -1413,12 +1539,12 @@
     } catch (err) {}
   })();
 </script>
-<script src="i18n-en.js?v=20261020e"></script>
-<script src="i18n.js?v=20261020e"></script>
-<script src="cookies.js?v=20261020e"></script>
-<script src="advisors.js?v=20261020e"></script>
-<script src="spas-data.js?v=20261020e"></script>
-<script src="catalogo-data.js?v=20261020e"></script>
+<script src="i18n-en.js?v=20261021a"></script>
+<script src="i18n.js?v=20261021a"></script>
+<script src="cookies.js?v=20261021a"></script>
+<script src="advisors.js?v=20261021a"></script>
+<script src="spas-data.js?v=20261021a"></script>
+<script src="catalogo-data.js?v=20261021a"></script>
 <script>
   // Inicio siempre arriba (también al volver con los botones atrás/adelante del navegador)
   window.scrollTo(0, 0);
