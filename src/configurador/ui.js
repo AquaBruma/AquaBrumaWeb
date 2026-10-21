@@ -189,7 +189,7 @@ export class Configurator {
       case 'dec': case 'inc': { const k = el.dataset.k, def = this.rangeDef(k); const nv = Math.min(def.max, Math.max(def.min, +(s[k] + (a === 'inc' ? def.step : -def.step)).toFixed(2))); this.set({ [k]: nv }, { panel: false }); this.syncRange(k); break; }
       case 'view': this.scene && this.scene.setView(v); this.markView(v); break;
       case 'night': this.set({ night: !s.night }, { rebuild: false, panel: false }); this.scene && this.scene.setNight(this.state.night); this.renderTools(); break;
-      case 'water-toggle': this.waterOn = !this.waterOn; if (this.scene) this.scene.setWater(this.waterOn); this.renderTools(); break;
+      case 'water-toggle': this.waterOn = !this.waterOn; if (this.scene) this.scene.setWater(this.waterOn); this.renderTools(); if (STEPS[this.step].id === 'agua') this.renderBody(); break;
       case 'rotate': this.autoRotate = !this.autoRotate; if (this.scene) this.scene.controls.autoRotate = this.autoRotate; this.renderTools(); break;
       case 'shot': this.capture(); break;
       case 'copy': this.copyLink(el); break;
@@ -304,7 +304,8 @@ export class Configurator {
     } else if (id === 'agua') {
       h = head(tr('Agua y luz', 'Water and light'), tr('El color del agua y las luces de la piscina. Prueba la vista de noche.', 'The water color and the pool lights. Try the night view.')) +
         `<h3 class="cfg-s">${tr('Color del agua', 'Water color')}</h3>` + this.sw('water', WATERS, s.water) + `<h3 class="cfg-s">${tr('Luces subacuáticas', 'Underwater lights')}</h3>` + this.sw('lights', LIGHTS, s.lights) +
-        this.switchRow('night', tr('Ver de noche', 'Night view'), tr('Las luces se aprecian mejor sin sol.', 'Lights look best without sun.'), s.night);
+        `<button type="button" class="cfg-switch${this.waterOn === false ? ' on' : ''}" data-act="water-toggle" role="switch" aria-checked="${this.waterOn === false}"><span><b>${tr('Ver sin agua', 'View without water')}</b><em>${tr('Quita el agua para ver el fondo, los muros y la escalera.', 'Hides the water so you can see the floor, walls and steps.')}</em></span><i></i></button>` +
+                this.switchRow('night', tr('Ver de noche', 'Night view'), tr('Las luces se aprecian mejor sin sol.', 'Lights look best without sun.'), s.night);
     } else if (id === 'extras') {
       const canStairs = s.shape === 'rect' || s.shape === 'L';
       h = head(tr('Extras', 'Extras'), tr('Detalles que cambian la forma de usar tu piscina.', 'Details that change how you use your pool.')) +
