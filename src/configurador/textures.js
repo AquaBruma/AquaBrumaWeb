@@ -111,10 +111,10 @@ function grassTexture(aniso) {
 // Textura desde una foto (por ejemplo, los mosaicos reales del proveedor). Se ve primero con el color promedio y la foto
 // reemplaza ese color apenas termina de descargarse; así el 3D nunca se queda esperando.
 const loader = new THREE.TextureLoader();
-export function imageTexture(url, avg, aniso) {
+export function imageTexture(url, avg, aniso, mirror) {
   const cv = canvas(4); const g = cv.getContext('2d'); g.fillStyle = avg || '#888'; g.fillRect(0, 0, 4, 4);
   const map = new THREE.CanvasTexture(cv);
-  map.colorSpace = THREE.SRGBColorSpace; map.wrapS = map.wrapT = THREE.RepeatWrapping; map.anisotropy = aniso;
+  map.colorSpace = THREE.SRGBColorSpace; map.wrapS = map.wrapT = mirror ? THREE.MirroredRepeatWrapping : THREE.RepeatWrapping; map.anisotropy = aniso;
   loader.load(url, (img) => { map.dispose(); map.image = img.image; map.generateMipmaps = true; map.needsUpdate = true; }, undefined, () => {});
   return { map, bumpMap: null };
 }
@@ -136,8 +136,9 @@ export function makeTexture(spec, aniso = 4) {
 export function finishTexture(typeId, color, aniso) {
   const base = color.c;
   switch (typeId) {
-    case 'membrana': return { ...makeTexture({ kind: 'plain', base, seed: 11, noise: 0.045 }, aniso), scale: 1, rough: 0.55, metal: 0.0 };
+    case 'membrana': return { ...makeTexture({ kind: 'plain', base, seed: 11, noise: 0.03 }, aniso), scale: 1, rough: 0.5, metal: 0.0 };
     case 'impresa':
+      if (color.img) return { ...imageTexture(color.img, base, aniso, color.mirror), scale: color.size || 1, rough: 0.5, metal: 0 };
       if (color.pattern === 'stripes') return { ...makeTexture({ kind: 'stripes', base, seed: 37 }, aniso), scale: 4, rough: 0.35, metal: 0 };
       if (color.pattern === 'stone') return { ...makeTexture({ kind: 'stone', base, seed: 23 }, aniso), scale: 1.2, rough: 0.7, metal: 0 };
       return { ...makeTexture({ kind: 'tiles', base, n: 20, gap: 1.6, vari: 0.07, seed: 31 }, aniso), scale: 1, rough: 0.6, metal: 0 };

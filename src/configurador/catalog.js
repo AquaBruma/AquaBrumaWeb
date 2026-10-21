@@ -11,6 +11,10 @@ export const SHAPES = [
 
 // Revestimiento interior. type define el patrón; colors son los tonos disponibles.
 import { REVIGLASS } from './reviglass.js';
+import { RENOLIT } from './renolit.js';
+
+const ROLL_NOTE = { es: 'Membrana Renolit Alkorplan en rollos de 1,60 a 2,10 m de ancho y de 20 a 25 m de largo. Espesor de 1,5 mm para uso general y de 1,8 a 2,0 mm en líneas premium, texturizadas o comerciales.', en: 'Renolit Alkorplan membrane in rolls 1.60 to 2.10 m wide and 20 to 25 m long. 1.5 mm thick for general use and 1.8 to 2.0 mm for premium, textured or commercial lines.' };
+const renolitColors = (groups) => RENOLIT.filter((m) => groups.includes(m.group)).map((m) => ({ id: m.id, es: m.name, en: m.name, c: m.c, fam: m.group, thick: m.thick, thumb: `img/texturas/renolit/${m.id}-t.jpg`, ...(m.kind === 'img' ? { img: `img/texturas/renolit/${m.id}.jpg`, size: m.size, mirror: true } : {}) }));
 
 export const MOSAIC_FAMS = [
   { id: 'Azul', es: 'Azul', en: 'Blue' }, { id: 'Verde', es: 'Verde', en: 'Green' }, { id: 'Blanco', es: 'Blanco', en: 'White' }, { id: 'Gris', es: 'Gris', en: 'Grey' },
@@ -18,25 +22,17 @@ export const MOSAIC_FAMS = [
 ];
 
 export const FINISH_TYPES = [
-  { id: 'membrana', es: 'Membrana lisa', en: 'Smooth membrane', note: { es: 'Superficie lisa y uniforme, sin juntas.', en: 'Smooth, uniform surface with no joints.' },
+  { id: 'membrana', es: 'Membrana lisa', en: 'Smooth membrane', note: ROLL_NOTE,
+    groups: [{ id: '2000', es: 'Serie 2000', en: '2000 series' }, { id: 'Extreme', es: 'Extreme', en: 'Extreme' }],
+    colors: renolitColors(['2000', 'Extreme']) },
+  { id: 'impresa', es: 'Membrana con diseño', en: 'Patterned membrane', note: ROLL_NOTE,
+    groups: [{ id: 'Ceramics', es: 'Ceramics', en: 'Ceramics' }, { id: 'Touch', es: 'Touch', en: 'Touch' }, { id: 'Ejemplo', es: 'Diseños de ejemplo', en: 'Sample designs' }],
     colors: [
-      { id: 'celeste', es: 'Celeste', en: 'Sky blue', c: '#5fb4d8' },
-      { id: 'azul', es: 'Azul', en: 'Blue', c: '#2f6faa' },
-      { id: 'arena', es: 'Arena', en: 'Sand', c: '#d9ccb0' },
-      { id: 'gris', es: 'Gris', en: 'Grey', c: '#8d979d' },
-      { id: 'blanco', es: 'Blanco', en: 'White', c: '#eef2f3' },
-      { id: 'verde', es: 'Verde agua', en: 'Sea green', c: '#4d9c88' }
+      ...renolitColors(['Ceramics', 'Touch']),
+      { id: 'franjas-azul', es: 'Franjas azules', en: 'Blue stripes', c: '#1f6ea8', pattern: 'stripes', fam: 'Ejemplo' },
+      { id: 'franjas-gris', es: 'Franjas grises', en: 'Grey stripes', c: '#59707d', pattern: 'stripes', fam: 'Ejemplo' }
     ] },
-  { id: 'impresa', es: 'Membrana con diseño', en: 'Patterned membrane', note: { es: 'Estampado que imita mosaico o piedra.', en: 'Print that imitates mosaic or stone.' },
-    colors: [
-      { id: 'mosaico-azul', es: 'Mosaico azul', en: 'Blue mosaic', c: '#2a76b3', pattern: 'mosaic' },
-      { id: 'mosaico-arena', es: 'Mosaico arena', en: 'Sand mosaic', c: '#cdbb95', pattern: 'mosaic' },
-      { id: 'mosaico-gris', es: 'Mosaico gris', en: 'Grey mosaic', c: '#7d8a92', pattern: 'mosaic' },
-      { id: 'piedra', es: 'Efecto piedra', en: 'Stone effect', c: '#a39a8a', pattern: 'stone' },
-      { id: 'franjas-azul', es: 'Franjas azules', en: 'Blue stripes', c: '#1f6ea8', pattern: 'stripes' },
-      { id: 'franjas-gris', es: 'Franjas grises', en: 'Grey stripes', c: '#59707d', pattern: 'stripes' }
-    ] },
-  { id: 'mosaico', es: 'Mosaico vítreo', en: 'Glass mosaic', note: { es: 'Mosaico vítreo Reviglass, en paños de 33,5 × 33,5 cm. Vidrio en piezas pequeñas, con brillo y profundidad.', en: 'Reviglass glass mosaic in 33.5 × 33.5 cm sheets. Small glass pieces with shine and depth.' },
+  { id: 'mosaico', es: 'Mosaico vítreo', en: 'Glass mosaic', groups: MOSAIC_FAMS, note: { es: 'Mosaico vítreo Reviglass, en paños de 33,5 × 33,5 cm. Vidrio en piezas pequeñas, con brillo y profundidad.', en: 'Reviglass glass mosaic in 33.5 × 33.5 cm sheets. Small glass pieces with shine and depth.' },
     colors: REVIGLASS.map((m) => ({ id: m.id, es: m.name, en: m.name, c: m.c, fam: m.fam, size: m.size, img: `img/texturas/reviglass/${m.id}.jpg`, thumb: `img/texturas/reviglass/${m.id}-t.jpg` })) },
   { id: 'porcelanato', es: 'Porcelanato', en: 'Porcelain tile', note: { es: 'Formato grande y juntas finas; fácil de limpiar.', en: 'Large format and fine joints; easy to clean.' },
     colors: [
