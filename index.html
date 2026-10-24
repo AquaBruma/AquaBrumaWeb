@@ -7,8 +7,10 @@
   try { if (localStorage.getItem('aq-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
 </script>
 <script>
-  // Siempre empezar en el inicio: sin restaurar el scroll ni saltar a la sección de la dirección (#...)
+  // Siempre empezar en el inicio (sin restaurar el scroll). Si la dirección trae una sección (#nosotros), se guarda y se baja hasta ella
+  // cuando termina la pantalla de entrada (ver más abajo).
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.__aqHash = location.hash ? decodeURIComponent(location.hash.slice(1)) : '';
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,9 +168,9 @@
 
 
 <link rel="stylesheet" href="fonts.css">
-<link rel="stylesheet" href="tailwind.css?v=20261021d">
+<link rel="stylesheet" href="tailwind.css?v=20261023a">
 
-<link rel="stylesheet" href="site.css?v=20261021d">
+<link rel="stylesheet" href="site.css?v=20261023a">
 </head>
 
 <body class="bg-ink text-cream antialiased font-light overflow-hidden">
@@ -1011,8 +1013,8 @@
       if (window.AQCfg) return Promise.resolve();
       if (p) return p;
       p = new Promise((res, rej) => {
-        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261021d'; document.head.appendChild(l);
-        const s = document.createElement('script'); s.src = 'configurador.js?v=20261021d'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
+        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261023a'; document.head.appendChild(l);
+        const s = document.createElement('script'); s.src = 'configurador.js?v=20261023a'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
       });
       return p;
     }
@@ -1028,8 +1030,8 @@
       if (window.AQSauna) return Promise.resolve();
       if (ps) return ps;
       ps = new Promise((res, rej) => {
-        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261021d'; document.head.appendChild(l); }
-        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261021d'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
+        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261023a'; document.head.appendChild(l); }
+        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261023a'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
       });
       return ps;
     }
@@ -1057,13 +1059,13 @@
     } catch (err) {}
   })();
 </script>
-<script src="i18n-en.js?v=20261021d"></script>
-<script src="i18n-pages-en.js?v=20261021d"></script>
-<script src="i18n.js?v=20261021d"></script>
-<script src="cookies.js?v=20261021d"></script>
-<script src="advisors.js?v=20261021d"></script>
-<script src="spas-data.js?v=20261021d"></script>
-<script src="catalogo-data.js?v=20261021d"></script>
+<script src="i18n-en.js?v=20261023a"></script>
+<script src="i18n-pages-en.js?v=20261023a"></script>
+<script src="i18n.js?v=20261023a"></script>
+<script src="cookies.js?v=20261023a"></script>
+<script src="advisors.js?v=20261023a"></script>
+<script src="spas-data.js?v=20261023a"></script>
+<script src="catalogo-data.js?v=20261023a"></script>
 <script>
   // Inicio siempre arriba (también al volver con los botones atrás/adelante del navegador)
   window.scrollTo(0, 0);
@@ -1287,6 +1289,33 @@
     syncHeroVideo();
     document.dispatchEvent(new CustomEvent('aq:intro-done'));
   }
+  // Enlaces a una sección (aquabrumapools.com/#nosotros): al terminar la entrada se baja hasta ahí;
+  // y al desplazarse, la dirección del navegador se actualiza con la sección que se está viendo (así se puede copiar y compartir).
+  (function () {
+    const ids = ['colecciones', 'configurador', 'sauna', 'espacios', 'bienestar', 'proceso', 'nosotros', 'proyectos', 'contacto'];
+    const secs = ids.map((i) => document.getElementById(i)).filter(Boolean);
+    let cur = '', tick = false;
+    const setHash = (h) => {
+      if (h === cur) return; cur = h;
+      const rc = document.documentElement.classList;
+      if (rc.contains('catalog-open') || rc.contains('cfg-open') || rc.contains('modal-open')) return;
+      try { history.replaceState(null, '', location.pathname + location.search + (h ? '#' + h : '')); } catch (e) {}
+    };
+    const update = () => {
+      tick = false;
+      const mid = window.innerHeight * 0.4; let found = '';
+      for (const el of secs) { const r = el.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) { found = el.id; break; } }
+      setHash(found);
+    };
+    let armed = false;
+    document.addEventListener('aq:intro-done', () => {
+      const id = window.__aqHash, el = id && document.getElementById(id);
+      if (el) setTimeout(() => { window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 70), behavior: 'auto' }); cur = id; try { history.replaceState(null, '', location.pathname + location.search + '#' + id); } catch (e) {} armed = true; }, 150);
+      else armed = true;
+    }, { once: true });
+    window.addEventListener('scroll', () => { if (armed && !tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+  })();
+
   // Reproduce solo el video del tema activo (el de día se descarga la primera vez que se usa)
   function syncHeroVideo() {
     if (!introDone) return;
@@ -2019,6 +2048,22 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
         ${formHTML(' y de «' + esc(p.name) + '»')}`;
     }
 
+    // Dirección compartible del catálogo: ?catalogo=spas&coleccion=Colección J5&producto=j509
+    const SHARE_KEYS = ['catalogo', 'familia', 'coleccion', 'producto'];
+    function syncUrl(clear) {
+      try {
+        const sp = new URLSearchParams(location.search);
+        SHARE_KEYS.forEach((k) => sp.delete(k));
+        if (!clear && key) {
+          sp.set('catalogo', key);
+          if (family !== 'all' && family !== cat().families[0]) sp.set('familia', family);
+          if (sub !== 'all') sp.set('coleccion', sub);
+          if (product) sp.set('producto', product.id);
+        }
+        const q = sp.toString();
+        history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
+      } catch (e) {}
+    }
     function render() {
       view.innerHTML = product ? detailHTML() : comparing ? compareHTML() : listHTML();
       const frame = view.querySelector('iframe');
@@ -2026,6 +2071,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       if (frame) setup3D(frame);
       view.querySelectorAll('.spa-banner').forEach(mountBanner);
       refreshCompare();
+      syncUrl();
       backLabel.textContent = product ? (comparing ? 'Volver a comparar' : 'Volver al catálogo') : comparing ? 'Volver al catálogo' : sub !== 'all' ? 'Volver a las colecciones' : 'Volver a ' + cat().title;
     }
 
@@ -2043,6 +2089,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       setTimeout(() => document.getElementById('cat-close').focus(), 60);
     }
     function closeAll() {
+      syncUrl(true);
       root.classList.remove('open');
       document.documentElement.classList.remove('catalog-open');
       root.setAttribute('aria-hidden', 'true');
@@ -2050,6 +2097,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
     function backToModal() {
+      syncUrl(true);
       root.classList.remove('open');
       document.documentElement.classList.remove('catalog-open');
       root.setAttribute('aria-hidden', 'true');
@@ -2102,7 +2150,18 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
     });
 
     window.AQCatalog = { open };
-    try { const cq = new URLSearchParams(location.search).get('catalogo'); if (cq && CAT[cq]) document.addEventListener('aq:intro-done', () => setTimeout(() => open(cq), 400), { once: true }); } catch (err) {}
+    try {
+      const sp = new URLSearchParams(location.search), cq = sp.get('catalogo');
+      if (cq && CAT[cq]) document.addEventListener('aq:intro-done', () => setTimeout(() => {
+        open(cq);
+        const fam = sp.get('familia'), col = sp.get('coleccion'), pr = sp.get('producto');
+        if (fam && cat().families.includes(fam)) family = fam;
+        if (col) sub = col;
+        const found = pr && cat().products.find((x) => x.id === pr);
+        if (found) product = found;
+        if (fam || col || found) render();
+      }, 400), { once: true });
+    } catch (err) {}
     document.addEventListener('click', (e) => {
       const a = e.target.closest('[data-open-catalog]');
       if (!a || !CAT[a.dataset.openCatalog]) return;

@@ -130,3 +130,5 @@ Además de la página principal, el sitio tiene páginas reales, cada una con su
 - `/?catalogo=spas` abre el catálogo de spas en la página principal.
 - La carpeta `tools/` no se publica (no va en el zip).
 - Para que Google las encuentre: en Google Search Console agregar `aquabrumapools.com` y enviar `https://aquabrumapools.com/sitemap.xml`. Los enlaces rápidos los decide Google y pueden tardar semanas.
+
+**Enlaces compartibles en la página principal:** cada sección tiene su propia dirección (`aquabrumapools.com/#nosotros`, `#proyectos`, `#colecciones`, `#configurador`, `#sauna`, `#contacto`…). La dirección del navegador se actualiza sola mientras se baja, y al abrir un enlace con `#sección` se baja hasta ahí cuando termina la pantalla de entrada. El catálogo también: `?catalogo=spas&coleccion=Colección J5&producto=jz-j509` abre el spa exacto (y al volver o cerrar la dirección se limpia). Los diseños de los configuradores se comparten con `?diseno=` y `?sauna=`.
