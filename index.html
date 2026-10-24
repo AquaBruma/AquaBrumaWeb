@@ -168,9 +168,9 @@
 
 
 <link rel="stylesheet" href="fonts.css">
-<link rel="stylesheet" href="tailwind.css?v=20261024f">
+<link rel="stylesheet" href="tailwind.css?v=20261024g">
 
-<link rel="stylesheet" href="site.css?v=20261024f">
+<link rel="stylesheet" href="site.css?v=20261024g">
 </head>
 
 <body class="bg-ink text-cream antialiased font-light overflow-hidden">
@@ -1015,8 +1015,8 @@
       if (window.AQCfg) return Promise.resolve();
       if (p) return p;
       p = new Promise((res, rej) => {
-        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261024f'; document.head.appendChild(l);
-        const s = document.createElement('script'); s.src = 'configurador.js?v=20261024f'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
+        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261024g'; document.head.appendChild(l);
+        const s = document.createElement('script'); s.src = 'configurador.js?v=20261024g'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
       });
       return p;
     }
@@ -1032,8 +1032,8 @@
       if (window.AQSauna) return Promise.resolve();
       if (ps) return ps;
       ps = new Promise((res, rej) => {
-        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261024f'; document.head.appendChild(l); }
-        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261024f'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
+        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261024g'; document.head.appendChild(l); }
+        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261024g'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
       });
       return ps;
     }
@@ -1061,15 +1061,15 @@
     } catch (err) {}
   })();
 </script>
-<script src="i18n-en.js?v=20261024f"></script>
-<script src="i18n-pages-en.js?v=20261024f"></script>
-<script src="i18n-pw-en.js?v=20261024f"></script>
-<script src="i18n.js?v=20261024f"></script>
-<script src="cookies.js?v=20261024f"></script>
-<script src="advisors.js?v=20261024f"></script>
-<script src="spas-data.js?v=20261024f"></script>
-<script src="spaspw-data.js?v=20261024f"></script>
-<script src="catalogo-data.js?v=20261024f"></script>
+<script src="i18n-en.js?v=20261024g"></script>
+<script src="i18n-pages-en.js?v=20261024g"></script>
+<script src="i18n-pw-en.js?v=20261024g"></script>
+<script src="i18n.js?v=20261024g"></script>
+<script src="cookies.js?v=20261024g"></script>
+<script src="advisors.js?v=20261024g"></script>
+<script src="spas-data.js?v=20261024g"></script>
+<script src="spaspw-data.js?v=20261024g"></script>
+<script src="catalogo-data.js?v=20261024g"></script>
 <script>
   // Inicio siempre arriba (también al volver con los botones atrás/adelante del navegador)
   window.scrollTo(0, 0);
@@ -1556,7 +1556,7 @@
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     const sized = (u, w) => u.replace(/w=\d+/, 'w=' + w);
     const ARROW = '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>';
-    let key = null, family = 'all', sub = 'all', product = null, lastFocus = null, listScroll = 0, pwColor = null;
+    let key = null, family = 'all', sub = 'all', product = null, lastFocus = null, listScroll = 0, pwColor = null, pwF = { cap: '', agua: '', jets: '' };
     let cmp = [], comparing = false;
     const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=' + (window.AQ_LANG === 'en' ? 'en' : 'es');
     const third = () => !window.AQConsent || window.AQConsent.third();
@@ -1622,7 +1622,7 @@
 
     function listHTML() {
       const c = cat();
-      const prods = c.products.filter((p) => (family === 'all' || p.family === family) && (sub === 'all' || p.sub === sub));
+      const prods = c.products.filter((p) => (family === 'all' || p.family === family) && (sub === 'all' || p.sub === sub) && pwMatch(p));
       const subs = (c.subs && c.subs[family]) || [];
       const chip = (f, label, n) => `<button type="button" data-family="${esc(f)}" class="rounded-full px-5 py-2.5 text-[11px] tracking-widest2 uppercase transition-colors duration-300 ${family === f ? 'bg-sky text-ink font-medium' : 'border border-white/15 text-cream/80 hover:border-sky hover:text-sky'}">${esc(label)} <span class="opacity-60 ml-1">${n}</span></button>`;
       const chips = c.families.map((f) => chip(f, f, c.products.filter((p) => p.family === f).length)).join('');
@@ -1678,6 +1678,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
           <p class="text-cream/70 font-light leading-relaxed">${esc(c.intro)}</p>
         </header>`}
         ${c.families.length > 1 ? `<div class="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filtrar por familia">${chips}</div>` : ''}
+        ${pwBar(c)}
         ${overview
           ? `<div class="spa-banner relative rounded-3xl overflow-hidden mb-8 md:mb-12 h-[340px] sm:h-[440px] md:h-[540px] lg:h-[600px] bg-ink2" data-yt="HJV5D7RL4FI">
           <div class="spa-banner-media absolute inset-0 overflow-hidden" aria-hidden="true"></div>
@@ -2013,6 +2014,57 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
         ${formHTML(' y de «' + esc(p.name) + '»')}`;
     }
 
+
+    // Filtros del catálogo de Spas PW: personas, consumo de agua (litros) y chorros
+    const PW_GROUPS = [
+      { k: 'cap', title: 'Personas', opts: [['1-2', '1 a 2'], ['3-4', '3 a 4'], ['5-6', '5 a 6'], ['7+', '7 o más']] },
+      { k: 'agua', title: 'Consumo de agua', opts: [['a', 'Hasta 700 L'], ['b', '700 a 1.000 L'], ['c', 'Más de 1.000 L']] },
+      { k: 'jets', title: 'Chorros', opts: [['a', 'Hasta 20'], ['b', '21 a 35'], ['c', '36 o más']] }
+    ];
+    const pwNum = (p) => {
+      const sp = p.stats || {};
+      const cm = /(\d+)(?:\s*-\s*(\d+))?/.exec(sp.capacidad || '');
+      return {
+        min: cm ? +cm[1] : null, max: cm ? +(cm[2] || cm[1]) : null,
+        agua: sp.volumen ? parseInt(String(sp.volumen).replace(/\./g, ''), 10) : null,
+        jets: sp.chorros ? parseInt(sp.chorros, 10) : null
+      };
+    };
+    function pwMatch(p) {
+      if (!p.colors) return true;
+      const f = pwF;
+      if (!f.cap && !f.agua && !f.jets) return true;
+      const n = pwNum(p);
+      if (f.cap) {
+        if (n.min === null) return false;
+        const ok = { '1-2': n.min <= 2, '3-4': n.min <= 4 && n.max >= 3, '5-6': n.min <= 6 && n.max >= 5, '7+': n.max >= 7 }[f.cap];
+        if (!ok) return false;
+      }
+      if (f.agua) {
+        if (n.agua === null) return false;
+        if (!({ a: n.agua <= 700, b: n.agua > 700 && n.agua <= 1000, c: n.agua > 1000 }[f.agua])) return false;
+      }
+      if (f.jets) {
+        if (n.jets === null) return false;
+        if (!({ a: n.jets <= 20, b: n.jets > 20 && n.jets <= 35, c: n.jets > 35 }[f.jets])) return false;
+      }
+      return true;
+    }
+    function pwBar(c) {
+      if (!c.products.length || !c.products[0].colors) return '';
+      const total = c.products.length, shown = c.products.filter(pwMatch).length;
+      const active = !!(pwF.cap || pwF.agua || pwF.jets);
+      const noData = c.products.filter((p) => !p.stats || !p.stats.capacidad).length;
+      const grp = PW_GROUPS.map((g) => `<div><p class="text-[10px] tracking-widest2 uppercase text-cream/55 mb-3">${g.title}</p><div class="flex flex-wrap gap-2">${g.opts.map(([v, label]) => `<button type="button" data-pwf="${g.k}" data-val="${v}" aria-pressed="${pwF[g.k] === v}" class="rounded-full px-4 py-2 text-[11px] tracking-wide transition-colors duration-300 ${pwF[g.k] === v ? 'bg-sky text-ink font-medium' : 'border border-white/15 text-cream/80 hover:border-sky hover:text-sky'}">${label}</button>`).join('')}</div></div>`).join('');
+      return `<div class="rounded-3xl border border-white/10 bg-ink2/60 p-5 md:p-6 grid gap-6 md:grid-cols-3 mb-6">${grp}</div>
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-8 text-[11px] tracking-widest2 uppercase text-cream/60">
+          <span>Mostrando ${shown} de ${total} modelos</span>
+          ${active ? '<button type="button" data-pw-clear class="text-sky hover:text-mist transition-colors">Quitar filtros</button>' : ''}
+        </div>
+        ${active && noData ? '<p class="text-cream/45 text-xs font-light -mt-5 mb-8">Los modelos que aún no tienen datos publicados no aparecen al filtrar.</p>' : ''}
+        ${shown === 0 ? '<p class="text-center text-cream/70 font-light py-14">Ningún modelo coincide con esos filtros. Quita alguno para ver más.</p>' : ''}`;
+    }
+
     // ---------- Spas PW (Premier Wellness): tarjetas con fotos que cambian y detalle con selector de color ----------
 
     // Datos del spa en "fichas" con ícono: capacidad, medidas, volumen de agua y chorros (big = versión grande del detalle)
@@ -2053,7 +2105,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
           <div class="p-6">
             <h3 class="text-xl font-normal mb-4">${esc(p.name)}</h3>
             ${pwStats(p, false)}
-            <div class="flex items-center gap-2 mb-5"><span class="flex items-center gap-1.5" aria-hidden="true">${dots}</span><span class="text-[11px] tracking-widest2 uppercase text-cream/55">${p.colors.length} colores</span></div>
+            <div class="flex items-center gap-1.5 mb-5" role="img" aria-label="${p.colors.length} colores">${dots}</div>
             <span class="inline-flex items-center gap-2 text-[10px] tracking-widest2 uppercase text-cream/80 group-hover:text-sky transition-colors">Ver detalle ${ARROW}</span>
           </div>
         </button>`;
@@ -2173,7 +2225,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
     }
 
     function open(k) {
-      key = k; family = cat().families[0]; sub = 'all'; product = null; pwColor = null; listScroll = 0; cmp = []; comparing = false;
+      key = k; family = cat().families[0]; sub = 'all'; product = null; pwColor = null; pwF = { cap: '', agua: '', jets: '' }; listScroll = 0; cmp = []; comparing = false;
       lastFocus = document.activeElement;
       if (window.AQModal) window.AQModal.close(true);
       render();
@@ -2310,6 +2362,12 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
         if (!product) listScroll = root.scrollTop;
         const found = cat().products.find((x) => x.id === pr.dataset.product);
         if (found) swap(() => { product = found; pwColor = null; render(); });
+        return;
+      }
+      const pf = e.target.closest('[data-pwf]');
+      if (pf || e.target.closest('[data-pw-clear]')) {
+        if (pf) { const k = pf.dataset.pwf, v = pf.dataset.val; pwF[k] = pwF[k] === v ? '' : v; } else pwF = { cap: '', agua: '', jets: '' };
+        const y = root.scrollTop; render(); root.scrollTop = y;
         return;
       }
       const pcb = e.target.closest('[data-pw-color]');

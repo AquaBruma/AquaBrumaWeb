@@ -8,6 +8,14 @@ Object.assign(window.AQ_EN = window.AQ_EN || {}, {
   'Volumen de agua': 'Water volume',
   'Chorros': 'Jets',
   'Agua': 'Water',
+  'Personas': 'People',
+  'Consumo de agua': 'Water use',
+  '1 a 2': '1 to 2', '3 a 4': '3 to 4', '5 a 6': '5 to 6', '7 o más': '7 or more',
+  'Hasta 700 L': 'Up to 700 L', '700 a 1.000 L': '700 to 1,000 L', 'Más de 1.000 L': 'Over 1,000 L',
+  'Hasta 20': 'Up to 20', '21 a 35': '21 to 35', '36 o más': '36 or more',
+  'Quitar filtros': 'Clear filters',
+  'Los modelos que aún no tienen datos publicados no aparecen al filtrar.': 'Models without published data do not appear when filtering.',
+  'Ningún modelo coincide con esos filtros. Quita alguno para ver más.': 'No model matches those filters. Remove one to see more.',
   'Peso vacío': 'Dry weight',
   'Peso lleno': 'Full weight',
   'Calentador': 'Heater',
@@ -21,6 +29,7 @@ Object.assign(window.AQ_EN = window.AQ_EN || {}, {
   'Gabinete en aluminio y estructura en acero galvanizado': 'Aluminum cabinet and galvanized steel frame'
 });
 (window.AQ_EN_PATTERNS = window.AQ_EN_PATTERNS || []).push(
+  [/^Mostrando (\d+) de (\d+) modelos$/, (m, a, b) => 'Showing ' + a + ' of ' + b + ' models'],
   [/^Spas PW · (.+)$/, (m, r) => 'PW spas · ' + r],
   [/^(\d+) colores disponibles$/, (m, n) => n + ' colors available'],
   [/^(\d+) colores$/, (m, n) => n + ' colors'],
