@@ -91,6 +91,13 @@ def specs_from_pdfs(folder):
         elif rnd: s['medidas'] = f'Ø {rnd.group(1)} × {rnd.group(2)} cm'
         if wat: s['volumen'] = f'{int(wat.group(1).replace(".", "").replace(",", "")):,}'.replace(',', '.') + ' L'
         if jets: s['chorros'] = jets.group(1)
+        kg = re.findall(r'(\d[\d.,]*)\s*Kg', t, re.I)
+        kws = re.findall(r'(\d+[,.]?\d*)\s*KW', t, re.I)
+        mx = re.search(r'(\d+[,.]?\d*)\s*KW\s*(\d+)\s*A\s*in\s*(\d+)\s*V', t, re.I)
+        fmt = lambda v: f'{int(v.replace(".", "").replace(",", "")):,}'.replace(',', '.')
+        if len(kg) >= 2: s['peso_vacio'] = fmt(kg[0]) + ' kg'; s['peso_lleno'] = fmt(kg[1]) + ' kg'
+        if len(kws) >= 3: s['calentador'] = kws[2].replace('.', ',') + ' kW'
+        if mx: s['consumo'] = f'{mx.group(1)} kW · {mx.group(2)} A · {mx.group(3)} V'
     return s
 
 
@@ -100,6 +107,16 @@ def parse_color(folder_name):
         if key in u: return label
     return None
 
+
+if os.environ.get('SPECS_ONLY'):
+    js_old = open('spaspw-data.js', encoding='utf-8').read()
+    head, body = js_old.split('window.AQ_SPAS_PW =', 1)
+    data = json.loads(body.rstrip().rstrip(';'))
+    for m in data:
+        mdir = next(d for d in os.listdir(SRC) if d.startswith(m['ref']))
+        sp = specs_from_pdfs(os.path.join(SRC, mdir)); sp.update(OVERRIDES.get(m['ref'], {})); m['specs'] = sp
+    open('spaspw-data.js', 'w', encoding='utf-8', newline=chr(10)).write(head + 'window.AQ_SPAS_PW = ' + json.dumps(data, ensure_ascii=False, indent=1) + ';' + chr(10))
+    print('fichas actualizadas'); sys.exit(0)
 
 models = []
 color_samples = {}

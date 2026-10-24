@@ -291,7 +291,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "5-6 personas",
    "medidas": "210 × 210 × 90 cm",
    "volumen": "1.100 L",
-   "chorros": "31"
+   "chorros": "31",
+   "peso_vacio": "280 kg",
+   "peso_lleno": "1.860 kg",
+   "calentador": "5,5 kW",
+   "consumo": "8,05 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-001/white-marble-3.webp",
@@ -529,7 +533,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "3 personas",
    "medidas": "187 × 133 × 80 cm",
    "volumen": "600 L",
-   "chorros": "16"
+   "chorros": "16",
+   "peso_vacio": "175 kg",
+   "peso_lleno": "915 kg",
+   "calentador": "5,5 kW",
+   "consumo": "7,35 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-003/white-marble-1.webp",
@@ -797,7 +805,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "6 personas",
    "medidas": "253 × 230 × 90 cm",
    "volumen": "1.300 L",
-   "chorros": "42"
+   "chorros": "42",
+   "peso_vacio": "412 kg",
+   "peso_lleno": "2.219 kg",
+   "calentador": "5,5 kW",
+   "consumo": "8,05 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-005/white-marble-2.webp",
@@ -1394,7 +1406,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "6-7 personas",
    "medidas": "216 × 216 × 80 cm",
    "volumen": "1.300 L",
-   "chorros": "35"
+   "chorros": "35",
+   "peso_vacio": "320 kg",
+   "peso_lleno": "2.020 kg",
+   "calentador": "5,5 kW",
+   "consumo": "8,05 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-007/white-marble-3.webp",
@@ -2409,7 +2425,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "2 personas",
    "medidas": "201 × 136 × 80 cm",
    "volumen": "600 L",
-   "chorros": "20"
+   "chorros": "20",
+   "peso_vacio": "189 kg",
+   "peso_lleno": "949 kg",
+   "calentador": "5,5 kW",
+   "consumo": "7,35 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-011/white-marble-3.webp",
@@ -2623,7 +2643,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "6 personas",
    "medidas": "216 × 216 × 90 cm",
    "volumen": "1.100 L",
-   "chorros": "35"
+   "chorros": "35",
+   "peso_vacio": "290 kg",
+   "peso_lleno": "1.870 kg",
+   "calentador": "5,5 kW",
+   "consumo": "8,05 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-012/white-marble-3.webp",
@@ -2903,7 +2927,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "5 personas",
    "medidas": "208 × 208 × 80 cm",
    "volumen": "1.100 L",
-   "chorros": "35"
+   "chorros": "35",
+   "peso_vacio": "265 kg",
+   "peso_lleno": "1.765 kg",
+   "calentador": "5,5 kW",
+   "consumo": "8,05 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-013/white-marble-3.webp",
@@ -3105,7 +3133,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "4-5 personas",
    "medidas": "216 × 176 × 80 cm",
    "volumen": "900 L",
-   "chorros": "26"
+   "chorros": "26",
+   "peso_vacio": "205 kg",
+   "peso_lleno": "1.505 kg",
+   "calentador": "5,5 kW",
+   "consumo": "8,05 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-014/white-marble-3.webp",
@@ -4095,7 +4127,11 @@ window.AQ_SPAS_PW = [
    "capacidad": "4 personas",
    "medidas": "Ø 160 × 70 cm",
    "volumen": "500 L",
-   "chorros": "14"
+   "chorros": "14",
+   "peso_vacio": "180 kg",
+   "peso_lleno": "1.000 kg",
+   "calentador": "5,5 kW",
+   "consumo": "7,35 kW · 40 A · 220 V"
   },
   "cover": [
    "img/spaspw/bd-018/white-marble-3.webp",
