@@ -90,7 +90,7 @@ def section(title, lead, body, alt=False):
 def cards(items, cols='md:grid-cols-2 lg:grid-cols-4'):
     out = []
     for it in items:
-        img = f'<div class="aspect-[4/3] overflow-hidden bg-ink3"><img src="{it["img"]}" alt="{e(it.get("alt", ""))}" loading="lazy" width="800" height="600" class="w-full h-full object-cover"></div>' if it.get('img') else ''
+        img = f'<div class="aspect-[4/3] overflow-hidden bg-ink3"><img src="{it["img"]}" alt="{e(it.get("alt", ""))}" loading="lazy" width="800" height="600" class="w-full h-full {"object-contain p-4" if it.get("contain") else "object-cover"}"></div>' if it.get('img') else ''
         link = f'<a href="{e(it["href"])}" class="inline-flex items-center gap-2 mt-4 text-sky text-[11px] tracking-widest2 uppercase link-underline">{e(it["cta"])} {ARROW}</a>' if it.get('href') else ''
         out.append(f'<article class="rounded-2xl overflow-hidden border border-white/10 bg-ink2 flex flex-col">{img}<div class="p-6 flex flex-col flex-1"><h3 class="text-cream text-xl font-normal mb-2">{e(it["title"])}</h3><p class="text-cream/65 font-light text-sm leading-relaxed flex-1">{e(it["text"])}</p>{link}</div></article>')
     return f'<div class="grid gap-6 {cols}">' + ''.join(out) + '</div>'
@@ -105,6 +105,7 @@ def steps(items):
 
 def related(slugs):
     names = {
+        'spas-pw': (t('Spas PW', 'PW spas'), t('Spas Premier Wellness en varios colores.', 'Premier Wellness spas in several colors.')),
         'spas': (t('Spas y jacuzzis', 'Spas and jacuzzis'), t('Colecciones Jacuzzi: compara modelos y míralos en 3D.', 'Jacuzzi collections: compare models and view them in 3D.')),
         'piscinas': (t('Piscinas a la medida', 'Custom pools'), t('Diseño, obra y acabados para tu piscina.', 'Design, construction and finishes for your pool.')),
         'saunas': (t('Saunas y turcos', 'Saunas and steam rooms'), t('Calor, vapor y madera integrados a tu espacio.', 'Heat, steam and wood built into your space.')),
@@ -128,7 +129,7 @@ def cta_band(text_wa):
 
 # ---------------------------------------------------------------- pie de página
 def footer():
-    links = [('/spas/', t('Spas y jacuzzis', 'Spas and jacuzzis')), ('/piscinas/', t('Piscinas a la medida', 'Custom pools')), ('/saunas/', t('Saunas y turcos', 'Saunas and steam rooms')),
+    links = [('/spas/', t('Spas y jacuzzis', 'Spas and jacuzzis')), ('/spas-pw/', t('Spas PW', 'PW spas')), ('/piscinas/', t('Piscinas a la medida', 'Custom pools')), ('/saunas/', t('Saunas y turcos', 'Saunas and steam rooms')),
              ('/disena-tu-piscina/', t('Diseña tu piscina en 3D', 'Design your pool in 3D')), ('/disena-tu-sauna/', t('Diseña tu sauna en 3D', 'Design your sauna in 3D')),
              ('/nosotros/', t('Quiénes somos', 'About us')), ('/contacto/', t('Contacto', 'Contact'))]
     lis = ''.join(f'<li><a href="{h}" class="link-underline">{e(n)}</a></li>' for h, n in links)
@@ -197,8 +198,28 @@ page('spas',
      + section(t('Cuatro colecciones Jacuzzi', 'Four Jacuzzi collections'), t('Cada colección reúne varios modelos. Entra al catálogo para ver cada spa en 3D, compararlos y descubrir sus funciones.', 'Each collection brings together several models. Open the catalog to see each spa in 3D, compare them and discover their features.'), spa_cards)
      + section(t('Qué incluye', 'What is included'), t('Te acompañamos desde la elección hasta que el spa está funcionando.', 'We are with you from choosing the model until the spa is up and running.'),
                checks([t('Modelos empotrados o independientes', 'Built-in or freestanding models'), t('Calefacción y control de temperatura', 'Heating and temperature control'), t('Iluminación ambiental', 'Ambient lighting'), t('Instalación y puesta en marcha', 'Installation and start-up'), t('Asesoría para elegir tamaño y ubicación', 'Advice on choosing size and location'), t('Comparador de dos modelos lado a lado', 'Side-by-side comparison of two models')]), alt=True)
-     + related(['disena-tu-piscina', 'saunas', 'contacto']) + cta_band('Hola, quisiera información sobre spas y jacuzzis con AquaBruma.'),
+     + related(['spas-pw', 'disena-tu-piscina', 'saunas']) + cta_band('Hola, quisiera información sobre spas y jacuzzis con AquaBruma.'),
      'CollectionPage')
+
+
+# --- Spas PW (solo si ya existe spaspw-data.js, generado por tools/build_pw.py)
+if os.path.exists('spaspw-data.js'):
+    pw = json.loads(open('spaspw-data.js', encoding='utf-8').read().split('window.AQ_SPAS_PW =', 1)[1].rstrip().rstrip(';'))
+    def pw_text(m):
+        sp = m.get('specs') or {}
+        return ' · '.join(x for x in [sp.get('capacidad'), sp.get('medidas')] if x) or (str(len(m['colors'])) + ' colores disponibles')
+    t('colores disponibles', 'colors available')
+    pw_cards = cards([dict(title=m['name'], text=pw_text(m), img='/' + m['cover'][0], alt='Spa PW ' + m['name'], href='/?catalogo=spaspw&producto=' + m['id'], cta=t('Ver colores', 'See colors'), contain=True) for m in pw if m['cover']], 'sm:grid-cols-2 lg:grid-cols-4')
+    page('spas-pw',
+         t('Spas PW (Premier Wellness) en Colombia | AquaBruma', 'PW spas (Premier Wellness) in Colombia | AquaBruma'),
+         t('Spas PW de Premier Wellness en Colombia: modelos con hidromasaje, cromoterapia y gabinete negro, en varios colores. Mira cada modelo en todos sus colores y cotiza con un asesor.', 'PW spas by Premier Wellness in Colombia: models with hydromassage, chromotherapy and a black cabinet, in several colors. See each model in all its colors and get a quote from an advisor.'),
+         hero([(HOME_ES, '/'), (t('Spas PW', 'PW spas'), None)], t('Spas PW', 'PW spas'), t('Spas PW para tu casa', 'PW spas for your home'),
+              t('La línea PW de Premier Wellness reúne spas con hidromasaje, cromoterapia y generador de ozono, con gabinete negro y varios colores de acrílico. Elige el modelo y mira cómo se ve en cada color.', 'The PW line by Premier Wellness brings together spas with hydromassage, chromotherapy and an ozone generator, with a black cabinet and several acrylic colors. Choose the model and see how it looks in each color.'),
+              btn(t('Ver los modelos', 'See the models'), '/?catalogo=spaspw') + btn(t('Cotizar un spa PW', 'Quote a PW spa'), wa('Hola, quisiera cotizar un spa PW con AquaBruma.'), 2, 'target="_blank" rel="noopener"'),
+              '/' + (pw[0].get('hero') or pw[0]['cover'][0]), t('Spa PW en un ambiente exterior', 'PW spa in an outdoor setting'))
+         + section(t('Los modelos', 'The models'), t('Cada modelo se ve en todos sus colores: entra al catálogo y elige el que más te guste.', 'Every model is shown in all its colors: open the catalog and pick the one you like most.'), pw_cards)
+         + related(['spas', 'piscinas', 'contacto']) + cta_band('Hola, quisiera información sobre los spas PW con AquaBruma.'),
+         'CollectionPage', og_image=(pw[0].get('hero') or pw[0]['cover'][0]))
 
 # --- Piscinas
 page('piscinas',

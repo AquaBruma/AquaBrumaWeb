@@ -71,6 +71,33 @@
       ]
     },
 
+    // Spas PW (Premier Wellness): salen de spaspw-data.js (generado por tools/build_pw.py a partir de las fotos y fichas técnicas)
+    spaspw: {
+      title: 'Spas PW',
+      intro: 'Spas de la línea PW (Premier Wellness) con hidromasaje, cromoterapia y gabinete negro, en varios colores de acrílico. Elige el modelo y mira cómo se ve en cada color.',
+      photos: [],
+      families: ['Spas PW'],
+      products: (window.AQ_SPAS_PW || []).map((s) => {
+        const sp = s.specs || {}, n = s.colors.length, has = !!sp.capacidad;
+        const specs = [];
+        if (sp.capacidad) specs.push(['Capacidad', sp.capacidad]);
+        if (sp.medidas) specs.push(['Medidas', sp.medidas]);
+        if (sp.volumen) specs.push(['Volumen de agua', sp.volumen]);
+        if (sp.chorros) specs.push(['Chorros', sp.chorros]);
+        specs.push(['Colores', String(n)], ['Referencia', s.ref]);
+        const cutOf = (u) => s.colors.some((c) => c.imgs.some((d) => d.s === u && d.cut));
+        return {
+          id: s.id, family: 'Spas PW', ref: s.ref, name: s.name,
+          tagline: has ? [sp.capacidad, sp.medidas].filter(Boolean).join(' · ') : n + ' colores disponibles',
+          text: has
+            ? 'Spa ' + s.name + ' para ' + sp.capacidad + (sp.medidas ? ', de ' + sp.medidas : '') + (sp.volumen ? ' y ' + sp.volumen + ' de agua' : '') + (sp.chorros ? ', con ' + sp.chorros + ' chorros de hidromasaje' : '') + ', cromoterapia y generador de ozono. Disponible en ' + n + ' colores.'
+            : 'Spa ' + s.name + ' de la línea PW, disponible en ' + n + ' colores. Un asesor te da las medidas, la capacidad y las condiciones de instalación.',
+          specs, features: has ? ['Cromoterapia con luz LED multicolor', 'Generador de ozono', 'Panel de control Balboa', 'Acrílico termoformado', 'Gabinete en aluminio y estructura en acero galvanizado'] : [],
+          photos: [], colors: s.colors, cover: s.cover.map((u) => ({ s: u, cut: cutOf(u) }))
+        };
+      })
+    },
+
     saunas: {
       title: 'Saunas & Turcos',
       intro: 'Calor seco o vapor, en maderas y revestimientos que se integran a tu casa, spa o gimnasio.',

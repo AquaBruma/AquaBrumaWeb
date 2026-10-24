@@ -168,9 +168,9 @@
 
 
 <link rel="stylesheet" href="fonts.css">
-<link rel="stylesheet" href="tailwind.css?v=20261023a">
+<link rel="stylesheet" href="tailwind.css?v=20261024a">
 
-<link rel="stylesheet" href="site.css?v=20261023a">
+<link rel="stylesheet" href="site.css?v=20261024a">
 </head>
 
 <body class="bg-ink text-cream antialiased font-light overflow-hidden">
@@ -213,6 +213,7 @@
                class="absolute right-0 top-full mt-5 w-60 rounded-2xl bg-ink/30 backdrop-blur-md border border-cream/15 shadow-xl shadow-black/25 py-3 opacity-0 invisible -translate-y-2 transition-all duration-300">
             <a href="#colecciones" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Catálogo</a>
             <a href="/spas/" data-open-catalog="spas" class="nav-sub flex items-center gap-2.5 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas Jacuzzi</a>
+      <a href="/spas-pw/" data-open-catalog="spaspw" class="nav-sub flex items-center gap-2.5 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas PW</a>
             <a href="/disena-tu-piscina/" data-open-configurator class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Diseña tu piscina</a>
             <a href="/disena-tu-sauna/" data-open-sauna class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Diseña tu sauna</a>
             <a href="#proyectos" class="block px-6 py-3 text-[11px] tracking-widest2 uppercase text-cream/80 hover:text-sky transition-colors duration-300">Proyectos</a>
@@ -251,6 +252,7 @@
     <div class="flex flex-col items-center gap-4">
       <a href="#colecciones" class="mobile-link text-3xl font-light">Catálogo</a>
       <a href="/spas/" data-open-catalog="spas" class="mobile-link flex items-center gap-2.5 text-lg font-light text-sky"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas Jacuzzi</a>
+      <a href="/spas-pw/" data-open-catalog="spaspw" class="mobile-link flex items-center gap-2.5 text-lg font-light text-sky"><svg width="10" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3c3 4 6 6.8 6 10.5a6 6 0 0 1-12 0C6 9.8 9 7 12 3z"/></svg>Spas PW</a>
     </div>
     <a href="/disena-tu-piscina/" data-open-configurator class="mobile-link text-3xl font-light">Diseña tu piscina</a>
     <a href="/disena-tu-sauna/" data-open-sauna class="mobile-link text-3xl font-light">Diseña tu sauna</a>
@@ -1013,8 +1015,8 @@
       if (window.AQCfg) return Promise.resolve();
       if (p) return p;
       p = new Promise((res, rej) => {
-        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261023a'; document.head.appendChild(l);
-        const s = document.createElement('script'); s.src = 'configurador.js?v=20261023a'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
+        const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261024a'; document.head.appendChild(l);
+        const s = document.createElement('script'); s.src = 'configurador.js?v=20261024a'; s.onload = res; s.onerror = () => { p = null; rej(); }; document.head.appendChild(s);
       });
       return p;
     }
@@ -1030,8 +1032,8 @@
       if (window.AQSauna) return Promise.resolve();
       if (ps) return ps;
       ps = new Promise((res, rej) => {
-        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261023a'; document.head.appendChild(l); }
-        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261023a'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
+        if (!document.querySelector('link[href^="configurador.css"]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'configurador.css?v=20261024a'; document.head.appendChild(l); }
+        const sc = document.createElement('script'); sc.src = 'sauna.js?v=20261024a'; sc.onload = res; sc.onerror = () => { ps = null; rej(); }; document.head.appendChild(sc);
       });
       return ps;
     }
@@ -1059,13 +1061,15 @@
     } catch (err) {}
   })();
 </script>
-<script src="i18n-en.js?v=20261023a"></script>
-<script src="i18n-pages-en.js?v=20261023a"></script>
-<script src="i18n.js?v=20261023a"></script>
-<script src="cookies.js?v=20261023a"></script>
-<script src="advisors.js?v=20261023a"></script>
-<script src="spas-data.js?v=20261023a"></script>
-<script src="catalogo-data.js?v=20261023a"></script>
+<script src="i18n-en.js?v=20261024a"></script>
+<script src="i18n-pages-en.js?v=20261024a"></script>
+<script src="i18n-pw-en.js?v=20261024a"></script>
+<script src="i18n.js?v=20261024a"></script>
+<script src="cookies.js?v=20261024a"></script>
+<script src="advisors.js?v=20261024a"></script>
+<script src="spas-data.js?v=20261024a"></script>
+<script src="spaspw-data.js?v=20261024a"></script>
+<script src="catalogo-data.js?v=20261024a"></script>
 <script>
   // Inicio siempre arriba (también al volver con los botones atrás/adelante del navegador)
   window.scrollTo(0, 0);
@@ -1552,7 +1556,7 @@
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     const sized = (u, w) => u.replace(/w=\d+/, 'w=' + w);
     const ARROW = '<svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 5h14M10 1l4 4-4 4"/></svg>';
-    let key = null, family = 'all', sub = 'all', product = null, lastFocus = null, listScroll = 0;
+    let key = null, family = 'all', sub = 'all', product = null, lastFocus = null, listScroll = 0, pwColor = null;
     let cmp = [], comparing = false;
     const embedUrl = (id) => 'https://jg-embed.brand3d.com/' + id + '?lang=' + (window.AQ_LANG === 'en' ? 'en' : 'es');
     const third = () => !window.AQConsent || window.AQConsent.third();
@@ -1646,6 +1650,7 @@
         </button>`;
       }).join('');
       const cards = prods.map((p) => {
+        if (p.colors) return cardPW(p);
         const a = photoOf(p, 0), b = photoOf(p, 1);
         const card = `<button type="button" data-product="${p.id}" class="cat-card group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx ${p.embed ? 'w-full h-full block' : ''}">
           <div class="relative aspect-[4/3] overflow-hidden ${p.img ? '' : 'bg-ink2'}">
@@ -2008,8 +2013,71 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
         ${formHTML(' y de «' + esc(p.name) + '»')}`;
     }
 
+    // ---------- Spas PW (Premier Wellness): tarjetas con fotos que cambian y detalle con selector de color ----------
+    function cardPW(p) {
+      const imgs = p.cover.map((c, i) => `<img src="${esc(c.s)}" alt="${i === 0 ? esc(p.name) : ''}" loading="lazy" class="${i === 0 ? 'on ' : ''}absolute inset-0 w-full h-full ${c.cut ? 'object-contain' : 'object-cover'}"${c.cut ? ' style="padding:2.5rem 1rem 1rem"' : ''}>`).join('');
+      const dots = p.colors.map((c) => `<i class="pw-dot" style="background:${esc(c.hex)}" title="${esc(c.name)}"></i>`).join('');
+      return `<button type="button" data-product="${p.id}" class="cat-card group text-left rounded-3xl overflow-hidden bg-ink3/50 border border-white/5 card-fx">
+          <div class="pw-cov relative aspect-[4/3] overflow-hidden bg-ink2">${imgs}
+            <span class="absolute top-4 left-4 rounded-full bg-ink/65 backdrop-blur-sm border border-white/15 px-3 py-1 text-[10px] tracking-widest2 uppercase text-cream/90">Spas PW</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-normal mb-1">${esc(p.name)}</h3>
+            <p class="text-sky text-sm font-light mb-4">${esc(p.tagline)}</p>
+            <div class="flex items-center gap-1.5 mb-5" aria-label="${p.colors.length} colores">${dots}</div>
+            <span class="inline-flex items-center gap-2 text-[10px] tracking-widest2 uppercase text-cream/80 group-hover:text-sky transition-colors">Ver detalle ${ARROW}</span>
+          </div>
+        </button>`;
+    }
+    const pwCol = () => product.colors.find((c) => c.id === pwColor) || product.colors[0];
+    function pwGallery() {
+      const col = pwCol(), im = col.imgs, f = im[0];
+      const main = `<div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-ink2"><img id="cat-main" src="${esc(f.s)}" alt="${esc(product.name + ' ' + col.name)}" class="absolute inset-0 w-full h-full ${f.cut ? 'object-contain' : 'object-cover'} transition-opacity duration-300"${f.cut ? ' style="padding:2.5rem"' : ''}></div>`;
+      const thumbs = im.length > 1 ? `<div class="flex flex-wrap gap-3 mt-4">${im.map((d, k) => `<button type="button" data-pw-img="${k}" aria-label="Foto ${k + 1}" class="cat-thumb ${k === 0 ? 'on' : ''} w-24 h-[72px] rounded-xl overflow-hidden bg-ink2"><img src="${esc(d.t)}" alt="" loading="lazy" class="w-full h-full ${d.cut ? 'object-contain p-1' : 'object-cover'}"></button>`).join('')}</div>` : '';
+      return main + thumbs;
+    }
+    function detailPW() {
+      const c = cat(), p = product, col = pwCol();
+      const idx = c.products.indexOf(p);
+      const prev = c.products[(idx - 1 + c.products.length) % c.products.length];
+      const next = c.products[(idx + 1) % c.products.length];
+      const sw = p.colors.map((x) => `<button type="button" data-pw-color="${esc(x.id)}" aria-label="${esc(x.name)}" aria-pressed="${x.id === col.id}" title="${esc(x.name)}" class="pw-sw ${x.id === col.id ? 'on' : ''}" style="background:${esc(x.hex)}"></button>`).join('');
+      return `
+        <nav class="pt-8 pb-6 text-[11px] tracking-widest2 uppercase text-cream/50 flex flex-wrap items-center gap-2" aria-label="Ubicación">
+          <button type="button" data-act="list" class="hover:text-sky transition-colors">Catálogo</button><span>/</span>
+          <button type="button" data-act="list" class="hover:text-sky transition-colors">${esc(c.title)}</button><span>/</span>
+          <span class="text-cream/80">${esc(p.name)}</span>
+        </nav>
+        <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14 items-start">
+          <div id="pw-gal">${pwGallery()}</div>
+          <div>
+            <p class="text-sky text-[11px] tracking-widest2 uppercase mb-4">${esc(p.family)} · ${esc(p.ref)}</p>
+            <h2 id="cat-title" class="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-3">${esc(p.name)}</h2>
+            <p class="text-sky font-light mb-6">${esc(p.tagline)}</p>
+            <div class="mb-8">
+              <p class="text-[11px] tracking-widest2 uppercase text-cream/60 mb-3">Color: <span id="pw-cname" class="text-cream">${esc(col.name)}</span></p>
+              <div class="flex flex-wrap gap-3" role="group" aria-label="Elige el color">${sw}</div>
+              <p class="text-cream/45 text-xs font-light mt-3">Gabinete negro en todos los colores.</p>
+            </div>
+            <p class="text-cream/75 font-light leading-relaxed mb-8">${esc(p.text)}</p>
+            <dl class="modal-meta grid grid-cols-2 gap-x-6 gap-y-5 py-6 mb-6 border-y border-white/10">${p.specs.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+            ${p.features.length ? `<ul class="space-y-2.5 text-sm text-cream/80 font-light mb-9">${p.features.map((f) => `<li class="flex items-start gap-3"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-sky flex-shrink-0"></span>${esc(f)}</li>`).join('')}</ul>` : ''}
+            <div class="flex flex-wrap items-center gap-3">
+              <a id="pw-wa" href="${waLink('Hola, me interesa el spa «' + p.name + '» (Spas PW) en color ' + col.name + '. ¿Me pueden dar más información?')}" target="_blank" rel="noopener" class="inline-flex items-center gap-3 rounded-full bg-sky hover:bg-mist text-ink transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-7 py-3.5 font-medium">Cotizar este spa</a>
+              <button type="button" data-act="list" class="inline-flex items-center gap-3 rounded-full border border-white/25 hover:border-sky hover:text-sky transition-colors duration-300 text-[11px] tracking-widest2 uppercase px-6 py-3.5">Ver más productos</button>
+            </div>
+            <div class="flex items-center justify-between gap-4 mt-10 pt-5 border-t border-white/10 text-[11px] tracking-widest2 uppercase text-cream/70">
+              <button type="button" data-product="${prev.id}" class="flex items-center gap-2 hover:text-sky transition-colors"><svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M15 5H1M6 1L2 5l4 4"/></svg> ${esc(prev.name)}</button>
+              <button type="button" data-product="${next.id}" class="flex items-center gap-2 hover:text-sky transition-colors text-right">${esc(next.name)} ${ARROW}</button>
+            </div>
+          </div>
+        </div>
+        ${formHTML(' y de «' + esc(p.name) + '»')}`;
+    }
+
     function detailHTML() {
       if (product.embed) return detail3D();
+      if (product.colors) return detailPW();
       const c = cat(), p = product;
       const imgs = p.photos.map((i) => c.photos[i]);
       const idx = c.products.indexOf(p);
@@ -2049,7 +2117,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
     }
 
     // Dirección compartible del catálogo: ?catalogo=spas&coleccion=Colección J5&producto=j509
-    const SHARE_KEYS = ['catalogo', 'familia', 'coleccion', 'producto'];
+    const SHARE_KEYS = ['catalogo', 'familia', 'coleccion', 'producto', 'color'];
     function syncUrl(clear) {
       try {
         const sp = new URLSearchParams(location.search);
@@ -2059,6 +2127,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
           if (family !== 'all' && family !== cat().families[0]) sp.set('familia', family);
           if (sub !== 'all') sp.set('coleccion', sub);
           if (product) sp.set('producto', product.id);
+          if (product && product.colors && pwColor && pwColor !== product.colors[0].id) sp.set('color', pwColor);
         }
         const q = sp.toString();
         history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
@@ -2076,7 +2145,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
     }
 
     function open(k) {
-      key = k; family = cat().families[0]; sub = 'all'; product = null; listScroll = 0; cmp = []; comparing = false;
+      key = k; family = cat().families[0]; sub = 'all'; product = null; pwColor = null; listScroll = 0; cmp = []; comparing = false;
       lastFocus = document.activeElement;
       if (window.AQModal) window.AQModal.close(true);
       render();
@@ -2101,7 +2170,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       root.classList.remove('open');
       document.documentElement.classList.remove('catalog-open');
       root.setAttribute('aria-hidden', 'true');
-      if (window.AQModal) window.AQModal.open('coleccion', window.AQModal.order.indexOf(key), lastFocus);
+      if (window.AQModal && window.AQModal.order.indexOf(key) >= 0) window.AQModal.open('coleccion', window.AQModal.order.indexOf(key), lastFocus);
       else closeAll();
     }
     function goBack() {
@@ -2158,7 +2227,7 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
         if (fam && cat().families.includes(fam)) family = fam;
         if (col) sub = col;
         const found = pr && cat().products.find((x) => x.id === pr);
-        if (found) product = found;
+        if (found) { product = found; const co = sp.get('color'); if (found.colors && co && found.colors.some((x) => x.id === co)) pwColor = co; }
         if (fam || col || found) render();
       }, 400), { once: true });
     } catch (err) {}
@@ -2168,6 +2237,20 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       e.preventDefault();
       open(a.dataset.openCatalog);
     });
+
+    // Tarjetas de Spas PW: las fotos de la portada cambian solas al pasar el mouse (en celulares, mientras la tarjeta está a la vista)
+    (function () {
+      const timers = new WeakMap();
+      const step = (box) => { const im = [...box.querySelectorAll('img')]; if (im.length < 2) return; const i = im.findIndex((x) => x.classList.contains('on')); im[i].classList.remove('on'); im[(i + 1) % im.length].classList.add('on'); };
+      const start = (box, ms) => { if (timers.has(box)) return; step(box); timers.set(box, setInterval(() => step(box), ms)); };
+      const stop = (box) => { const t = timers.get(box); if (t) { clearInterval(t); timers.delete(box); } box.querySelectorAll('img').forEach((x, k) => x.classList.toggle('on', k === 0)); };
+      view.addEventListener('mouseover', (e) => { const b = e.target.closest('.pw-cov'); if (b && !b.contains(e.relatedTarget)) start(b, 1000); });
+      view.addEventListener('mouseout', (e) => { const b = e.target.closest('.pw-cov'); if (b && !b.contains(e.relatedTarget)) stop(b); });
+      if (window.matchMedia && window.matchMedia('(hover: none)').matches) {
+        const io = new IntersectionObserver((es) => es.forEach((en) => (en.isIntersecting ? start(en.target, 2400) : stop(en.target))), { threshold: 0.6 });
+        new MutationObserver(() => view.querySelectorAll('.pw-cov:not([data-io])').forEach((b) => { b.dataset.io = '1'; io.observe(b); })).observe(view, { childList: true, subtree: true });
+      }
+    })();
 
     document.getElementById('cat-back').addEventListener('click', goBack);
     document.getElementById('cat-close').addEventListener('click', closeAll);
@@ -2198,7 +2281,26 @@ ${overview ? '<div class="pt-4"></div>' : subs.length ? (collectionIntro() || `<
       if (pr) {
         if (!product) listScroll = root.scrollTop;
         const found = cat().products.find((x) => x.id === pr.dataset.product);
-        if (found) swap(() => { product = found; render(); });
+        if (found) swap(() => { product = found; pwColor = null; render(); });
+        return;
+      }
+      const pcb = e.target.closest('[data-pw-color]');
+      if (pcb && product && product.colors) {
+        pwColor = pcb.dataset.pwColor;
+        const col = pwCol();
+        document.getElementById('pw-gal').innerHTML = pwGallery();
+        document.getElementById('pw-cname').textContent = col.name;
+        view.querySelectorAll('.pw-sw').forEach((x) => { const on = x === pcb; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); });
+        const wal = document.getElementById('pw-wa'); if (wal) wal.href = waLink('Hola, me interesa el spa «' + product.name + '» (Spas PW) en color ' + col.name + '. ¿Me pueden dar más información?');
+        syncUrl();
+        return;
+      }
+      const pib = e.target.closest('[data-pw-img]');
+      if (pib && product && product.colors) {
+        const d = pwCol().imgs[+pib.dataset.pwImg], main = document.getElementById('cat-main');
+        main.style.opacity = 0;
+        setTimeout(() => { main.src = d.s; main.classList.toggle('object-contain', !!d.cut); main.classList.toggle('object-cover', !d.cut); main.style.padding = d.cut ? '2.5rem' : ''; main.style.opacity = 1; }, 200);
+        view.querySelectorAll('.cat-thumb').forEach((x) => x.classList.toggle('on', x === pib));
         return;
       }
       const t = e.target.closest('[data-thumb]');

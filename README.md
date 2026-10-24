@@ -132,3 +132,12 @@ Además de la página principal, el sitio tiene páginas reales, cada una con su
 - Para que Google las encuentre: en Google Search Console agregar `aquabrumapools.com` y enviar `https://aquabrumapools.com/sitemap.xml`. Los enlaces rápidos los decide Google y pueden tardar semanas.
 
 **Enlaces compartibles en la página principal:** cada sección tiene su propia dirección (`aquabrumapools.com/#nosotros`, `#proyectos`, `#colecciones`, `#configurador`, `#sauna`, `#contacto`…). La dirección del navegador se actualiza sola mientras se baja, y al abrir un enlace con `#sección` se baja hasta ahí cuando termina la pantalla de entrada. El catálogo también: `?catalogo=spas&coleccion=Colección J5&producto=jz-j509` abre el spa exacto (y al volver o cerrar la dirección se limpia). Los diseños de los configuradores se comparten con `?diseno=` y `?sauna=`.
+
+## Spas PW (Premier Wellness)
+
+Categoría **Spas PW** en el catálogo (menú desplegable y menú del celular: «Spas PW», con la gota) y página propia `/spas-pw/`. 16 referencias (BD-001 JAZ … BD-018 RIO 160), 9 colores cada una (Copper, Gypsum, Midnight, Ocean Wave, Oyster, Pearl, Sunset, White, White Marble; gabinete negro).
+- **Tarjetas:** 2 o 3 fotos de portada que cambian solas al pasar el mouse (en celular, mientras la tarjeta está a la vista) y los puntos de color disponibles.
+- **Detalle:** selector de color; al elegirlo aparecen las fotos de ese color (producto con fondo transparente primero, luego los detalles) con miniaturas. Botón de cotizar por WhatsApp que incluye el color elegido. La dirección guarda el modelo y el color: `?catalogo=spaspw&producto=pw-bd-007&color=copper`.
+- **Datos:** capacidad, medidas, volumen y chorros salen de las fichas técnicas (PDF) de cada carpeta; las referencias sin ficha (LIO, ZEN, RIO 200, RIO 220, JORDAN, CONGO, RIO 180) muestran solo nombre y colores hasta que se tengan. Para corregir un dato: `OVERRIDES` en `tools/build_pw.py`.
+- **Cómo se genera:** las fotos originales están en `texturas-nuevas/Spas PW/` (no se publican). `python tools/build_pw.py` crea las versiones livianas en `img/spaspw/` (fondo blanco → transparente en las fotos de producto, WebP) y `spaspw-data.js`; después `python tools/build_pages.py` (actualiza `/spas-pw/` y el sitemap). Textos en inglés: `i18n-pw-en.js`.
+- El código del catálogo está en `index.html` (`cardPW`, `detailPW`) y los datos de la categoría en `catalogo-data.js` (`spaspw`).
