@@ -92,7 +92,7 @@
           text: has
             ? 'Spa ' + s.name + ' para ' + sp.capacidad + (sp.medidas ? ', de ' + sp.medidas : '') + (sp.volumen ? ' y ' + sp.volumen + ' de agua' : '') + (sp.chorros ? ', con ' + sp.chorros + ' chorros de hidromasaje' : '') + ', cromoterapia y generador de ozono. Disponible en ' + n + ' colores.'
             : 'Spa ' + s.name + ' de la línea PW, disponible en ' + n + ' colores. Un asesor te da las medidas, la capacidad y las condiciones de instalación.',
-          specs, features: has ? ['Cromoterapia con luz LED multicolor', 'Generador de ozono', 'Panel de control Balboa', 'Acrílico termoformado', 'Gabinete en aluminio y estructura en acero galvanizado'] : [],
+          stats: sp, specs, features: has ? ['Cromoterapia con luz LED multicolor', 'Generador de ozono', 'Panel de control Balboa', 'Acrílico termoformado', 'Gabinete en aluminio y estructura en acero galvanizado'] : [],
           photos: [], colors: s.colors, cover: s.cover.map((u) => ({ s: u, cut: cutOf(u) }))
         };
       })
