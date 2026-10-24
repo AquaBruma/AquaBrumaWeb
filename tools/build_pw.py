@@ -33,25 +33,63 @@ def slug(s):
 
 
 def cutout(im, thr=246):
-    a = np.asarray(im.convert('RGB'))
-    near = a.min(axis=2) >= thr
-    lab, n = ndi.label(near)
+    """Recorte del fondo blanco de fotos de spas.
+    1) Fondo = píxeles casi blancos conectados al borde (umbral estricto: no se come el acrílico blanco del spa).
+    2) Sombra gris clara que algunas fotos traen BAJO el spa: se quita solo por debajo del gabinete oscuro.
+    3) Contorno suavizado (sin dientes) y borde con transparencia gradual, des-mezclado del blanco (sin halo)."""
+    rgb = np.asarray(im.convert('RGB')).astype(np.float32)
+    h, w, _ = rgb.shape
+    mn = rgb.min(axis=2); mx = rgb.max(axis=2); lum = rgb.mean(axis=2)
+    near = mn >= thr
+    lab, _ = ndi.label(near)
     border = set(np.unique(np.r_[lab[0], lab[-1], lab[:, 0], lab[:, -1]])) - {0}
-    fg = ~np.isin(lab, list(border))
+    bg = np.isin(lab, list(border))
+    fg = ~bg
     fg = ndi.binary_opening(fg, iterations=1)
     fg = ndi.binary_fill_holes(fg)
     lab2, n2 = ndi.label(fg)
     if n2 > 1:
         sizes = ndi.sum(fg, lab2, range(1, n2 + 1)); fg = lab2 == (1 + int(np.argmax(sizes)))
+
+    # --- sombra bajo el gabinete ---
+    dark = (lum < 95) & fg
+    if fg.sum() > 0 and dark.sum() / fg.sum() >= 0.10:
+        cols = np.where(dark.any(axis=0))[0]
+        low = np.full(w, -1.0)
+        for x in cols:
+            low[x] = np.where(dark[:, x])[0].max()
+        xs = np.arange(w)
+        low_i = np.interp(xs, cols, low[cols])          # fuera del gabinete: se toma la base más cercana
+        low_i = ndi.uniform_filter1d(low_i, 15)
+        yy = np.arange(h)[:, None]
+        shadowish = (mn >= 88) & ((mx - mn) <= 18)      # gris sin color (sombra de contacto y sombra suave)
+        below = yy > (low_i[None, :] + 2)
+        fg = fg & ~(shadowish & below)
+        # lo que quede suelto tras quitar la sombra
+        fg = ndi.binary_opening(fg, iterations=2)
+        lab3, n3 = ndi.label(fg)
+        if n3 > 1:
+            sizes = ndi.sum(fg, lab3, range(1, n3 + 1)); fg = lab3 == (1 + int(np.argmax(sizes)))
+        fg = ndi.binary_fill_holes(fg)
+
+    # --- borde limpio ---
+    f = ndi.gaussian_filter(fg.astype(np.float32), 1.3)
+    fg = f > 0.5
     fg = ndi.binary_erosion(fg, iterations=1)
-    alpha = Image.fromarray((fg * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.9))
-    out = im.convert('RGBA'); out.putalpha(alpha)
-    bb = alpha.point(lambda v: 255 if v > 20 else 0).getbbox()
+    alpha = ndi.gaussian_filter(fg.astype(np.float32), 0.8)
+    alpha = np.clip((alpha - 0.12) / 0.76, 0, 1)
+    a3 = np.maximum(alpha, 0.02)[..., None]
+    edge = (alpha > 0) & (alpha < 1)
+    out = rgb.copy()
+    out[edge] = np.clip((rgb[edge] - (1 - a3[edge]) * 255.0) / a3[edge], 0, 255)
+    rgba = np.dstack([out, alpha * 255]).astype(np.uint8)
+    img = Image.fromarray(rgba, 'RGBA')
+    bb = Image.fromarray((alpha * 255).astype(np.uint8)).point(lambda v: 255 if v > 10 else 0).getbbox()
     if bb:
-        pad = int(0.04 * max(out.size))
-        bb = (max(0, bb[0] - pad), max(0, bb[1] - pad), min(out.width, bb[2] + pad), min(out.height, bb[3] + pad))
-        out = out.crop(bb)
-    return out
+        pad = int(0.04 * max(img.size))
+        bb = (max(0, bb[0] - pad), max(0, bb[1] - pad), min(img.width, bb[2] + pad), min(img.height, bb[3] + pad))
+        img = img.crop(bb)
+    return img
 
 
 def is_product_shot(im):
@@ -117,6 +155,28 @@ if os.environ.get('SPECS_ONLY'):
         sp = specs_from_pdfs(os.path.join(SRC, mdir)); sp.update(OVERRIDES.get(m['ref'], {})); m['specs'] = sp
     open('spaspw-data.js', 'w', encoding='utf-8', newline=chr(10)).write(head + 'window.AQ_SPAS_PW = ' + json.dumps(data, ensure_ascii=False, indent=1) + ';' + chr(10))
     print('fichas actualizadas'); sys.exit(0)
+
+if os.environ.get('RECUT'):
+    n_done = 0
+    for mdir in sorted(d for d in os.listdir(SRC) if d.startswith('BD-')):
+        ref = mdir.split()[0]; mslug = ref.lower()
+        if ONLY and ONLY != ref: continue
+        for cdir in sorted(d for d in os.listdir(os.path.join(SRC, mdir)) if os.path.isdir(os.path.join(SRC, mdir, d))):
+            cname = parse_color(cdir)
+            if not cname: continue
+            cslug = slug(cname)
+            for f in sorted(os.listdir(os.path.join(SRC, mdir, cdir))):
+                m = re.search(r'(\d+)\.(png|jpg|jpeg)$', f, re.I)
+                if not m: continue
+                im = load(os.path.join(SRC, mdir, cdir, f), 1500)
+                if not is_product_shot(im): continue
+                out = cutout(im); n = int(m.group(1))
+                save_webp(out, os.path.join(OUT, mslug, f'{cslug}-{n}.webp'), 82, 1200)
+                th = out.copy(); th.thumbnail((420, 420), Image.LANCZOS)
+                th.save(os.path.join(OUT, mslug, f'{cslug}-{n}-t.webp'), 'WEBP', quality=72, method=4, alpha_quality=80)
+                n_done += 1
+        print(ref, 'listo', flush=True)
+    print('recortes rehechos:', n_done); sys.exit(0)
 
 models = []
 color_samples = {}

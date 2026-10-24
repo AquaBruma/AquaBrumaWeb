@@ -141,3 +141,7 @@ Categoría **Spas PW** en el catálogo (menú desplegable y menú del celular: �
 - **Datos:** capacidad, medidas, volumen y chorros salen de las fichas técnicas (PDF) de cada carpeta; las referencias sin ficha (LIO, ZEN, RIO 200, RIO 220, JORDAN, CONGO, RIO 180) muestran solo nombre y colores hasta que se tengan. Para corregir un dato: `OVERRIDES` en `tools/build_pw.py`.
 - **Cómo se genera:** las fotos originales están en `texturas-nuevas/Spas PW/` (no se publican). `python tools/build_pw.py` crea las versiones livianas en `img/spaspw/` (fondo blanco → transparente en las fotos de producto, WebP) y `spaspw-data.js`; después `python tools/build_pages.py` (actualiza `/spas-pw/` y el sitemap). Textos en inglés: `i18n-pw-en.js`.
 - El código del catálogo está en `index.html` (`cardPW`, `detailPW`) y los datos de la categoría en `catalogo-data.js` (`spaspw`).
+
+**Recorte de las fotos de los spas PW:** `cutout()` en `tools/build_pw.py` quita el fondo blanco con umbral estricto (no se come el acrílico blanco), borra la sombra gris que algunas fotos traen bajo el gabinete (RIO 160/180/200/220), suaviza el contorno y des-mezcla el blanco del borde (sin halo). Para rehacer solo los recortes: `RECUT=1 python tools/build_pw.py` (opcional `ONLY=BD-017`).
+
+**Atrás / adelante del navegador:** en el catálogo, abrir una categoría, una colección o un spa agrega una entrada al historial; las flechas del navegador restauran ese paso o cierran el catálogo, y el botón «Volver» de la página sigue disponible. Cambiar de color o de filtros no agrega entradas.
