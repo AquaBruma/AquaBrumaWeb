@@ -88,10 +88,10 @@
         const cutOf = (u) => s.colors.some((c) => c.imgs.some((d) => d.s === u && d.cut));
         return {
           id: s.id, family: 'Spas PW', ref: s.ref, name: s.name,
-          tagline: has ? [sp.capacidad, sp.medidas].filter(Boolean).join(' · ') : n + ' colores disponibles',
+          tagline: has ? [sp.capacidad, sp.medidas].filter(Boolean).join(' · ') : (sp.medidas ? sp.medidas + ' · ' : '') + n + ' colores disponibles',
           text: has
             ? 'Spa ' + s.name + ' para ' + sp.capacidad + (sp.medidas ? ', de ' + sp.medidas : '') + (sp.volumen ? ' y ' + sp.volumen + ' de agua' : '') + (sp.chorros ? ', con ' + sp.chorros + ' chorros de hidromasaje' : '') + ', cromoterapia y generador de ozono. Disponible en ' + n + ' colores.'
-            : 'Spa ' + s.name + ' de la línea PW, disponible en ' + n + ' colores. Un asesor te da las medidas, la capacidad y las condiciones de instalación.',
+            : 'Spa ' + s.name + ' de la línea PW' + (sp.medidas ? ', de ' + sp.medidas : '') + ', disponible en ' + n + ' colores. Un asesor te confirma ' + (sp.medidas ? 'la capacidad, los litros y los chorros' : 'las medidas, la capacidad y las condiciones de instalación') + '.',
           stats: sp, specs, features: has ? ['Cromoterapia con luz LED multicolor', 'Generador de ozono', 'Panel de control Balboa', 'Acrílico termoformado', 'Gabinete en aluminio y estructura en acero galvanizado'] : [],
           photos: [], colors: s.colors, cover: s.cover.map((u) => ({ s: u, cut: cutOf(u) }))
         };

@@ -1103,7 +1103,9 @@ window.AQ_SPAS_PW = [
    }
   ],
   "hero": "img/spaspw/bd-006/hero.webp",
-  "specs": {},
+  "specs": {
+   "medidas": "216 × 216 × 90 cm"
+  },
   "cover": [
    "img/spaspw/bd-006/white-marble-3.webp",
    "img/spaspw/bd-006/hero.webp",
@@ -1668,7 +1670,9 @@ window.AQ_SPAS_PW = [
    }
   ],
   "hero": null,
-  "specs": {},
+  "specs": {
+   "medidas": "208 × 208 × 90 cm"
+  },
   "cover": [
    "img/spaspw/bd-008/white-marble-2.webp",
    "img/spaspw/bd-008/white-marble-4.webp",
@@ -2146,7 +2150,9 @@ window.AQ_SPAS_PW = [
    }
   ],
   "hero": "img/spaspw/bd-010/hero.webp",
-  "specs": {},
+  "specs": {
+   "medidas": "Ø 220 × 90 cm"
+  },
   "cover": [
    "img/spaspw/bd-010/white-marble-3.webp",
    "img/spaspw/bd-010/hero.webp",
@@ -3652,7 +3658,9 @@ window.AQ_SPAS_PW = [
    }
   ],
   "hero": null,
-  "specs": {},
+  "specs": {
+   "medidas": "176 × 116 × 80 cm"
+  },
   "cover": [
    "img/spaspw/bd-016/white-marble-2.webp",
    "img/spaspw/bd-016/white-marble-1.webp",

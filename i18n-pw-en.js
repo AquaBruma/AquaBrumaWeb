@@ -8,6 +8,7 @@ Object.assign(window.AQ_EN = window.AQ_EN || {}, {
   'Volumen de agua': 'Water volume',
   'Chorros': 'Jets',
   'Agua': 'Water',
+  'La capacidad, los litros y los chorros de este modelo te los confirma un asesor.': 'An advisor will confirm the capacity, liters and jets of this model.',
   'Personas': 'People',
   'Personas: 1 a 2': 'People: 1 to 2', 'Personas: 3 a 4': 'People: 3 to 4', 'Personas: 5 a 6': 'People: 5 to 6', 'Personas: 7 o más': 'People: 7 or more',
   'Consumo de agua: Hasta 700 L': 'Water use: up to 700 L', 'Consumo de agua: 700 a 1.000 L': 'Water use: 700 to 1,000 L', 'Consumo de agua: Más de 1.000 L': 'Water use: over 1,000 L',
@@ -32,6 +33,8 @@ Object.assign(window.AQ_EN = window.AQ_EN || {}, {
   'Gabinete en aluminio y estructura en acero galvanizado': 'Aluminum cabinet and galvanized steel frame'
 });
 (window.AQ_EN_PATTERNS = window.AQ_EN_PATTERNS || []).push(
+  [/^Spa (.+) de la línea PW, de (.+), disponible en (\d+) colores\. Un asesor te confirma la capacidad, los litros y los chorros\.$/, (m, a, d, n) => 'Spa ' + a + ' from the PW line, ' + d + ', available in ' + n + ' colors. An advisor will confirm the capacity, liters and jets.'],
+  [/^(.+ cm) · (\d+) colores disponibles$/, (m, d, n) => d + ' · ' + n + ' colors available'],
   [/^Mostrando (\d+) de (\d+) modelos$/, (m, a, b) => 'Showing ' + a + ' of ' + b + ' models'],
   [/^Spas PW · (.+)$/, (m, r) => 'PW spas · ' + r],
   [/^(\d+) colores disponibles$/, (m, n) => n + ' colors available'],

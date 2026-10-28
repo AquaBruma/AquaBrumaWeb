@@ -139,6 +139,24 @@ def specs_from_pdfs(folder):
     return s
 
 
+def specs_from_manuals(ref):
+    """Medidas desde los manuales (carpeta MANUALES SPAS). Solo se usa la medida: es la única que coincide con las fichas técnicas
+    (la potencia del calentador, por ejemplo, difiere entre el manual de fábrica y la ficha), así que lo demás no se toma de ahí."""
+    out = {}
+    base = os.path.join(SRC, 'MANUALES SPAS')
+    files = glob.glob(os.path.join(base, ref + '*.pdf')) + glob.glob(os.path.join(base, '*', ref + '*.pdf'))
+    for f in files:
+        t = subprocess.run(['pdftotext', '-layout', '-enc', 'UTF-8', f, '-'], capture_output=True).stdout.decode('utf-8', 'ignore')
+        m = re.search(r'(?:Size|Tama[ñn]o)\s*:\s*([φØ])?\s*(\d{3,4})\s*[xX]\s*(\d{3,4})(?:\s*[xX]\s*(\d{3,4}))?\s*mm', t)
+        if not m: continue
+        a1, a2, a3 = int(m.group(2)) / 10, int(m.group(3)) / 10, (int(m.group(4)) / 10 if m.group(4) else None)
+        f0 = lambda v: str(int(round(v)))
+        if m.group(1): out['medidas'] = f'Ø {f0(a1)} × {f0(a2)} cm'
+        elif a3: out['medidas'] = f'{f0(a1)} × {f0(a2)} × {f0(a3)} cm'
+        break
+    return out
+
+
 def parse_color(folder_name):
     u = folder_name.upper()
     for key, label in COLORS:
@@ -152,7 +170,7 @@ if os.environ.get('SPECS_ONLY'):
     data = json.loads(body.rstrip().rstrip(';'))
     for m in data:
         mdir = next(d for d in os.listdir(SRC) if d.startswith(m['ref']))
-        sp = specs_from_pdfs(os.path.join(SRC, mdir)); sp.update(OVERRIDES.get(m['ref'], {})); m['specs'] = sp
+        sp = specs_from_pdfs(os.path.join(SRC, mdir)); [sp.setdefault(k, v) for k, v in specs_from_manuals(m['ref']).items()]; sp.update(OVERRIDES.get(m['ref'], {})); m['specs'] = sp
     open('spaspw-data.js', 'w', encoding='utf-8', newline=chr(10)).write(head + 'window.AQ_SPAS_PW = ' + json.dumps(data, ensure_ascii=False, indent=1) + ';' + chr(10))
     print('fichas actualizadas'); sys.exit(0)
 
@@ -194,6 +212,7 @@ for mdir in sorted(d for d in os.listdir(SRC) if d.startswith('BD-')):
         save_webp(im, os.path.join(OUT, mslug, 'hero.webp'), 78, 1600)
         model['hero'] = f'img/spaspw/{mslug}/hero.webp'
     sp = specs_from_pdfs(os.path.join(SRC, mdir))
+    for k, v in specs_from_manuals(ref).items(): sp.setdefault(k, v)
     sp.update(OVERRIDES.get(ref, {}))
     model['specs'] = sp
     for cdir in sorted(d for d in os.listdir(os.path.join(SRC, mdir)) if os.path.isdir(os.path.join(SRC, mdir, d))):
